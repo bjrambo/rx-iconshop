@@ -7,6 +7,7 @@ class iconshopMobile extends iconshopView
 	{
 		$oModuleModel = getModel('module');
 		$iconshop_info = $oModuleModel->getModuleInfoByMid("iconshop");
+		//TODO: check again
 		$iconshop_config = $oModuleModel->getModuleConfig('iconshop');
 
 		$colorset = $oModuleModel->getModuleSkinVars($iconshop_info->module_srl);

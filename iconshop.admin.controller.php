@@ -20,9 +20,11 @@ class iconshopAdminController extends iconshop
 	 **/
 	function procIconshopAdminModuleInsert()
 	{
+		$oModuleController = getController('module');
+
 		// request 값을 모두 받음
 		$args = Context::getRequestVars();
-		$args->mid = "iconshop";
+		$args->mid = 'iconshop';
 		$args->module = 'iconshop';
 		if(!$args->module_srl)
 		{
@@ -30,7 +32,6 @@ class iconshopAdminController extends iconshop
 		}
 
 		// module_srl의 값에 따라 insert/update
-		$oModuleController = &getController('module');
 		$output = $oModuleController->updateModule($args);
 
 		// 오류가 있으면 리턴
@@ -39,6 +40,16 @@ class iconshopAdminController extends iconshop
 			return $output;
 		}
 		$this->setMessage('success_updated');
+/*
+		if(Context::get('success_return_url'))
+		{
+			$this->setRedirectUrl(Context::get('success_return_url'));
+		}
+		else
+		{
+			$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispIconshopAdminConfig'));
+		}
+*/
 	}
 
 	/**
@@ -87,7 +98,10 @@ class iconshopAdminController extends iconshop
 		// 저장
 		$oModuleController = getController('module');
 		$output = $oModuleController->insertModuleConfig('iconshop', $iconshop_config);
-		debugPrint($output);
+		if(!$output->toBool())
+		{
+			return $output;
+		}
 		$this->setMessage('success_updated');
 	}
 
@@ -98,32 +112,39 @@ class iconshopAdminController extends iconshop
 	{
 		// 변수 정리
 		$args = Context::getRequestVars();
-		$obj = null;
+		$obj = new stdClass();
 		if(!$args->title)
 		{
 			return $this->ErrorMessage('null_title');
 		}
 
 		// icon_srl이 있으면 원본 데이터 가져오기
+		$icon_data = null;
 		if($args->icon_srl)
 		{
-			$oIconshopModel = &getModel("iconshop");
+			$oIconshopModel = getModel('iconshop');
 			$icon_data = $oIconshopModel->getIconBySrl($args->icon_srl);
 			if(!$icon_data)
 			{
 				return $this->ErrorMessage('invalid_icon');
 			}
 			$obj->file1 = $icon_data->file1;
+
+			// 원본데이터의 file1이 없고, 업로드한 파일도 없으면..
+			if((!$icon_data->file1) && (!$args->file1['tmp_name'] || !is_uploaded_file($args->file1['tmp_name'])))
+			{
+				return $this->ErrorMessage('null_file1');
+			}
 		}
 
-		// 원본데이터의 file1이 없고, 업로드한 파일도 없으면..
-		if((!$icon_data->file1) && (!$args->file1['tmp_name'] || !is_uploaded_file($args->file1['tmp_name'])))
+		if($icon_data === null && (!$args->file1['tmp_name'] || !is_uploaded_file($args->file1['tmp_name'])))
 		{
 			return $this->ErrorMessage('null_file1');
 		}
 
+
 		// 레벨값이 최대레벨보다 높을경우..
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$point_config = $oModuleModel->getModuleConfig('point');
 		$level_limit = (int)$args->level_limit;
 		if($level_limit > $point_config->max_level)
@@ -132,7 +153,7 @@ class iconshopAdminController extends iconshop
 		}
 
 		// 선택한 그룹중 존재하지 않는그룹이 있을경우...
-		$oMemberModel = &getModel('member');
+		$oMemberModel = getModel('member');
 		$member_group_list = $oMemberModel->getGroups(0);
 		$group_limit = array();
 		$group_limit_list = $args->group_limit;
@@ -144,13 +165,6 @@ class iconshopAdminController extends iconshop
 				{
 					$group_limit[] = $val;
 				}
-			}
-		}
-		else
-		{
-			if($member_group_list[$group_limit_list])
-			{
-				$group_limit[] = $group_limit_list;
 			}
 		}
 
@@ -183,7 +197,7 @@ class iconshopAdminController extends iconshop
 			}
 
 			// 경로를 정해서 업로드
-			$path = "./files/iconshop/";
+			$path = './files/iconshop/';
 
 			// 디렉토리 생성
 			if(!is_dir($path))
@@ -208,6 +222,7 @@ class iconshopAdminController extends iconshop
 			else
 			{
 				$filename = sprintf("%s%s.%s", $path, md5($file1_obj['name']), $file1_ext[1]);
+				//TODO(bJRAmbo) : check again
 				@move_uploaded_file($file1_obj['tmp_name'], $filename);
 			}
 			$obj->file1 = $filename;
@@ -220,14 +235,14 @@ class iconshopAdminController extends iconshop
 		}
 
 		// icon_data가 있으면 Update, 없으면 Insert
-		$oIconshopController = &getController('iconshop');
+		$oIconshopController = getController('iconshop');
 		if($obj->icon_srl)
 		{
-			$oIconshopController->UpdateIcon($obj);
+			$oIconshopController->updateIcon($obj);
 		}
 		else
 		{
-			$oIconshopController->InsertIcon($obj);
+			$oIconshopController->insertIcon($obj);
 		}
 
 		return $this->ErrorMessage('success_saved', 1);
@@ -238,6 +253,9 @@ class iconshopAdminController extends iconshop
 	 **/
 	function procIconshopAdminIconDelete()
 	{
+		$oIconshopModel = getModel('iconshop');
+		$oIconshopController = getController('iconshop');
+
 		$icon_srls = Context::get('icon_srls');
 		if(!$icon_srls)
 		{
@@ -245,7 +263,6 @@ class iconshopAdminController extends iconshop
 		}
 
 		$icon_srl_list = explode(",", $icon_srls);
-		$oIconshopModel = &getModel("iconshop");
 		foreach($icon_srl_list as $key => $val)
 		{
 			// 원본데이터 가져오기
@@ -256,18 +273,17 @@ class iconshopAdminController extends iconshop
 			}
 
 			// 데이터 삭제
-			$oIconshopController = &getController('iconshop');
-			$oIconshopController->DeleteIcon($icon_data->icon_srl);
+			$oIconshopController->deleteIcon($icon_data->icon_srl);
 
 			// 첨부파일 삭제
 			FileHandler::removeFile($icon_data->file1);
 
 			// 회원이 보유한 아이콘 삭제
-			$args = null;
+			$args = new stdClass();
 			$args->icon_srl = $icon_data->icon_srl;
-			$oIconshopController->DeleteMemberIcon($args);
+			$oIconshopController->deleteMemberIcon($args);
 			// 로그삭제
-			$oIconshopController->DeleteLog($args);
+			$oIconshopController->deleteLog($args);
 		}
 		$this->setMessage('success_deleted');
 	}
@@ -277,6 +293,9 @@ class iconshopAdminController extends iconshop
 	 **/
 	function procIconshopAdminMemberIconInsert()
 	{
+		$oIconshopModel = getModel('iconshop');
+		$oMemberModel = getModel('member');
+
 		// 변수 정리
 		$args = Context::getRequestVars();
 		$data_srl = (int)$args->data_srl;
@@ -290,7 +309,6 @@ class iconshopAdminController extends iconshop
 		$end_date4 = str_pad($args->end_date4, 2, '0', STR_PAD_LEFT); // s
 
 		// data_srl이 있으면 원본 데이터가 존재하는지 검사
-		$oIconshopModel = &getModel('iconshop');
 		if($data_srl)
 		{
 			$member_icon_data = $oIconshopModel->getMemberIconByDataSrl($data_srl);
@@ -301,7 +319,6 @@ class iconshopAdminController extends iconshop
 		}
 
 		// 회원이 존재하는지 검사
-		$oMemberModel = &getModel('member');
 		$member_info = $oMemberModel->getMemberInfoByMemberSrl($member_srl);
 		if(!$member_info->member_srl)
 		{
@@ -332,7 +349,7 @@ class iconshopAdminController extends iconshop
 			}
 		}
 
-		$obj = null;
+		$obj = new stdClass();
 		if($member_icon_data->data_srl)
 		{
 			$obj->data_srl = $member_icon_data->data_srl;
@@ -349,15 +366,15 @@ class iconshopAdminController extends iconshop
 		$obj->end_date = $end_date;
 
 		// data_srl의 값에 따라 insert/update
-		$oIconshopController = &getController('iconshop');
+		$oIconshopController = getController('iconshop');
 		if($obj->data_srl)
 		{
-			$oIconshopController->UpdateMemberIcon($obj);
+			$oIconshopController->updateMemberIcon($obj);
 			$msg_code = "success_updated";
 		}
 		else
 		{
-			$oIconshopController->InsertMemberIcon($obj);
+			$oIconshopController->insertMemberIcon($obj);
 			$msg_code = "success_registed";
 		}
 
@@ -376,6 +393,9 @@ class iconshopAdminController extends iconshop
 	 **/
 	function procIconshopAdminMemberIconDelete()
 	{
+		$oIconshopModel = getModel('iconshop');
+		$oIconshopController = getController('iconshop');
+
 		$data_srls = Context::get('data_srls');
 		if(!$data_srls)
 		{
@@ -383,8 +403,6 @@ class iconshopAdminController extends iconshop
 		}
 
 		$data_srl_list = explode(",", $data_srls);
-		$oIconshopModel = &getModel("iconshop");
-		$oIconshopController = &getController('iconshop');
 		foreach($data_srl_list as $key => $val)
 		{
 			// 원본데이터 가져오기
@@ -395,9 +413,9 @@ class iconshopAdminController extends iconshop
 			}
 
 			// 데이터 삭제
-			$args = null;
+			$args = new stdClass();
 			$args->data_srl = $icon_data->data_srl;
-			$oIconshopController->DeleteMemberIcon($args);
+			$oIconshopController->deleteMemberIcon($args);
 		}
 		$this->setMessage('success_deleted');
 	}
@@ -414,13 +432,13 @@ class iconshopAdminController extends iconshop
 		}
 
 		$data_srl_list = explode(",", $data_srls);
-		$oIconshopController = &getController('iconshop');
+		$oIconshopController = getController('iconshop');
 		foreach($data_srl_list as $key => $val)
 		{
 			// 데이터 삭제
-			$args = null;
+			$args = new stdClass();
 			$args->data_srl = $val;
-			$oIconshopController->DeleteLog($args);
+			$oIconshopController->deleteLog($args);
 		}
 		$this->setMessage('success_deleted');
 	}
@@ -430,12 +448,13 @@ class iconshopAdminController extends iconshop
 	 **/
 	function procIconshopAdminLogReset()
 	{
-		$oIconshopController = &getController('iconshop');
-		$oIconshopController->ResetLog();
+		$oIconshopController = getController('iconshop');
+		$oIconshopController->resetLog();
 		$this->setMessage('success_deleted');
 	}
 
 	/**
+	 * TODO: Check again
 	 * @에러처리를 따로 하기위한 함수 (insert/update시 사용)
 	 * reload - 1일경우 메세지 출력후 새로고침
 	 **/

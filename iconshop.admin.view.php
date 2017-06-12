@@ -14,9 +14,10 @@ class iconshopAdminView extends iconshop
 	 **/
 	function init()
 	{
+		$oModuleModel = getModel('module');
+
 		// 설정 정보 가져오기
-		$oModuleModel = &getModel('module');
-		$iconshop_info = $oModuleModel->getModuleInfoByMid("iconshop");
+		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
 		$iconshop_config = $oModuleModel->getModuleConfig('iconshop');
 		$module_category = $oModuleModel->getModuleCategories();
 
@@ -35,7 +36,7 @@ class iconshopAdminView extends iconshop
 	function dispIconshopAdminConfig()
 	{
 		// 스킨목록 가져오기
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$skin_list = $oModuleModel->getSkins($this->module_path);
 		Context::set('skin_list', $skin_list);
 
@@ -43,7 +44,7 @@ class iconshopAdminView extends iconshop
 		Context::set('mskin_list', $mskin_list);
 
 		// 레이아웃 목록을 구해옴
-		$oLayoutModel = &getModel('layout');
+		$oLayoutModel = getModel('layout');
 		$layout_list = $oLayoutModel->getLayoutList();
 		Context::set('layout_list', $layout_list);
 
@@ -69,7 +70,7 @@ class iconshopAdminView extends iconshop
 	function dispIconshopAdminSkinConfig()
 	{
 		// 공통 모듈 권한 설정 페이지 호출
-		$oModuleAdminModel = &getAdminModel('module');
+		$oModuleAdminModel = getAdminModel('module');
 		$iconshop_info = Context::get('iconshop_info');
 		$skin_content = $oModuleAdminModel->getModuleSkinHTML($iconshop_info->module_srl);
 		Context::set('skin_content', $skin_content);
@@ -84,7 +85,7 @@ class iconshopAdminView extends iconshop
 	function dispIconshopAdminIconList()
 	{
 		// 상품정보 가져오기
-		$oIconshopAdminModel = &getAdminModel("iconshop");
+		$oIconshopAdminModel = getAdminModel('iconshop');
 		$icon_list = $oIconshopAdminModel->getIconList();
 		Context::set('total_count', $icon_list->total_count);
 		Context::set('total_page', $icon_list->total_page);
@@ -101,17 +102,18 @@ class iconshopAdminView extends iconshop
 	 **/
 	function dispIconshopAdminIconInsert()
 	{
+		$oMemberModel = getModel('member');
+
 		$icon_srl = Context::get('icon_srl');
 
 		// 등록된 그룹목록을 구해옴
-		$oMemberModel = &getModel('member');
 		$group_list = $oMemberModel->getGroups(0);
 		Context::set('group_list', $group_list);
 
 		// 원본 데이터 가져오기
 		if($icon_srl)
 		{
-			$oIconshopModel = &getModel("iconshop");
+			$oIconshopModel = getModel('iconshop');
 			$icon_data = $oIconshopModel->getIconBySrl($icon_srl);
 			if($icon_data)
 			{
@@ -129,7 +131,7 @@ class iconshopAdminView extends iconshop
 	function dispIconshopAdminMemberIconList()
 	{
 		// 회원 상품정보 가져오기
-		$oIconshopAdminModel = &getAdminModel("iconshop");
+		$oIconshopAdminModel = getAdminModel('iconshop');
 		$icon_list = $oIconshopAdminModel->getMemberIconList();
 		Context::set('total_count', $icon_list->total_count);
 		Context::set('total_page', $icon_list->total_page);
@@ -151,12 +153,12 @@ class iconshopAdminView extends iconshop
 		// 수정모드일때 원본데이터 가져오기
 		if($data_srl)
 		{
-			$oIconshopModel = &getModel("iconshop");
-			$member_info = $oIconshopModel->getMemberIconByDataSrl($data_srl);
-			if($member_info)
+			$oIconshopModel = getModel('iconshop');
+			$member_icon = $oIconshopModel->getMemberIconByDataSrl($data_srl);
+			if($member_icon)
 			{
-				$icon_data = $oIconshopModel->getIconBySrl($member_info->icon_srl);
-				Context::set('member_icon_data', $member_info);
+				$icon_data = $oIconshopModel->getIconBySrl($member_icon->icon_srl);
+				Context::set('member_icon_data', $member_icon);
 				Context::set('icon_data', $icon_data);
 			}
 		}
@@ -171,20 +173,20 @@ class iconshopAdminView extends iconshop
 	function dispIconshopAdminLogList()
 	{
 		// 설정 정보 가져오기
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$iconshop_config = $oModuleModel->getModuleConfig('iconshop');
 
 		// 보관일수가 지난 기록은 삭제..
 		if($iconshop_config->log_save_day)
 		{
-			$args = null;
+			$args = new stdClass();
 			$args->regdate_less = date("YmdHis", strtotime(sprintf('-%d day', $iconshop_config->log_save_day)));
-			$oIconshopController = &getController('iconshop');
-			$oIconshopController->DeleteLog($args);
+			$oIconshopController = getController('iconshop');
+			$oIconshopController->deleteLog($args);
 		}
 
 		// 상품정보 가져오기
-		$oIconshopAdminModel = &getAdminModel("iconshop");
+		$oIconshopAdminModel = getAdminModel('iconshop');
 		$log_list = $oIconshopAdminModel->getLogList();
 		Context::set('total_count', $log_list->total_count);
 		Context::set('total_page', $log_list->total_page);
@@ -208,7 +210,7 @@ class iconshopAdminView extends iconshop
 				$params->search_keyword = (int)$params->search_keyword;
 				break;
 			case "s_title":
-				$params->search_keyword = $params->search_keyword;
+
 				break;
 			default:
 				unset($params->search_keyword);
@@ -217,7 +219,7 @@ class iconshopAdminView extends iconshop
 		// 키워드가 있을경우 아이콘 정보 가져옴
 		if($params->search_target && $params->search_keyword)
 		{
-			$args = null;
+			$args = new stdClass();
 			$args->{$params->search_target} = $params->search_keyword;
 			$args->page = Context::get('page');
 			$args->list_count = 10;

@@ -7,16 +7,49 @@
  **/
 class iconshop extends ModuleObject
 {
+	protected static $config = NULL;
+
+	protected static function getConfig()
+	{
+		if(self::$config === NULL)
+		{
+			$config = getModel('module')->getModuleConfig('iconshop');
+			if(!$config)
+			{
+				$config = new stdClass();
+				$config->icon_width = 20;
+				$config->icon_height = 20;
+				$config->send_fee = 0;
+				$config->sell_per = 50;
+				$config->log_save_day = 7;
+				$config->new_hour = 24;
+				$config->member_max_count = 100;
+				$config->list_count = 10;
+				$config->cols_list_count = 2;
+				$config->member_info_print = "Y";
+				$config->item_delete_event = "N";
+				$config->item_delete_title = "[nick_name]님이 구입하신 [[icon_title]] 아이콘의 시간이 만료 되었습니다.";
+				$config->item_delete_message = "[nick_name]님이 구입하신 [[icon_title]] 아이콘의 시간이 만료되어 삭제 되었습니다.\n\n[[end_date]]";
+				self::$config = $config;
+			}
+		}
+
+		return self::$config;
+	}
+
+	function setConfig()
+	{
+
+	}
 
 	/**
 	 * @brief 설치시 추가 작업이 필요할시 구현
 	 **/
 	function moduleInstall()
 	{
-		$oModuleModel = &getModel('module');
-		$oModuleController = &getController('module');
-		$oAddonAdminModel = &getAdminModel('addon');
-		$oAddonAdminController = &getAdminController('addon');
+		$oModuleModel = getModel('module');
+		$oModuleController = getController('module');
+		$oAddonAdminController = getAdminController('addon');
 
 		// iconshop 모듈에서 사용할 디렉토리 생성
 		FileHandler::makeDir('./files/iconshop');
@@ -25,7 +58,7 @@ class iconshop extends ModuleObject
 		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
 		if(!$iconshop_info->module_srl)
 		{
-			$args = null;
+			$args = new stdClass();
 			$args->mid = 'iconshop';
 			$args->module = 'iconshop';
 			$args->browser_title = '아이콘샵';
@@ -35,7 +68,7 @@ class iconshop extends ModuleObject
 		}
 
 		// 아이콘샵 모듈의 기본설정 저장
-		$config = null;
+		$config = new stdClass();
 		$config->icon_width = 20;
 		$config->icon_height = 20;
 		$config->send_fee = 0;
@@ -52,7 +85,7 @@ class iconshop extends ModuleObject
 		$oModuleController->insertModuleConfig('iconshop', $config);
 
 		// 회원 모듈 설정에서 이미지 마크 사용시...
-		$member_config = $oModuleModel->getModuleConfig('member');
+		$member_config = getModel('member')->getMemberConfig();
 		if($member_config->image_mark == 'Y')
 		{
 			$member_config->image_mark = "N";
@@ -61,10 +94,6 @@ class iconshop extends ModuleObject
 
 		// 대표아이콘 출력 애드온 활성화 시키기
 		$site_module_info = Context::get('site_module_info');
-		if($oAddonAdminModel->isActivatedAddon('icon_print', $site_module_info->site_srl))
-		{
-			$oAddonAdminController->doDeactivate('icon_print', $site_module_info->site_srl);
-		}
 		$oAddonAdminController->doActivate('member_icon_print', $site_module_info->site_srl);
 		$oAddonAdminController->makeCacheFile($site_module_info->site_srl);
 
@@ -76,9 +105,9 @@ class iconshop extends ModuleObject
 	 **/
 	function checkUpdate()
 	{
-		$oDB = &DB::getInstance();
-		$oModuleModel = &getModel('module');
-		$oAddonAdminModel = &getAdminModel('addon');
+		$oDB = DB::getInstance();
+		$oModuleModel = getModel('module');
+		$oAddonAdminModel = getAdminModel('addon');
 
 		// 2010. 06. 25 point_limit 추가
 		if(!$oDB->isColumnExists("iconshop_admin", "point_limit"))
@@ -91,7 +120,6 @@ class iconshop extends ModuleObject
 		{
 			return true;
 		}
-
 		// iconshop 모듈이 존재하지 않으면...
 		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
 		if(!$iconshop_info->module_srl)
@@ -115,10 +143,6 @@ class iconshop extends ModuleObject
 
 		// 대표아이콘 출력 애드온이 비활성화 되있으면..
 		$site_module_info = Context::get('site_module_info');
-		if($oAddonAdminModel->isActivatedAddon('icon_print', $site_module_info->site_srl))
-		{
-			return true;
-		}
 		if(!$oAddonAdminModel->isActivatedAddon('member_icon_print', $site_module_info->site_srl))
 		{
 			return true;
@@ -130,11 +154,10 @@ class iconshop extends ModuleObject
 	 **/
 	function moduleUpdate()
 	{
-		$oDB = &DB::getInstance();
-		$oModuleModel = &getModel('module');
-		$oModuleController = &getController('module');
-		$oAddonAdminModel = &getAdminModel('addon');
-		$oAddonAdminController = &getAdminController('addon');
+		$oDB = DB::getInstance();
+		$oModuleModel = getModel('module');
+		$oModuleController = getController('module');
+		$oAddonAdminController = getAdminController('addon');
 
 		/**
 		 * 2010. 06. 25 point_limit 추가
@@ -154,7 +177,7 @@ class iconshop extends ModuleObject
 		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
 		if(!$iconshop_info->module_srl)
 		{
-			$args = null;
+			$args = new stdClass();
 			$args->mid = 'iconshop';
 			$args->module = 'iconshop';
 			$args->browser_title = '아이콘샵';
@@ -167,7 +190,7 @@ class iconshop extends ModuleObject
 		$iconshop_config = $oModuleModel->getModuleConfig('iconshop');
 		if(!$iconshop_config)
 		{
-			$config = null;
+			$config = new stdClass();
 			$config->icon_width = 16;
 			$config->icon_height = 16;
 			$config->send_fee = 0;
@@ -185,7 +208,7 @@ class iconshop extends ModuleObject
 		}
 
 		// 회원 모듈 설정에서 이미지 마크 사용시...
-		$member_config = $oModuleModel->getModuleConfig('member');
+		$member_config = getModel('member')->getMemberConfig();
 		if($member_config->image_mark == 'Y')
 		{
 			$member_config->image_mark = "N";
@@ -194,11 +217,11 @@ class iconshop extends ModuleObject
 
 		// 대표아이콘 출력 애드온이 비활성화 되있으면..
 		$site_module_info = Context::get('site_module_info');
-		if($oAddonAdminModel->isActivatedAddon('icon_print', $site_module_info->site_srl))
+		$output = $oAddonAdminController->doActivate('member_icon_print', $site_module_info->site_srl);
+		if(!$output->toBool())
 		{
-			$oAddonAdminController->doDeactivate('icon_print', $site_module_info->site_srl);
+			return $output;
 		}
-		$oAddonAdminController->doActivate('member_icon_print', $site_module_info->site_srl);
 		$oAddonAdminController->makeCacheFile($site_module_info->site_srl);
 
 		return new Object(0, 'success_updated');

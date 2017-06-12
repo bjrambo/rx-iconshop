@@ -21,7 +21,7 @@ class iconshopModel extends module
 	{
 		if(!$icon_srl)
 		{
-			return;
+			return false;
 		}
 		$args = new stdClass();
 		$args->icon_srl = $icon_srl;
@@ -70,7 +70,7 @@ class iconshopModel extends module
 		$args->list_count = ($iconshop_config->list_count) ? $iconshop_config->list_count : 10;
 		$args->page_count = (int)$page_count;
 
-		$output = executeQuery("iconshop.getIconList", $args);
+		$output = executeQueryArray("iconshop.getIconList", $args);
 
 		if($output->data)
 		{
@@ -80,10 +80,6 @@ class iconshopModel extends module
 				{
 					$output->data[$key] = $this->varSetting($val);
 				}
-			}
-			else
-			{
-				$output->data = $this->varSetting($output->data);
 			}
 		}
 		return $output;
@@ -96,7 +92,7 @@ class iconshopModel extends module
 	{
 		if(!$data_srl)
 		{
-			return;
+			return false;
 		}
 		$args = new stdClass();
 		$args->data_srl = $data_srl;
@@ -122,7 +118,7 @@ class iconshopModel extends module
 	{
 		if(!$icon_srl || !$member_srl)
 		{
-			return;
+			return false;
 		}
 		$args = new stdClass();
 		$args->icon_srl = $icon_srl;
@@ -150,7 +146,7 @@ class iconshopModel extends module
 	{
 		if(!$member_srl)
 		{
-			return;
+			return false;
 		}
 		$args = new stdClass();
 		$args->member_srl = $member_srl;
@@ -213,18 +209,18 @@ class iconshopModel extends module
 		return (int)$output->data->count;
 	}
 
-	function group_check($member_group_list, $icon_group_list)
+	function groupCheck($member_group_list, $icon_group_list)
 	{
-		$i = 0;
+		$is_checked = false;
 		foreach($member_group_list as $key => $val)
 		{
 			if(in_array($key, $icon_group_list))
 			{
-				$i = 1;
+				$is_checked = true;
 				break;
 			}
 		}
-		return $i;
+		return $is_checked;
 	}
 
 	// object의 값을 쓰기 편하게 세팅
@@ -232,7 +228,7 @@ class iconshopModel extends module
 	{
 		if(!$data)
 		{
-			return;
+			return false;
 		}
 		$data->title = htmlspecialchars($data->title);
 		if($data->group_limit)
@@ -256,7 +252,7 @@ class iconshopModel extends module
 		}
 
 		// 설정 정보 가져오기
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$iconshop_config = $oModuleModel->getModuleConfig('iconshop');
 		$point_config = $oModuleModel->getModuleConfig('point');
 		Context::set('point_name', $point_config->point_name);
@@ -295,7 +291,7 @@ class iconshopModel extends module
 	{
 		if(!$data_srl)
 		{
-			return;
+			return false;
 		}
 		$args = new stdClass();
 		$args->data_srl = $data_srl;

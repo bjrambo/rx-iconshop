@@ -3,7 +3,7 @@
 <!--@if($member_icon_data->icon_srl)-->
 
 <div class="x_page-header">
-	<h1>{$lang->memberIconModify}</h1>
+	<h1>{$lang->memberIconModify}asdasdasd</h1>
 </div>
 
 <form id="fo_insert" action="./" method="get" onsubmit="return procFilter(this, insert_membericon)" class="x_form-horizontal">
@@ -51,6 +51,7 @@
 			<label class="x_control-label" for="lang_browser_title">{$lang->end_date}</label>
 			<div class="x_controls">
             <input type="hidden" name="end_date1" value="{zDate($member_icon_data->end_date,'Ymd')}" />
+				<!-- TODO Checkagain -->
                 <input type="text" value="{zDate($member_icon_data->end_date,'Y-m-d')}" readonly="readonly" class="inputDate inputTypeText w80" />
                 <span class="button"><input type="button" value="{$lang->cmd_delete}" class="dateRemover" /></span>
                 <select name="end_date2">

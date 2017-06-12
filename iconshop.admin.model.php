@@ -24,7 +24,7 @@ class iconshopAdminModel extends module
 		$search_target = Context::get('search_target');
 		$search_target_list = array("s_title", "s_content", "icon_srl", "s_total_count", "s_total_count_less", "s_total_count_more", "s_price", "s_price_less", "s_price_more", "s_minute", "s_minute_less", "s_minute_more", "s_level_limit");
 		$search_limit = Context::gets('buy_limit', 'send_limit', 'sell_limit', 'point_limit', 'event_limit', 'minute_limit');
-		$args = null;
+		$args = new stdClass();
 		if(in_array($search_limit->buy_limit, array("Y", "N")))
 		{
 			$args->buy_limit = $search_limit->buy_limit;
@@ -74,8 +74,21 @@ class iconshopAdminModel extends module
 	{
 		$search_keyword = trim(Context::get('search_keyword'));
 		$search_target = Context::get('search_target');
-		$search_target_list = array("s_data_srl", "s_icon_srl", "s_member_srl", "s_start_date", "s_start_date_less", "s_start_date_more", "s_end_date", "s_end_date_less", "s_end_date_more", "s_user_id", "s_nick_name", "s_ipaddress");
-		$args = null;
+		$search_target_list = array(
+			"s_data_srl",
+			"s_icon_srl",
+			"s_member_srl",
+			"s_start_date",
+			"s_start_date_less",
+			"s_start_date_more",
+			"s_end_date",
+			"s_end_date_less",
+			"s_end_date_more",
+			"s_user_id",
+			"s_nick_name",
+			"s_ipaddress"
+		);
+		$args = new stdClass();
 		if($search_keyword && in_array($search_target, $search_target_list))
 		{
 			if(array_search($search_target, $search_target_list) < 5)
@@ -105,12 +118,20 @@ class iconshopAdminModel extends module
 	{
 		$search_keyword = trim(Context::get('search_keyword'));
 		$search_target = Context::get('search_target');
-		$search_target_list = array("s_data_srl", "s_icon_srl", "s_sender_srl", "s_receive_srl", "s_point", "s_content", "s_ipaddress");
+		$search_target_list = array(
+			"s_data_srl",
+			"s_icon_srl",
+			"s_sender_srl",
+			"s_receive_srl",
+			"s_point",
+			"s_content",
+			"s_ipaddress"
+		);
 		$s_category_srl = Context::get('s_category_srl');
 		$s_regdate_less = Context::get('s_regdate_less');
 		$s_regdate_more = Context::get('s_regdate_more');
 
-		$args = null;
+		$args = new stdClass();
 		if($s_category_srl)
 		{
 			$args->s_category_srl = (int)$s_category_srl;

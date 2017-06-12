@@ -17,10 +17,9 @@ class iconshopView extends iconshop
 		$oModuleModel = getModel('module');
 
 		// 설정 정보 가져오기
-		$iconshop_info = $oModuleModel->getModuleInfoByMid("iconshop");
+		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
 		$iconshop_config = $oModuleModel->getModuleConfig('iconshop');
 		$colorset = $oModuleModel->getModuleSkinVars($iconshop_info->module_srl);
-		debugPrint($colorset);
 		// 설정 변수 지정
 		Context::set('iconshop_info', $iconshop_info);
 		Context::set('iconshop_config', $iconshop_config);
@@ -53,11 +52,11 @@ class iconshopView extends iconshop
 		$oIconshopModel = getModel('iconshop');
 
 		// 로그인정보 가져오기
-		$logged_info = Context::get('logged_info');
-		if(!$logged_info->member_srl)
+		if(!Context::get('is_logged'))
 		{
 			return new Object(-1, 'msg_not_permitted');
 		}
+		$logged_info = Context::get('logged_info');
 
 		// 포인트/레벨을 구해옴
 		$logged_info->point = $oPointModel->getPoint($logged_info->member_srl);
@@ -81,16 +80,16 @@ class iconshopView extends iconshop
 	 **/
 	function dispIconshopMyIcon()
 	{
-		$oPointModel = &getModel('point');
-		$oModuleModel = &getModel('module');
-		$oIconshopModel = &getModel('iconshop');
+		$oPointModel = getModel('point');
+		$oModuleModel = getModel('module');
+		$oIconshopModel = getModel('iconshop');
 
 		// 로그인정보 가져오기
-		$logged_info = Context::get('logged_info');
-		if(!$logged_info->member_srl)
+		if(!Context::get('is_logged'))
 		{
 			return new Object(-1, 'msg_not_permitted');
 		}
+		$logged_info = Context::get('logged_info');
 
 		// 포인트/레벨을 구해옴
 		$logged_info->point = $oPointModel->getPoint($logged_info->member_srl);
@@ -115,16 +114,16 @@ class iconshopView extends iconshop
 	function dispIconshopIconSend()
 	{
 		$this->setLayoutFile('popup_layout');
-		$oPointModel = &getModel('point');
-		$oModuleModel = &getModel('module');
-		$oIconshopModel = &getModel('iconshop');
+		$oPointModel = getModel('point');
+		$oModuleModel = getModel('module');
+		$oIconshopModel = getModel('iconshop');
 
 		// 로그인정보 가져오기
-		$logged_info = Context::get('logged_info');
-		if(!$logged_info->member_srl)
+		if(!Context::get('is_logged'))
 		{
 			return new Object(-1, 'msg_not_permitted');
 		}
+		$logged_info = Context::get('logged_info');
 
 		// 회원의 포인트/레벨을 구해옴
 		$logged_info->point = $oPointModel->getPoint($logged_info->member_srl);
@@ -186,11 +185,7 @@ class iconshopView extends iconshop
 		}
 
 		Context::set('menu', 'my_icon');
-		Context::set('total_count', $icon_list->total_count);
-		Context::set('total_page', $icon_list->total_page);
-		Context::set('page', $icon_list->page);
 		Context::set('icon_data', $icon_data);
-		Context::set('page_navigation', $icon_list->page_navigation);
 		Context::set('point_name', $point_config->point_name);
 		$this->setTemplateFile('my_icon');
 
@@ -202,7 +197,7 @@ class iconshopView extends iconshop
 	 **/
 	function dispIconshopMemberSearch()
 	{
-		$oMemberModel = &getModel('member');
+		$oMemberModel = getModel('member');
 
 		$params = Context::gets('search_target', 'search_keyword', 'target_id');
 		$result_list = array();
@@ -217,7 +212,7 @@ class iconshopView extends iconshop
 					break;
 				case "nick_name":
 					$params->search_keyword = str_replace(' ', '%', $params->search_keyword);
-					$args = null;
+					$args = new stdClass();
 					$args->s_nick_name = $params->search_keyword;
 					$args->page = Context::get('page');
 					$args->list_count = 10;
