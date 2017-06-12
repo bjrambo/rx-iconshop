@@ -1,0 +1,15 @@
+<filter name="insert_config" module="iconshop" act="procIconshopAdminConfig" confirm_msg_code="confirm_update">
+    <form>
+        <node target="icon_width" required="true" filter="number" maxlength="3" />
+        <node target="icon_height" required="true" filter="number" maxlength="3" />
+        <node target="send_fee" filter="number" maxlength="3" />
+        <node target="sell_per" filter="number" maxlength="3" />
+        <node target="new_hour" filter="number" />
+        <node target="member_max_count" filter="number" />
+        <node target="log_save_day" filter="number" />
+    </form>
+    <response>
+        <tag name="error" />
+        <tag name="message" />
+    </response>
+</filter>

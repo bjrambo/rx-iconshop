@@ -1,0 +1,181 @@
+<!--#include("./header.html")-->
+
+<div class="x_page-header">
+	<h1>{($icon_data->icon_srl)?$lang->iconModify :$lang->iconInsert}</h1>
+</div>
+
+<form id="fo_insert" action="./" method="post" enctype="multipart/form-data" target="hidden_iframe" class="x_form-horizontal">
+<input type="hidden" name="module" value="iconshop" />
+<input type="hidden" name="act" value="procIconshopAdminIconInsert" />
+<!--@if($icon_data->icon_srl)--><input type="hidden" name="icon_srl" value="{$icon_data->icon_srl}" /><!--@end-->
+	<section class="section">
+    	<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->icon_title}</label>
+			<div class="x_controls">
+				<input type="text" name="title" value="{$icon_data->title}" />
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->icon_total_count}</label>
+			<div class="x_controls">
+				<input type="text" name="total_count" value="{$icon_data->total_count}" />
+                <a href="#icon_total_count_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="icon_total_count_help" class="x_help-block" hidden>{$lang->total_count_about}</p>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->icon_price}</label>
+			<div class="x_controls">
+				<input type="text" name="price" value="{$icon_data->price}" />
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->buy_limit}</label>
+			<div class="x_controls">
+			<select name="buy_limit">
+            <!--@foreach($lang->iconshop_checked_list as $key=>$val)-->
+            <option value="{$val}" <!--@if($val==$icon_data->buy_limit)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+            </select>
+            <a href="#buy_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="buy_limit_help" class="x_help-block" hidden>{$lang->buy_limit_about}</p>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->send_limit}</label>
+			<div class="x_controls">
+			<select name="send_limit">
+            <!--@foreach($lang->iconshop_checked_list as $key=>$val)-->
+            <option value="{$val}" <!--@if($val==$icon_data->send_limit)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+            </select>
+            <a href="#send_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="send_limit_help" class="x_help-block" hidden>{$lang->send_limit_about}</p>
+			</div>
+		</div>
+        
+       	<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->sell_limit}</label>
+			<div class="x_controls">
+			<select name="sell_limit">
+            <!--@foreach($lang->iconshop_checked_list as $key=>$val)-->
+            <option value="{$val}" <!--@if($val==$icon_data->sell_limit)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+            </select>
+            <a href="#sell_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="sell_limit_help" class="x_help-block" hidden>{$lang->sell_limit_about}</p>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->point_limit}</label>
+			<div class="x_controls">
+			 <select name="point_limit">
+            <!--@foreach($lang->iconshop_checked_list as $key=>$val)-->
+            <option value="{$val}" <!--@if($val==$icon_data->point_limit)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+            </select>
+            <a href="#point_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="point_limit_help" class="x_help-block" hidden>{$lang->point_limit_about}</p>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->minute_limit}</label>
+			<div class="x_controls">
+			<select name="minute_limit">
+            <!--@foreach($lang->iconshop_checked_list2 as $key=>$val)-->
+            <option value="{$val}" <!--@if($val==$icon_data->minute_limit)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+            </select>
+            <input type="text" name="minute" value="{$icon_data->minute}" />{$lang->unit_min}
+            <a href="#minute_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="minute_limit_help" class="x_help-block" hidden>{$lang->minute_limit_about}</p>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->event_limit}</label>
+			<div class="x_controls">
+			<select name="event_limit">
+            <!--@foreach($lang->iconshop_checked_list2 as $key=>$val)-->
+            <option value="{$val}" <!--@if($val==$icon_data->event_limit)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+            </select>
+                <span>
+                    <input type="hidden" name="event_start" value="{$icon_data->event_start}" />
+                    <input type="text" value="{zdate($icon_data->event_start,'Y-m-d')}" readonly="readonly" class="inputDate inputTypeText" />
+                    <span class="button"><input type="button" value="{$lang->cmd_delete}" class="x_btn dateRemover" /></span>
+                </span>
+            ~
+                <span>
+                    <input type="hidden" name="event_end" value="{$icon_data->event_end}" />
+                    <input type="text" value="{zdate($icon_data->event_end,'Y-m-d')}" readonly="readonly" class="inputDate inputTypeText" />
+                    <span class="button"><input type="button" value="{$lang->cmd_delete}" class="x_btn dateRemover" /></span>
+                </span>
+            <a href="#event_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="event_limit_help" class="x_help-block" hidden>{$lang->event_limit_about}</p>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->level_limit}</label>
+			<div class="x_controls">
+			<input type="text" name="level_limit" value="{$icon_data->level_limit}" />
+            <a href="#level_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="level_limit_help" class="x_help-block" hidden>{$lang->level_limit_about}</p>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->group_limit}</label>
+			<div class="x_controls">
+			<!--@foreach($group_list as $key => $val)-->
+            <label for="groups_{$key}"><input type="checkbox" name="group_limit[]" id="groups_{$key}" value="{$key}" <!--@if($icon_data->group_limit && in_array($key,$icon_data->group_limit_list))-->checked="checked"<!--@end--> />{$val->title}</label> 
+            <!--@end-->
+            <a href="#group_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="group_limit_help" class="x_help-block" hidden>{$lang->group_limit_about}</p>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->description}</label>
+			<div class="x_controls">
+			<textarea name="content" id="content">{nl2br($icon_data->content)}</textarea>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->icon_file1}</label>
+			<div class="x_controls">
+			<input type="file" name="file1" value=""  />
+            <!--@if($icon_data->file1)-->
+            <p>
+                <img src="{$icon_data->file1}" title="{$icon_data->title}" alt="{$icon_data->title}" />
+                <label for="file1_del"><input type="checkbox" name="file1_del" id="file1_del" value="Y" /> {$lang->cmd_modify}</label>
+            </p>
+            <!--@end-->
+            <a href="#icon_file1_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="icon_file1_help" class="x_help-block" hidden>{sprintf($lang->image_format_about,$module_config->icon_width,$module_config->icon_height)}</p>
+			</div>
+		</div>
+    </section>
+    
+    <div class="x_clearfix btnArea">
+		
+		<div class="x_pull-right">
+        	<input type="submit" value="{$lang->cmd_registration}" class="x_btn x_btn-primary" />
+		</div>
+	</div>
+
+</form>
+<iframe name="hidden_iframe" frameborder="0" style="display:none"></iframe>
+
+<script type="text/javascript">
+(function($){
+    $(function(){
+        var option = { changeMonth: true, changeYear: true, gotoCurrent: false,yearRange:'-100:+10', onSelect:function(){
+
+            $(this).prev('input[type="hidden"]').val(this.value.replace(/-/g,""))}
+        };
+        $.extend(option,$.datepicker.regional['{$lang_type}']);
+        $(".inputDate").datepicker(option);
+		$(".dateRemover").click(function() {
+			$(this).parent().prevAll('input').val('');
+			return false;});
+    });
+})(jQuery);
+</script>

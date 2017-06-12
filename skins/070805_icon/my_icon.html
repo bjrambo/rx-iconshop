@@ -1,0 +1,104 @@
+<!--#include("_header.html")-->
+
+<div class="x">
+<!--// 테이블형 출력 -->
+<ul class="thumbnails">
+    <!--@if(!$icon_list)-->
+    <li>{$lang->null_myicon}</li>
+    <!--@end-->
+        {@
+            $count = 0;
+            $cell_index = 0;
+        }
+        <!--@foreach($icon_list as $key => $val)-->
+        
+        <li>
+        <div class="thumbnail">
+            <div class="media" >
+                <a href="#{$val->icon_srl}" role="button" data-toggle="modal" class="pull-left"><img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" class="img-polaroid media-object" /></a>
+                <div class="media-body" >
+                <a href="#{$val->icon_srl}" role="button" data-toggle="modal"><h5 class="media-heading">{$val->title}</h5></a>
+                
+                    <p class="content">{sprintf($lang->end_date_message,$val->end_date2)}</p>
+                    <p >
+                    <span class="icon_btn">
+                    <!--@if($val->is_selected!="Y")--><a onclick="iconSelected({$val->data_srl});">{$lang->is_selected}</a>
+                    <!--@else-->
+	               {$lang->icon_active}
+                    <!--@end-->
+                    </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div id="{$val->icon_srl}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="x_close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">{$lang->icon_sell}/{$lang->icon_delete}</h3>
+  </div>
+  <div class="modal-body">
+
+  <h3>{$val->title}</h3>
+
+
+                    <p style="color:#00F; font-size:14px;"><!--@if($val->is_selected!="Y")--><a onclick="iconSelected({$val->data_srl});">{$lang->is_selected}</a>
+                    <!--@else-->
+	               {$lang->icon_active}
+                    <!--@end--></p>
+
+	{sprintf($lang->end_date_message,$val->end_date2)}
+
+            <div style="clear:both; display:block;text-align:center">
+  <h4>Preview</h4>
+
+            <span style="background:url({$val->file1}) no-repeat left center; padding:10px 0 10px 22px ">{$logged_info->nick_name}</span>
+
+  </div>
+  
+       <div style="clear:both; display:block; text-align:center; padding:20px 0;">     
+한번 판매/삭제하신 상품은 취소가 불가합니다.
+
+</div>
+         
+    </div>
+    <div class="modal-footer">
+
+                    <!--@if($val->sell_limit == "Y")--><a onclick="iconSell({$val->data_srl});" class="x_btn x_btn-warning">{$lang->icon_sell}</a><!--@else-->{$lang->icon_sell}<!--@end-->
+                    <a onclick="iconDelete({$val->data_srl});" class=" x_btn x_btn-danger">{$lang->icon_delete}</a> <button class="x_btn" data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
+     </div>
+    
+  </div>
+  
+        </li>
+        {@
+            $count++;
+            $cell_index++;
+        }
+        
+        <!--@end-->
+</ul>
+
+<!-- 페이지 네비게이션 -->
+<div class="x_clearfix">
+<!-- 페이지 네비게이션 -->       
+<div class="x_pagination" >
+	<ul>
+		<li><a href="{getUrl('page','','module_srl','')}"class="direction">&laquo;</a></li>
+		<!--@while($page_no = $page_navigation->getNextPage())-->
+		<li class="active"|cond="$page == $page_no"><a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a></li>
+		<!--@end-->
+		<li><a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="direction">&raquo;</a></li>
+	</ul>
+</div>
+
+		
+  </div>
+</div>
+<script type="text/javascript">
+var confirm_isselected = "{$lang->confirm_isselected}";
+var confirm_sell = "{sprintf($lang->confirm_sell,$iconshop_config->sell_per."%")}";
+var confirm_delete = "{$lang->confirm_delete}";
+</script>
+<!--#include("_footer.html")-->

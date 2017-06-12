@@ -1,0 +1,21 @@
+<query id="getMemberIconBySelected" action="select">
+    <tables>
+        <table name="iconshop_member" alias="member" />
+        <table name="iconshop_admin" alias="admin" />
+    </tables>
+    <columns>
+        <column name="member.*" />
+        <column name="admin.title" />
+        <column name="admin.file1" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="admin.icon_srl" default="member.icon_srl" notnull="notnull" />
+        <group pipe="and">
+            <condition operation="equal" column="member.member_srl" var="member_srl" filter="number" />
+            <condition operation="equal" column="member.is_selected" var="is_selected" default="Y" pipe="and" />
+        </group>
+    </conditions>
+    <navigation>
+        <list_count var="list_count" default="1" />
+    </navigation>
+</query>

@@ -1,0 +1,40 @@
+#iconshop_layout { position:relative; width:100%; }
+#iconshop_header { width:100%; }
+
+/* Member Info */
+#iconshop_header .iconshop_member_info { text-align:right; font:normal 12px "돋움",Dotum; padding:5px 20px 5px 5px; }
+
+/* TabMenu */
+#iconshop_header .iconshop_tabmenu{ position:relative; *zoom:1;}
+#iconshop_header .iconshop_tabmenu ul{ position:relative; margin:0; padding:0; list-style:none; *zoom:1;}
+#iconshop_header .iconshop_tabmenu ul ul{ display:none; position:absolute; width:100%; top:31px; left:0; border:0; padding:25px 0 0 0; }
+#iconshop_header .iconshop_tabmenu ul:after{ content:""; display:block; clear:both;}
+#iconshop_header .iconshop_tabmenu li{ float:left; margin-right:-1px; margin-bottom:-1px; *zoom:1;}
+#iconshop_header .iconshop_tabmenu li a{ position:relative; float:left; padding:8px 19px 7px 19px; text-decoration:none; }
+#iconshop_header .iconshop_tabmenu li.search { float:right; margin-right:20px; *zoom:1;}
+#iconshop_header .iconshop_tabmenu li.active a{ font-weight:bold; letter-spacing:-1px; }
+#iconshop_header .iconshop_tabmenu li.active li{ float:none; margin:0 0 6px 0; padding:0 0 0 28px; background:url(../images/iconList.gif) no-repeat 15px center; }
+#iconshop_header .iconshop_tabmenu li.active li a{ padding:0; float:none; border:0; background:none; font-weight:normal; }
+#iconshop_header .iconshop_tabmenu li.active ul{ display:block; }
+#iconshop_header .iconshop_tabmenu li li a:hover,
+#iconshop_header .iconshop_tabmenu li li a:active,
+#iconshop_header .iconshop_tabmenu li li a:focus{ text-decoration:underline; }
+
+#iconshop_content { width:100%; margin:0; padding:10px 0; text-align:center; }
+#iconshop_footer { font:normal 12px "돋움",Dotum; padding-top:10px; text-align:center; }
+
+/* 상품리스트 */
+.boardList{ border:0; width:100%; overflow-x:hidden; }
+.boardList td{ border:0; padding:8px 6px 7px 6px; white-space:nowrap; }
+.icon_data { position:relative; }
+.icon_data .image { float:left; width:60px; height:70px; line-height:70px; text-align:center; }
+.icon_data .image:after { content: " "; margin-left: -0.6em; white-space: pre; }
+.icon_data .image img { vertical-align:middle; }
+.icon_data .info { float:left; margin:0; padding:0 0 0 10px; text-align:left !important; }
+.icon_data .info p { margin:0; font:normal 12px "돋움",Dotum; line-height:120%; vertical-align:top; }
+.icon_data .info .title { font-weight:bold; }
+.icon_data .info .bar { padding:2px; }
+.icon_data .info .btn a { cursor:pointer; text-decoration:none; }
+.icon_data .info .btn a:hover,
+.icon_data .info .btn a:active,
+.icon_data .info .btn a:focus{ text-decoration:underline;} 

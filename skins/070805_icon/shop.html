@@ -1,0 +1,183 @@
+<include target="_header.html" />
+<block cond="$is_logged">
+{@
+$oPointModel = getModel('point');
+$point = $oPointModel->getPoint($logged_info->member_srl);
+$oModuleModel = getModel('module');
+$config = $oModuleModel->getModuleConfig('point');
+$level = $oPointModel->getLevel($point, $config->level_step);
+$level_count = $level+1; $nextPoint = $config->level_step[$level_count];
+}
+</block>
+
+<div class="x">
+
+	<div class="x_clearfix">
+		<div class="x_pull-left">
+        해당 조건에 대해 <b style="color:#FF3333">{number_format($total_count)}</b> 개의 아이콘이 있습니다.
+		</div>
+
+
+		<form action="./" method="get" class="x_pull-right">
+		<input type="hidden" name="mid" value="{$mid}" />
+		<input type="hidden" name="act" value="{$act}" />
+
+        <span class="x_input-append">
+		<input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" style="width:100px" />
+
+        <button type="submit" class="x_btn x_btn-inverse">{$lang->cmd_search}</button>
+        </span>
+
+		</form>
+	</div>
+
+<!--// 테이블형 출력 -->
+<ul class="thumbnails">
+    <!--@if(!$icon_list)-->
+    <li>{$lang->null_shop}</li>
+    <!--@end-->
+        {@
+            $count = 0;
+            $cell_index = 0;
+        }
+
+        <!--@foreach($icon_list as $key => $val)-->
+
+        <li>
+        <div class="thumbnail">
+            <div class="media" >
+                <a href="#{$val->icon_srl}" role="button" data-toggle="modal" class="pull-left"><img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" class="img-polaroid media-object" /></a>
+                <div class="media-body" >
+                <a href="#{$val->icon_srl}" role="button" data-toggle="modal">
+                    <h5 class="media-heading">{$val->title} {$val->icon}</h5></a>
+
+
+                    	<!--@if($val->price2 == 0)-->
+                    	<font color="#FF3300">무료</font>
+                    	<!--@else-->
+                    	{$val->price2}
+                    	<!--@end-->
+                        / {sprintf("%s : %s",$lang->total_count,$val->total_count2)}
+                    	<br/>
+
+
+
+                    	{$lang->minute_limit} :
+                    	<!--@if($val->minute2 == 43200)-->
+                    	<font color="#FF3300">구입후 한달</font>
+                    	<!--@elseif($val->minute2 == 10080)-->
+                    	<font color="#3366CC">구입후 일주일</font>
+                    	<!--@else-->
+                    	{$val->minute2}
+                    	<!--@end-->
+
+
+                </div>
+            </div>
+
+		</div>
+
+
+        <div id="{$val->icon_srl}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header" >
+    <button type="button" class="x_close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">{$lang->icon_buy}/{$lang->icon_send}</h3>
+  </div>
+  <div class="modal-body">
+
+  <h3>{$val->title}</h3>
+
+
+                    <p style="color:#00F; font-size:14px;">{$lang->icon_price} : <!--@if($val->price2 == 0)-->
+                    	<font color="#FF3300">무료</font>
+                    	<!--@else-->
+                    	{$val->price2}
+                    	<!--@end--></p>
+
+	<table style="width:250px; margin:0 auto; text-align:left; border-bottom:1px solid #ccc" class="popicon">
+    <Tr>
+            <Td>{sprintf("%s : %s",$lang->total_count,$val->total_count2)}</Td>
+
+                        <Td align="right">{$lang->minute_limit} :
+                    	<!--@if($val->minute2 == 43200)-->
+                    	<font color="#FF3300">구입후 한달</font>
+                    	<!--@elseif($val->minute2 == 10080)-->
+                    	<font color="#3366CC">구입후 일주일</font>
+                    	<!--@else-->
+                    	{$val->minute2}
+                    	<!--@end-->
+
+						</Td>
+                        </Tr>
+                        </table>
+
+
+            <div style="clear:both; display:block;text-align:center">
+  <h4>Preview</h4>
+
+            <span style="background:url({$val->file1}) no-repeat left center; padding:10px 0 10px 22px ">{$logged_info->nick_name}</span>
+
+  </div>
+
+       <div style="clear:both; display:block; text-align:center; padding:20px 0;">
+  구매하실 경우, 선택한 아이콘이 맞는지 꼭 확인하세요.<br />
+한번 구매하신 상품은 취소가 불가합니다.
+
+</div>
+
+
+	<table style="width:250px; margin:0 auto; text-align:left" class="popicon">
+    <tr>
+  	 <td>구매포인트</td> <td align="right">{$val->price2}</td>
+     </tr>
+     <tr>
+     <td>보유포인트</td> <td align="right">{$point}point</td>
+     </tr>
+     {@ $ipp = $val->price2}
+	 {@ $pp = $point - $ipp}
+     <tr style=" font-size:16px; border-top:1px solid #000">
+     <td style="padding:20px 0;">남는포인트</td> <td align="right" style="padding:20px 0;"><font color="#FF0000">{$pp}point
+     <!--@if($pp<0)--><br/>{$lang->point_limit_error}<!--@end--></font>
+     </td>
+     </tr>
+     </table>
+
+    </div>
+    <div class="modal-footer">
+
+                    <!--@if($val->buy_limit == "Y")--><a onclick="iconBuy({$val->icon_srl});" class="x_btn x_btn-primary">{$lang->icon_buy}</a><!--@else--><a href="#" class="x_btn x_btn-primary disabled">{$lang->icon_buy}</a><!--@end-->
+                    <!--@if($val->send_limit == "Y")--><a href="{getUrl('module','iconshop','act','dispIconshopIconSend','icon_srl',$val->icon_srl)}" onclick="popopen(this.href,'iconSend');return false;" class="x_btn x_btn-success">{$lang->icon_send}</a><!--@else--><a href="#" class="x_btn x_btn-success disabled">{$lang->icon_send}</a><!--@end-->
+ <button class="x_btn" data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
+     </div>
+
+  </div>
+
+        </li>
+        {@
+            $count++;
+            $cell_index++;
+        }
+
+        <!--@end-->
+    </ul>
+
+<div class="x_clearfix">
+<!-- 페이지 네비게이션 -->
+<div class="x_pagination" >
+	<ul>
+		<li><a href="{getUrl('page','','module_srl','')}"class="direction">&laquo;</a></li>
+		<!--@while($page_no = $page_navigation->getNextPage())-->
+		<li class="x_active"|cond="$page == $page_no"><a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a></li>
+		<!--@end-->
+		<li><a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="direction">&raquo;</a></li>
+	</ul>
+</div>
+
+
+  </div>
+</div>
+<script type="text/javascript">
+var confirm_buy = "{$lang->confirm_buy}";
+var confirm_icon_change = "{$lang->confirm_icon_change}";
+</script>
+<include target="_footer.html" />

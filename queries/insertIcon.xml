@@ -1,0 +1,25 @@
+<query id="insertIcon" action="insert">
+    <tables>
+        <table name="iconshop_admin" />
+    </tables>
+    <columns>
+        <column name="icon_srl" var="icon_srl" filter="number" notnull="notnull" />
+        <column name="title" var="title" notnull="notnull" />
+        <column name="total_count" var="total_count" default="0" filter="number" />
+        <column name="price" var="price" default="0" filter="number" />
+        <column name="buy_limit" var="buy_limit" default="Y" />
+        <column name="send_limit" var="send_limit" default="Y" />
+        <column name="sell_limit" var="sell_limit" default="Y" />
+        <column name="point_limit" var="point_limit" default="Y" />
+        <column name="minute_limit" var="minute_limit" default="N" />
+        <column name="minute" var="minute" default="0" filter="number" />
+        <column name="level_limit" var="level_limit" default="0" filter="number" />
+        <column name="group_limit" var="group_limit" default="" />
+        <column name="event_limit" var="event_limit" default="N" />
+        <column name="event_start" var="event_start" filter="number" />
+        <column name="event_end" var="event_end" filter="number" />
+        <column name="content" var="content" />
+        <column name="file1" var="file1" notnull="notnull" />
+        <column name="regdate" default="curdate()" />
+    </columns>
+</query>

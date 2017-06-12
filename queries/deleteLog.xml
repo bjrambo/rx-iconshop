@@ -1,0 +1,13 @@
+<query id="deleteMemberIcon" action="delete">
+    <tables>
+        <table name="iconshop_log" />
+    </tables>
+    <conditions>
+        <condition operation="equal" column="data_srl" var="data_srl" filter="number" />
+        <condition operation="equal" column="icon_srl" var="icon_srl" filter="number" pipe="and" />
+        <condition operation="equal" column="category_srl" var="category_srl" filter="number" pipe="and" />
+        <condition operation="equal" column="sender_srl" var="sender_srl" filter="number" pipe="and" />
+        <condition operation="equal" column="receive_srl" var="receive_srl" filter="number" pipe="and" />
+        <condition operation="less" column="regdate" var="regdate_less" pipe="and" />
+    </conditions>
+</query>

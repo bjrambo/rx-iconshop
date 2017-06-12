@@ -1,0 +1,29 @@
+<!--%import("css/default.css")-->
+<!--%import("css/pagination.css")-->
+
+    <!--%import("css/black.css")-->
+
+<!--%import("lang")-->
+
+<!--@if($iconshop_info->header_text)-->{nl2br($iconshop_info->header_text)}<!--@end-->
+<div id="iconshop_layout">
+    <div id="iconshop_header">
+        <!--@if($iconshop_config->member_info_print == "Y")--><div class="iconshop_member_info">{sprintf($lang->logged_message,$logged_info->nick_name,number_format($logged_info->point),$point_name,$logged_info->point_level)}</div><!--@end-->
+        <div class="iconshop_tabmenu">
+            <ul>
+                <!--@foreach($iconshop_main_menu as $key => $val)-->
+                <li<!--@if($menu == $key)--> class="active"<!--@end-->><a href="{getUrl('act',$val['act'],'page',1,'search_keyword','')}">{$val['title']}</a></li>
+                <!--@end-->
+                <li class="search">
+                    <!-- 검색 -->
+                    <form action="./" method="get" class="iconshopSearch">
+                        <input type="hidden" name="mid" value="{$mid}" />
+                        <input type="hidden" name="act" value="{$act}" />
+                        <input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="inputTypeText w200" />
+                        <span class="button"><input type="submit" value="{$lang->cmd_search}" accesskey="s" /></span>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="iconshop_content">

@@ -1,0 +1,37 @@
+<query id="getMemberIconListWithAdmin" action="select">
+    <tables>
+        <table name="iconshop_member" alias="member" />
+        <table name="iconshop_admin" alias="admin" />
+    </tables>
+    <columns>
+        <column name="member.*" />
+        <column name="admin.title" />
+        <column name="admin.sell_limit" />
+        <column name="admin.file1" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="admin.icon_srl" default="member.icon_srl" notnull="notnull" />
+        <group pipe="and">
+            <condition operation="equal" column="member.data_srl" var="s_data_srl" filter="number" />
+            <condition operation="equal" column="member.icon_srl" var="s_icon_srl" filter="number" pipe="and" />
+            <condition operation="equal" column="member.start_date" var="s_start_date" pipe="and" />
+            <condition operation="less" column="member.start_date" var="s_start_date_less" pipe="and" />
+            <condition operation="more" column="member.start_date" var="s_start_date_more" pipe="and" />
+            <condition operation="equal" column="member.end_date" var="s_end_date" pipe="and" />
+            <condition operation="less" column="member.end_date" var="s_end_date_less" pipe="and" />
+            <condition operation="more" column="member.end_date" var="s_end_date_more" pipe="and" />
+            <condition operation="like" column="admin.title" var="s_title" pipe="and" />
+        </group>
+        <group pipe="and">
+            <condition operation="equal" column="member.member_srl" var="s_member_srl" filter="number" />
+            <condition operation="like" column="member.user_id" var="s_user_id" pipe="or" />
+            <condition operation="like" column="member.nick_name" var="s_nick_name" pipe="or" />
+        </group>
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="member.data_srl" order="sort_order" />
+        <list_count var="list_count" default="20" />
+        <page_count var="page_count" default="10" />
+        <page var="page" default="1" />
+    </navigation>
+</query>

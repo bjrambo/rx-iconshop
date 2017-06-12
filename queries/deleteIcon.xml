@@ -1,0 +1,8 @@
+<query id="deleteIcon" action="delete">
+    <tables>
+        <table name="iconshop_admin" />
+    </tables>
+    <conditions>
+        <condition operation="equal" column="icon_srl" var="icon_srl" notnull="notnull" filter="number" />
+    </conditions>
+</query>

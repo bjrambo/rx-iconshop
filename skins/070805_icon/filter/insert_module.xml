@@ -1,0 +1,19 @@
+<filter name="insert_module" module="iconshop" act="procIconshopAdminModuleInsert" confirm_msg_code="confirm_update">
+    <form>
+        <node target="browser_title" required="true" maxlength="250" />
+    </form>
+    <parameter>
+        <param name="module_srl" target="module_srl" />
+        <param name="module_category_srl" target="module_category_srl" />
+        <param name="layout_srl" target="layout_srl" />
+        <param name="skin" target="skin" />
+        <param name="browser_title" target="browser_title" />
+        <param name="description" target="description" />
+        <param name="header_text" target="header_text" />
+        <param name="footer_text" target="footer_text" />
+    </parameter>
+    <response>
+        <tag name="error" />
+        <tag name="message" />
+    </response>
+</filter>

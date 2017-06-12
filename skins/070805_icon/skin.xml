@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin version="0.2">
+    <title xml:lang="ko">소시랑</title>
+    <description xml:lang="ko">
+        아이콘샵의 소시랑스킨 입니다.
+    </description>
+    <version>0.1</version>
+    <date>2012-12-02</date>
+
+    <author email_address="master@sosirang.com" link="http://sosirang.com">
+        <name xml:lang="ko">카이네드</name>
+    </author>
+
+    <license>GPL v2</license>
+</skin>
+

@@ -1,0 +1,128 @@
+
+<!--#include("./header.html")-->
+<div class="x_page-header">
+	<h1>{$lang->cmd_addition_setup}</h1>
+</div>
+
+<form id="fo_insert" action="./" method="post" enctype="multipart/form-data" target="hidden_iframe" class="x_form-horizontal">
+<input type="hidden" name="module" value="iconshop" />
+<input type="hidden" name="act" value="procIconshopAdminConfig" />
+	<section class="section">
+
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->list_count}</label>
+			<div class="x_controls">
+				<input type="text" name="list_count" value="{$iconshop_config->list_count}" class="inputTypeText w60" />
+				<a href="#browser_title_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="browser_title_help" class="x_help-block" hidden>{$lang->list_count_about}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->cols_list_count}</label>
+			<div class="x_controls">
+				<input type="text" name="cols_list_count" value="{$iconshop_config->cols_list_count}" class="inputTypeText w60" />
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->member_info_print}</label>
+			<div class="x_controls">
+				 <select name="member_info_print">
+			<!--@foreach($lang->iconshop_checked_list as $key=>$val)-->
+			<option value="{$val}" <!--@if($val==$iconshop_config->member_info_print)-->selected="selected"<!--@end-->>{$val}</option>
+			<!--@end-->
+			</select>
+			</div>
+		</div> 
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->icon_size}</label>
+			<div class="x_controls">
+				 {$lang->icon_max_width} : <input type="text" name="icon_width" maxlength="3" value="{$iconshop_config->icon_width}" class="inputTypeText w80" />px<br />
+			{$lang->icon_max_height} : <input type="text" name="icon_height" maxlength="3" value="{$iconshop_config->icon_height}" class="inputTypeText w80" />px
+			<a href="#icon_max_width_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="icon_max_width_help" class="x_help-block" hidden>{$lang->icon_size_about}</p>
+			</div>
+		</div> 
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->send_fee}</label>
+			<div class="x_controls">
+				 <input type="text" name="send_fee" value="{$iconshop_config->send_fee}" maxlength="3" class="inputTypeText w40" />%
+			<a href="#send_fee_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="send_fee_help" class="x_help-block" hidden>{$lang->send_fee_about}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->sell_per}</label>
+			<div class="x_controls">
+				 <input type="text" name="sell_per" value="{$iconshop_config->sell_per}" maxlength="3" class="inputTypeText w40" />%
+			<a href="#sell_per_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="sell_per_help" class="x_help-block" hidden>{$lang->sell_per_about}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->new_hour}</label>
+			<div class="x_controls">
+				 <input type="text" name="new_hour" value="{$iconshop_config->new_hour}" class="inputTypeText w40" />{$lang->unit_hour}
+			<a href="#new_hour_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="new_hour_help" class="x_help-block" hidden>{$lang->new_hour_about}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->member_max_count}</label>
+			<div class="x_controls">
+				 <input type="text" name="member_max_count" value="{$iconshop_config->member_max_count}" class="inputTypeText w60" />
+			<a href="#member_max_count_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="member_max_count_help" class="x_help-block" hidden>{$lang->member_max_count_about}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->log_save_day}</label>
+			<div class="x_controls">
+				 <input type="text" name="log_save_day" value="{$iconshop_config->log_save_day}" class="inputTypeText w60" />{$lang->unit_day}
+			<a href="#log_save_day_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="log_save_day_help" class="x_help-block" hidden>{$lang->log_save_day_about}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->item_delete_event}</label>
+			<div class="x_controls">
+				  <select name="item_delete_event">
+			<!--@foreach($lang->iconshop_checked_list as $key=>$val)-->
+			<option value="{$val}" <!--@if($val==$iconshop_config->item_delete_event)-->selected="selected"<!--@end-->>{$val}</option>
+			<!--@end-->
+			</select>
+			<a href="#item_delete_event_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="item_delete_event_help" class="x_help-block" hidden>{$lang->item_delete_event_about}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->sender}</label>
+			<div class="x_controls">
+				<input type="text" name="sender_srl" id="sender_srl" value="{$iconshop_config->sender_srl}" readonly="readonly" />
+
+				<a href="{getUrl('module','iconshop','act','dispIconshopMemberSearch','target_id','sender_srl')}" onclick="popopen(this.href,'iconSearch');return false;" class="x_btn x_btn-inverse" >{$lang->cmd_search}</a>
+
+				<span class="button"><input type="button" value="{$lang->cmd_delete}" class="x_btn" /></span>
+
+				<a href="#sender_help_2" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="sender_help_2" class="x_help-block" hidden>{$lang->sender_config_about} {$iconshop_config->item_delete_message}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">로그인</label>
+			<div class="x_controls">
+				  <input type="text" name="item_delete_title" value="{$iconshop_config->item_delete_title}" class="inputTypeText w300" /><br /><p></p>
+					<textarea name="item_delete_message" class="inputTypeTextArea w300" id="item_delete_message"></textarea>
+				<p></p><p>{$lang->iconshop_replace_about}</p>
+			</div>
+		</div>
+		
+	</section>   
+	
+	<div class="x_clearfix btnArea">
+		
+		<div class="x_pull-right">
+			<button class="x_btn x_btn-primary" type="submit">{$lang->cmd_registration}</button>
+		</div>
+	</div>
+
+</form>

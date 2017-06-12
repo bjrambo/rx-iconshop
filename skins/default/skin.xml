@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin version="0.2">
+    <title xml:lang="ko">Default Skin</title>
+    <description xml:lang="ko">
+        아이콘샵의 기본스킨 입니다.
+    </description>
+    <version>0.1</version>
+    <date>2010-07-07</date>
+
+    <author email_address="admin@barch.kr" link="http://iconshop.xpressengine.net">
+        <name xml:lang="ko">러키군</name>
+    </author>
+    <author link="http://iconshop.xpressengine.net">
+        <name xml:lang="ko">은예</name>
+    </author>
+    <license>GPL v2</license>
+
+    <colorset>
+        <color name="white" src="screenshot/white.png">
+            <title xml:lang="ko">하얀색(기본)</title>
+        </color>
+        <color name="black" src="screenshot/black.png">
+            <title xml:lang="ko">검은색</title>
+        </color>
+    </colorset>
+</skin>
+

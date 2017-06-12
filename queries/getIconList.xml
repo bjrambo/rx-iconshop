@@ -1,0 +1,36 @@
+<query id="getIconList" action="select">
+    <tables>
+        <table name="iconshop_admin" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="buy_limit" var="buy_limit" />
+        <condition operation="equal" column="send_limit" var="send_limit" pipe="and" />
+        <condition operation="equal" column="sell_limit" var="sell_limit" pipe="and" />
+        <condition operation="equal" column="minute_limit" var="minute_limit" pipe="and" />
+        <condition operation="equal" column="event_limit" var="event_limit" pipe="and" />
+        <group pipe="and">
+            <condition operation="equal" column="icon_srl" var="s_icon_srl" />
+            <condition operation="like" column="title" var="s_title" />
+            <condition operation="equal" column="total_count" var="s_total_count" pipe="or" />
+            <condition operation="less" column="total_count" var="s_total_count_less" pipe="or" />
+            <condition operation="more" column="total_count" var="s_total_count_more" pipe="or" />
+            <condition operation="equal" column="price" var="s_price" pipe="or" />
+            <condition operation="less" column="price" var="s_price_less" pipe="or" />
+            <condition operation="more" column="price" var="s_price_more" pipe="or" />
+            <condition operation="equal" column="minute" var="s_minute" pipe="or" />
+            <condition operation="less" column="minute" var="s_minute_less" pipe="or" />
+            <condition operation="more" column="minute" var="s_minute_more" pipe="or" />
+            <condition operation="equal" column="level_limit" var="s_level_limit" pipe="or" />
+            <condition operation="like" column="content" var="s_content" pipe="or" />
+        </group>
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="icon_srl" order="sort_order" />
+        <list_count var="list_count" default="20" />
+        <page_count var="page_count" default="10" />
+        <page var="page" default="1" />
+    </navigation>
+</query>

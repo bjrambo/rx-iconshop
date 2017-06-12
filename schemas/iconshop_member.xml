@@ -1,0 +1,12 @@
+<table name="iconshop_member">
+    <column name="data_srl" type="number" size="11" notnull="notnull" index="idx_data_srl" />
+    <column name="icon_srl" type="number" size="11" notnull="notnull" index="idx_icon_srl" />
+    <column name="member_srl" type="number" size="11" notnull="notnull" index="idx_member_srl" />
+    <column name="user_id" type="varchar" size="80" notnull="notnull" index="idx_user_id" />
+    <column name="nick_name" type="varchar" size="40" notnull="notnull" index="idx_nick_name" />
+    <column name="is_selected" type="char" size="1" default="N" notnull="notnull" index="idx_is_selected" />
+    <column name="minute_limit" type="char" size="1" default="N" notnull="notnull" index="idx_minute_limit" />
+    <column name="start_date" type="date" index="idx_start_date" />
+    <column name="end_date" type="date" index="idx_end_date" />
+    <column name="ipaddress" type="varchar" size="128" notnull="notnull" index="idx_ipaddress" />
+</table>

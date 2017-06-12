@@ -1,0 +1,29 @@
+<load target="css/default.css" />
+<load target="css/admin.bootstrap.css" />
+<load target="icon.js" />
+
+<!--%import("lang")-->
+
+<!--@if($iconshop_info->header_text)-->{nl2br($iconshop_info->header_text)}<!--@end-->
+<div id="iconshop_layout">
+    <div id="iconshop_header">
+        <!--@if($iconshop_config->member_info_print == "Y")--><div class="iconshop_member_info">{sprintf($lang->logged_message,$logged_info->nick_name,number_format($logged_info->point),$point_name,$logged_info->point_level)}</div><!--@end-->
+        
+	<div class="x" style="position:relative">
+		<ul class="x_nav x_nav-tabs" >
+        	<!--@foreach($iconshop_main_menu as $key => $val)-->
+			<li class="x_active"|cond="$menu == $key" style="position:relative"><a href="{getUrl('act',$val['act'],'page',1,'search_keyword','')}">{$val['title']}</a>
+			</li>
+            <!--@end-->
+            <li cond="$grant->manager">
+                <a href="{getUrl('','module','admin','act','dispIconshopAdminConfig')}" onclick="window.open(this.href);return false;" >{$lang->cmd_setup}</a>
+            </li>
+		</ul>
+        
+        
+
+	</div>
+
+         
+    </div>    
+    <div id="iconshop_content">

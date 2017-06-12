@@ -1,0 +1,153 @@
+<!-- 설명 -->
+<!--#include("header.html")-->
+
+<div class="x_page-header">
+	<h1>{$lang->iconList}</h1>
+</div>
+
+<!-- 검색 -->
+<form action="./" method="get" class="search center x_input-append">
+<input type="hidden" name="module" value="{$module}" />
+<input type="hidden" name="act" value="{$act}" />
+
+    <fieldset>
+
+        <select name="buy_limit">
+            <option value="" <!--@if(!in_array($buy_limit,$lang->iconshop_checked_list))-->selected="selected"<!--@end-->>{$lang->buy_limit}</option>
+            <!--@foreach($lang->iconshop_checked_list as $key => $val)-->
+            <option value="{$val}" <!--@if($buy_limit == $val)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+        </select>
+        <select name="send_limit">
+            <option value="" <!--@if(!in_array($send_limit,$lang->iconshop_checked_list))-->selected="selected"<!--@end-->>{$lang->send_limit}</option>
+            <!--@foreach($lang->iconshop_checked_list as $key => $val)-->
+            <option value="{$val}" <!--@if($send_limit == $val)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+        </select>
+        <select name="sell_limit">
+            <option value="" <!--@if(!in_array($sell_limit,$lang->iconshop_checked_list))-->selected="selected"<!--@end-->>{$lang->sell_limit}</option>
+            <!--@foreach($lang->iconshop_checked_list as $key => $val)-->
+            <option value="{$val}" <!--@if($sell_limit == $val)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+        </select>
+        <select name="event_limit">
+            <option value="" <!--@if(!in_array($event_limit,$lang->iconshop_checked_list))-->selected="selected"<!--@end-->>{$lang->event_limit}</option>
+            <!--@foreach($lang->iconshop_checked_list as $key => $val)-->
+            <option value="{$val}" <!--@if($event_limit == $val)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+        </select>
+        <select name="minute_limit">
+            <option value="" <!--@if(!in_array($minute_limit,$lang->iconshop_checked_list))-->selected="selected"<!--@end-->>{$lang->minute_limit}</option>
+            <!--@foreach($lang->iconshop_checked_list as $key => $val)-->
+            <option value="{$val}" <!--@if($minute_limit == $val)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+        </select>
+        <select name="search_target">
+            <option value="">{$lang->search_target}</option>
+            <!--@foreach($lang->iconshop_search_target as $key => $val)-->
+            <option value="{$key}" <!--@if($search_target==$key)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+        </select>
+        <input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="inputTypeText" />
+        <input type="submit" value="{$lang->cmd_search}" class="x_btn x_btn-inverse" />
+        <a href="#mm" onclick="location.href='{getUrl('','module',$module,'act',$act)}';return false;" class="x_btn">{$lang->cmd_cancel}</a>
+    </fieldset>
+</form>
+
+<!-- 목록 -->
+<form method="get" action="./" id="icon_fo">
+    <table cellspacing="0" class="x_table x_table-striped x_table-hover">
+    <caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
+    <thead>
+        <tr>
+            <th scope="col" class="nowr"><div>{$lang->no}</div></th>
+            <th scope="col" class="nowr"><div><input type="checkbox" onclick="XE.checkboxToggleAll(); return false;"/></div></th>
+            <th scope="col" class="nowr"><div>{$lang->icon_file1}</div></th>
+            <th scope="col" class="nowr"><div>{$lang->icon_title}</div></th>
+            <th scope="col" class="nowr"><div>{$lang->icon_total_count}</div></th>
+            <th scope="col" class="nowr"><div>{$lang->icon_price}</div></th>
+            <th scope="col" class="nowr"><div>{$lang->buy_limit}</div></th>
+            <th scope="col" class="nowr"><div>{$lang->send_limit}</div></th>
+            <th scope="col" class="nowr"><div>{$lang->sell_limit}</div></th>
+            <th scope="col" class="nowr"><div>{$lang->event_limit}</div></th>
+            <th scope="col" class="nowr"><div>{$lang->minute_limit}</div></th>
+            <th scope="col"><div>&nbsp;</div></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--@foreach($icon_list as $no => $val)-->
+        <!--@if($val->group_limit)-->{@ $val->group_limit = implode(', ', $val->group_limit)}<!--@end-->
+        <tr class="row{$cycle_idx}">
+            <td class="nowr">{$val->icon_srl}</td>
+            <td class="nowr"><input type="checkbox" name="cart" value="{$val->icon_srl}"/></td>
+            <td class="nowr"><img src="{$val->file1}" alt="{htmlspecialchars($val->title)}" title="{htmlspecialchars($val->title)}" /></td>
+            <td class="nowr"><a href="{getUrl('act','dispIconshopAdminIconInsert','icon_srl',$val->icon_srl)}">{htmlspecialchars($val->title)}</a></td>
+            <td class="nowr"><!--@if($val->total_count == -1)-->{$lang->count_infinite}<!--@else-->{number_format($val->total_count)}{$lang->unit_count}<!--@end--></td>
+            <td class="nowr">{number_format($val->price)}</td>
+            <td class="nowr">{$val->buy_limit}</td>
+            <td class="nowr">{$val->send_limit}</td>
+            <td class="nowr">{$val->sell_limit}</td>
+            <td class="nowr"><!--@if($val->event_limit == "Y")--><!--@if($val->event_start)-->{zdate($val->event_start,'Y-m-d')} <!--@end-->~<!--@if($val->event_end)--> {zdate($val->event_end,'Y-m-d')}<!--@end--><!--@else-->{$val->event_limit}
+            <!--@end-->
+            </td>
+            <td class="nowr"><!--@if($val->minute_limit == "Y")-->{$val->minute}{$lang->unit_min}<!--@else-->{$val->minute_limit}<!--@end--></td>
+            <td>
+                <a href="{getUrl('act','dispIconshopAdminIconInsert','icon_srl',$val->icon_srl)}" title="{$lang->cmd_modify}" class="buttonSet buttonSetting"><span>{$lang->cmd_modify}</span></a>
+                <a href="{getUrl('act','dispIconshopAdminMemberIconList','search_target','s_icon_srl','search_keyword',$val->icon_srl)}" title="{$lang->iconTrace}" class="buttonSet buttonLeft"><span>{$lang->iconTrace}</span></a>
+                <a href="{getUrl('act','dispIconshopAdminLogList','search_target','s_icon_srl','search_keyword',$val->icon_srl)}" title="{$lang->logTrace}" class="buttonSet buttonRight"><span>{$lang->logTrace}</span></a>
+            </td>
+        </tr>
+        <!--@end-->
+    </tbody>
+    </table>
+    
+    <div class="x_clearfix">
+		<div class="x_btn-group x_pull-right">
+			<a href="#manage" onclick="doDeleteIcons(); return false;" class="x_btn modalAnchor">{$lang->cmd_delete}</a>
+		</div>
+	</div>
+
+</form>
+
+<form action="./" class="x_pagination x_pull-left" style="margin:-36px 0 0 0">
+	<input type="hidden" name="error_return_url" value="" />
+	<input type="hidden" name="module" value="{$module}" />
+	<input type="hidden" name="act" value="{$act}" />
+	<input cond="$search_keyword" type="hidden" name="search_keyword" value="{$search_keyword}" />
+	<input cond="$search_target" type="hidden" name="search_target" value="{$search_target}" />
+	<ul>
+		<li class="x_disabled"|cond="!$page || $page == 1"><a href="{getUrl('page', '')}">&laquo; {$lang->first_page}</a></li>
+		<block cond="$page_navigation->first_page != 1 && $page_navigation->first_page + $page_navigation->page_count > $page_navigation->last_page - 1 && $page_navigation->page_count != $page_navigation->total_page">
+		{@$isGoTo = true}
+		<li>
+			<a href="#goTo" data-toggle title="{$lang->cmd_go_to_page}">&hellip;</a>
+			<span cond="$isGoTo" id="goTo" class="x_input-append">
+				<input type="number" min="1" max="{$page_navigation->last_page}" required name="page" title="{$lang->cmd_go_to_page}" />
+				<button type="submit" class="x_add-on">Go</button>
+			</span>
+		</li>
+		</block>
+
+		<!--@while($page_no = $page_navigation->getNextPage())-->
+		{@$last_page = $page_no}
+		<li class="x_active"|cond="$page_no == $page"><a  href="{getUrl('page', $page_no)}">{$page_no}</a></li>
+		<!--@end-->
+
+		<block cond="$last_page != $page_navigation->last_page && $last_page + 1 != $page_navigation->last_page">
+		{@$isGoTo = true}
+		<li>
+			<a href="#goTo" data-toggle title="{$lang->cmd_go_to_page}">&hellip;</a>
+			<span cond="$isGoTo" id="goTo" class="x_input-append">
+				<input type="number" min="1" max="{$page_navigation->last_page}" required name="page" title="{$lang->cmd_go_to_page}" />
+				<button type="submit" class="x_add-on">Go</button>
+			</span>
+		</li>
+		</block>
+		<li class="x_disabled"|cond="$page == $page_navigation->last_page"><a href="{getUrl('page', $page_navigation->last_page)}" title="{$page_navigation->last_page}">{$lang->last_page} &raquo;</a></li>
+	</ul>
+	</form>
+    
+<script type="text/javascript">
+    var null_message = "{$lang->msg_cart_is_null}";
+    var delete_message = "{$lang->confirm_delete}";
+</script>

@@ -1,0 +1,12 @@
+<query id="getIcon" action="select">
+    <tables>
+        <table name="iconshop_admin" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="icon_srl" var="icon_srl" filter="number" />
+        <condition operation="equal" column="title" var="title" pipe="or" />
+    </conditions>
+</query>

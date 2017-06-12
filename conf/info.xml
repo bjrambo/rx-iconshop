@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+    <title xml:lang="ko">아이콘샵</title>
+    <description xml:lang="ko">포인트를 이용한 아이콘 구입 모듈</description>
+    <version>0.4</version>
+    <date>2010-06-11</date>
+    <category>service</category>
+
+    <author email_address="admin@barch.kr" link="http://iconshop.xpressengine.net">
+        <name xml:lang="ko">러키군</name>
+    </author>
+</module>

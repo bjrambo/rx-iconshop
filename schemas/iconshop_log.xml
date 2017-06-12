@@ -1,0 +1,11 @@
+<table name="iconshop_log">
+    <column name="data_srl" type="number" size="11" notnull="notnull" index="idx_data_srl" />
+    <column name="icon_srl" type="number" size="11" notnull="notnull" index="idx_icon_srl" />
+    <column name="sender_srl" type="number" size="11" notnull="notnull" index="idx_sender_srl" />
+    <column name="receive_srl" type="number" size="11" notnull="notnull" index="idx_receive_srl" />
+    <column name="category_srl" type="number" size="1" notnull="notnull" default="1" index="idx_category_srl" />
+    <column name="point" type="number" size="11" default="0" index="idx_point" />
+    <column name="content" type="text" />
+    <column name="regdate" type="date" />
+    <column name="ipaddress" type="varchar" size="128" notnull="notnull" index="idx_ipaddress" />
+</table>

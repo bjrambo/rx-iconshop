@@ -1,0 +1,196 @@
+<!--#include("./header.html")-->
+<!--%import("filter/insert_membericon.xml")-->
+<!--@if($member_icon_data->icon_srl)-->
+
+<div class="x_page-header">
+	<h1>{$lang->memberIconModify}</h1>
+</div>
+
+<form id="fo_insert" action="./" method="get" onsubmit="return procFilter(this, insert_membericon)" class="x_form-horizontal">
+    <input type="hidden" name="data_srl" value="{$member_icon_data->data_srl}" />
+    <input type="hidden" name="page" value="{Context::get('page')}" />
+    
+    <section class="section">
+    	<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->icon_srl}</label>
+			<div class="x_controls">
+				<img src="{$icon_data->file1}" title="{$icon_data->title}" alt="{$icon_data->title}" />
+            <input type="text" name="icon_srl" id="icon_srl" value="{$member_icon_data->icon_srl}" readonly="readonly" />
+            <a href="{getUrl('module','iconshop','act','dispIconshopAdminIconSearch','target_id','icon_srl')}" onclick="popopen(this.href,'iconSearch');return false;" class="button green"><span>{$lang->cmd_search}</span></a>
+			</div>
+		</div>
+        
+       	<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->member_srl}</label>
+			<div class="x_controls">
+            <input type="text" name="member_srl" id="member_srl" value="{$member_icon_data->member_srl}" readonly="readonly" />
+            <a href="{getUrl('module','iconshop','act','dispIconshopMemberSearch','target_id','member_srl')}" onclick="popopen(this.href,'memberSearch');return false;" class="button green"><span>{$lang->cmd_search}</span></a>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->is_selected}</label>
+			<div class="x_controls">
+            <select name="is_selected">
+            <!--@foreach($lang->iconshop_checked_list2 as $key=>$val)-->
+            <option value="{$val}" <!--@if($val==$member_icon_data->is_selected)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+            </select>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->minute_limit}</label>
+			<div class="x_controls">
+            <select name="minute_limit">
+            <!--@foreach($lang->iconshop_checked_list2 as $key=>$val)-->
+            <option value="{$val}" <!--@if($val==$member_icon_data->minute_limit)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+            </select>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->end_date}</label>
+			<div class="x_controls">
+            <input type="hidden" name="end_date1" value="{zDate($member_icon_data->end_date,'Ymd')}" />
+                <input type="text" value="{zDate($member_icon_data->end_date,'Y-m-d')}" readonly="readonly" class="inputDate inputTypeText w80" />
+                <span class="button"><input type="button" value="{$lang->cmd_delete}" class="dateRemover" /></span>
+                <select name="end_date2">
+                    <!--@for($i=0;$i<=23;$i++)-->
+                    {@ $i = str_pad($i, 2, '0', STR_PAD_LEFT); }
+                    <option value='{$i}'<!--@if(zDate($member_icon_data->end_date,'H') ==$i)--> selected="selected"<!--@end-->>{$i}{$lang->unit_hour}</option>
+                    <!--@end-->
+                </select>
+                :
+                <select name="end_date3">
+                    <!--@for($i=0;$i<=59;$i++)-->
+                    {@ $i = str_pad($i, 2, '0', STR_PAD_LEFT); }
+                    <option value='{$i}'<!--@if(zDate($member_icon_data->end_date,'i') ==$i)--> selected="selected"<!--@end-->>{$i}{$lang->unit_min}</option>
+                    <!--@end-->
+                </select>
+                :
+                <select name="end_date4">
+                    <!--@for($i=0;$i<=59;$i++)-->
+                    {@ $i = str_pad($i, 2, '0', STR_PAD_LEFT); }
+                    <option value='{$i}'<!--@if(zDate($member_icon_data->end_date,'H') ==$i)--> selected="selected"<!--@end-->>{$i}{$lang->unit_sec}</option>
+                    <!--@end-->
+                </select>
+                <a href="#end_date_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="end_date_help" class="x_help-block" hidden>{$lang->end_date_about}</p>
+			</div>
+		</div>
+       
+    </section>
+    
+    <div class="x_clearfix">
+	<div class="x_btn-group x_pull-right">
+            <input type="submit" value="{$lang->cmd_registration}" class="x_btn x_btn-primary" />
+	</div>
+	</div>
+   
+</form>
+<!--@else-->
+
+<div class="x_page-header">
+	<h1>{$lang->memberIconInsert}</h1>
+</div>
+
+<form id="fo_insert" action="./" method="get" onsubmit="return procFilter(this, insert_membericon)" class="x_form-horizontal">
+    <input type="hidden" name="page" value="{Context::get('page')}" />
+    
+    <section class="section">
+    	<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->icon_srl}</label>
+			<div class="x_controls">
+			<input type="text" name="icon_srl" id="icon_srl" value="" readonly="readonly" />
+            <a href="{getUrl('module','iconshop','act','dispIconshopAdminIconSearch','target_id','icon_srl')}" onclick="popopen(this.href,'iconSearch');return false;" class="x_btn"><span>{$lang->cmd_search}</span></a>	
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->member_srl}</label>
+			<div class="x_controls">
+			<input type="text" name="member_srl" id="member_srl" value="" readonly="readonly" />
+            <a href="{getUrl('module','iconshop','act','dispIconshopMemberSearch','target_id','member_srl')}" onclick="popopen(this.href,'memberSearch');return false;" class="x_btn"><span>{$lang->cmd_search}</span></a>	
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->is_selected}</label>
+			<div class="x_controls">
+			<select name="is_selected">
+            <!--@foreach($lang->iconshop_checked_list2 as $key=>$val)-->
+            <option value="{$val}" <!--@if($val==$icon_data->is_selected)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+            </select>	
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->minute_limit}</label>
+			<div class="x_controls">
+			<select name="minute_limit">
+            <!--@foreach($lang->iconshop_checked_list2 as $key=>$val)-->
+            <option value="{$val}" <!--@if($val==$icon_data->minute_limit)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+            </select>	
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->end_date}</label>
+			<div class="x_controls">
+			<input type="hidden" name="end_date1" value="" />
+                <input type="text" value="" readonly="readonly" class="inputDate inputTypeText w80" />
+                <span class="button"><input type="button" value="{$lang->cmd_delete}" class="x_btn dateRemover" /></span><p></p>
+                <p><select name="end_date2">
+                    <!--@for($i=0;$i<=23;$i++)-->
+                    {@ $i = str_pad($i, 2, '0', STR_PAD_LEFT); }
+                    <option value='{$i}'>{$i}{$lang->unit_hour}</option>
+                    <!--@end-->
+                </select>
+                :
+                <select name="end_date3">
+                    <!--@for($i=0;$i<=59;$i++)-->
+                    {@ $i = str_pad($i, 2, '0', STR_PAD_LEFT); }
+                    <option value='{$i}'>{$i}{$lang->unit_min}</option>
+                    <!--@end-->
+                </select>
+                :
+                <select name="end_date4">
+                    <!--@for($i=0;$i<=59;$i++)-->
+                    {@ $i = str_pad($i, 2, '0', STR_PAD_LEFT); }
+                    <option value='{$i}'>{$i}{$lang->unit_sec}</option>
+                    <!--@end-->
+                </select></p>	
+                <a href="#end_date_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="end_date_help" class="x_help-block" hidden>{$lang->end_date_about}</p>
+			</div>
+		</div>
+        <div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title"></label>
+			<div class="x_controls">
+				
+			</div>
+		</div>
+    </section>
+    
+    <div class="x_clearfix">
+	<div class="x_btn-group x_pull-right">
+            <input type="submit" value="{$lang->cmd_registration}" class="x_btn x_btn-primary" />
+	</div>
+	</div>
+    
+</form>
+
+<!--@end-->
+
+<script type="text/javascript">
+(function($){
+    $(function(){
+        var option = { changeMonth: true, changeYear: true, gotoCurrent: false,yearRange:'-100:+10', onSelect:function(){
+
+            $(this).prev('input[type="hidden"]').val(this.value.replace(/-/g,""))}
+        };
+        $.extend(option,$.datepicker.regional['{$lang_type}']);
+        $(".inputDate").datepicker(option);
+        $(".dateRemover").click(function() {
+			$(this).parent().prevAll('input').val('');
+			return false;});
+    });
+})(jQuery);
+</script>

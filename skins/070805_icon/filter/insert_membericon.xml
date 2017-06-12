@@ -1,0 +1,11 @@
+<filter name="insert_membericon" module="iconshop" act="procIconshopAdminMemberIconInsert" confirm_msg_code="confirm_submit">
+    <form>
+        <node target="icon_srl" required="true" filter="number" />
+        <node target="member_srl" required="true" filter="number" />
+    </form>
+    <response callback_func="completeInsertMemberIcon">
+        <tag name="error" />
+        <tag name="message" />
+        <tag name="page" />
+    </response>
+</filter>

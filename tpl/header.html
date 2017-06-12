@@ -1,0 +1,25 @@
+<!--%import("js/iconshop_admin.js")-->
+<div class="x_page-header">
+	<h1>
+		{$lang->iconshop} 
+		<a href="./iconshop" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+	</h1>
+</div>
+
+
+
+<!--@if($iconshop_info)-->
+<div>
+    <ul class="x_nav x_nav-tabs">
+        <li <!--@if($act=='dispIconshopAdminConfig')--> class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminConfig')}">{$lang->cmd_module_config}</a></li>
+        <li <!--@if($act=='dispIconshopAdminAddConfig')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminAddConfig')}">{$lang->cmd_addition_setup}</a></li>
+        <li <!--@if($act=='dispIconshopAdminSkinConfig')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminSkinConfig')}">{$lang->skin_config}</a></li>
+        <li <!--@if($act=='dispIconshopAdminIconList')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminIconList')}">{$lang->iconList}</a></li>
+        <li <!--@if($act=='dispIconshopAdminIconInsert')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminIconInsert')}">{$lang->iconInsert}</a></li>
+        <li <!--@if($act=='dispIconshopAdminMemberIconList')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminMemberIconList')}">{$lang->memberIconList}</a></li>
+        <li <!--@if($act=='dispIconshopAdminMemberIconInsert')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminMemberIconInsert')}">{$lang->memberIconInsert}</a></li>
+        <li <!--@if($act=='dispIconshopAdminLogList')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminLogList')}">{$lang->iconshopLogList}</a></li>
+    </ul>
+</div>
+<!--@end-->
+

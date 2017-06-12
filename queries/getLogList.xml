@@ -1,0 +1,30 @@
+<query id="getLogList" action="select">
+    <tables>
+        <table name="iconshop_log" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="category_srl" var="s_category_srl" />
+        <condition operation="equal" column="substr(regdate,1,8)" var="s_regdate" pipe="and" />
+        <condition operation="more" column="substr(regdate,1,8)" var="s_regdate_more" pipe="and" />
+        <condition operation="less" column="substr(regdate,1,8)" var="s_regdate_less" pipe="and" />
+        <group pipe="and">
+            <condition operation="like" column="content" var="s_content" />
+            <condition operation="like" column="ipaddress" var="s_ipaddress" pipe="or" />
+            <condition operation="equal" column="data_srl" var="s_data_srl" pipe="or" />
+            <condition operation="equal" column="icon_srl" var="s_icon_srl" pipe="or" />
+            <condition operation="equal" column="point" var="s_point" pipe="or" />
+            <condition operation="equal" column="sender_srl" var="s_sender_srl" filter="number" pipe="or" />
+            <condition operation="equal" column="receive_srl" var="s_receive_srl" filter="number" pipe="or" />
+            <condition operation="less" column="point" var="s_point" filter="number" pipe="or" />
+        </group>
+    </conditions>
+    <navigation>
+        <index var="sort_index" default="regdate" order="sort_order" />
+        <list_count var="list_count" default="20" />
+        <page_count var="page_count" default="10" />
+        <page var="page" default="1" />
+    </navigation>
+</query>

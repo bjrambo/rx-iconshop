@@ -1,0 +1,141 @@
+<!-- 설명 -->
+<!--#include("header.html")-->
+
+<div class="x_page-header">
+	<h1>{$lang->iconshopLogList}</h1>
+</div>
+
+<div class="infoText">{$lang->log_save_day} : {$module_config->log_save_day}{$lang->unit_day}</div>
+
+<!-- 검색 -->
+<form action="./" method="get" class="search center x_input-append">
+<input type="hidden" name="module" value="{$module}" />
+<input type="hidden" name="act" value="{$act}" />
+
+    <fieldset>
+        <span>
+            <input type="text" name="s_regdate_more" value="{$s_regdate_more}" readonly="readonly" class="inputDate inputTypeText" />
+            <span class="button"><input type="button" value="{$lang->cmd_delete}" class="x_btn dateRemover" /></span> ~
+        </span>
+        <span>
+            <input type="text" name="s_regdate_less" value="{$s_regdate_less}" readonly="readonly" class="inputDate inputTypeText" />
+        <span class="button"><input type="button" value="{$lang->cmd_delete}" class="x_btn dateRemover" /></span>
+        </span>
+        <select name="s_category_srl">
+            <option value="" <!--@if(!in_array($s_category_srl,$lang->iconshop_log_act_list))-->selected="selected"<!--@end-->>{$lang->module_action}</option>
+            <!--@foreach($lang->iconshop_log_act_list as $key => $val)-->
+            <option value="{$key}" <!--@if($s_category_srl == $key)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+        </select>
+        <select name="search_target">
+            <option value="">{$lang->search_target}</option>
+            <!--@foreach($lang->iconshop_search_target3 as $key => $val)-->
+            <option value="{$key}" <!--@if($search_target==$key)-->selected="selected"<!--@end-->>{$val}</option>
+            <!--@end-->
+        </select>
+        <input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="inputTypeText" />
+        <input type="submit" value="{$lang->cmd_search}" class="x_btn x_btn-inverse" />
+        <a href="#" onclick="location.href='{getUrl('','module',$module,'act',$act)}';return false;" class="x_btn">{$lang->cmd_cancel}</a>
+    </fieldset>
+</form>
+
+<!-- 목록 -->
+<form method="get" action="./" id="log_fo">
+    <table cellspacing="0" class="x_table x_table-striped x_table-hover">
+    <caption>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</caption>
+    <thead>
+        <tr>
+            <th scope="col" class="nowr"><div>{$lang->data_srl}</div></th>
+            <th scope="col" class="nowr"><div>{$lang->icon_srl}</div></th>
+            <th scope="col" class="nowr"><div><input type="checkbox" onclick="XE.checkboxToggleAll(); return false;"/></div></th>
+            <th scope="col" class="nowr"><div class="tCenter">{$lang->content}</div></th>
+            <th scope="col" class="nowr"><div>{$lang->point}</div></th>
+            <th scope="col" class="nowr"><div>{$lang->regdate}</div></th>
+            <th scope="col" class="nowr"><div>{$lang->ipaddress}</div></th>
+            <th scope="col" ><div>-</div></th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--@foreach($log_list as $no => $val)-->
+        <!--@if($val->group_limit)-->{@ $val->group_limit = implode(', ', $val->group_limit)}<!--@end-->
+        <tr class="row{$cycle_idx}">
+            <td class="nowr">{$val->data_srl}</td>
+            <td class="nowr">{$val->icon_srl}</td>
+            <td class="nowr"><input type="checkbox" name="cart" value="{$val->data_srl}"/></td>
+            <td class="nowr">{$val->content}</td>
+            <td class="nowr">{number_format($val->point)}</td>
+            <td class="nowr">{zdate($val->regdate,'Y-m-d H:i:s')}</td>
+            <td class="nowr">{$val->ipaddress}</td>
+            <td><a href="{getUrl('act','dispIconshopAdminMemberIconList','search_target','s_data_srl','search_keyword',$val->data_srl)}" title="{$lang->iconTrace}" class="buttonSet buttonLeft"><span>{$lang->iconTrace}</span></a></td>
+        </tr>
+        <!--@end-->
+    </tbody>
+    </table>
+    
+    <div class="x_clearfix">
+		<div class="x_btn-group x_pull-right">
+			<a href="#manage" onclick="doDeleteLogs(); return false;" class="x_btn modalAnchor">{$lang->cmd_delete}</a>
+		</div>
+        <div class="x_btn-group x_pull-right">
+			<a href="#manage" onclick="doResetLogs(); return false;" class="x_btn modalAnchor">{$lang->cmd_reset}</a>
+		</div>
+	</div>
+</form>
+
+<form action="./" class="x_pagination x_pull-left" style="margin:-36px 0 0 0">
+	<input type="hidden" name="error_return_url" value="" />
+	<input type="hidden" name="module" value="{$module}" />
+	<input type="hidden" name="act" value="{$act}" />
+	<input cond="$search_keyword" type="hidden" name="search_keyword" value="{$search_keyword}" />
+	<input cond="$search_target" type="hidden" name="search_target" value="{$search_target}" />
+	<ul>
+		<li class="x_disabled"|cond="!$page || $page == 1"><a href="{getUrl('page', '')}">&laquo; {$lang->first_page}</a></li>
+		<block cond="$page_navigation->first_page != 1 && $page_navigation->first_page + $page_navigation->page_count > $page_navigation->last_page - 1 && $page_navigation->page_count != $page_navigation->total_page">
+		{@$isGoTo = true}
+		<li>
+			<a href="#goTo" data-toggle title="{$lang->cmd_go_to_page}">&hellip;</a>
+			<span cond="$isGoTo" id="goTo" class="x_input-append">
+				<input type="number" min="1" max="{$page_navigation->last_page}" required name="page" title="{$lang->cmd_go_to_page}" />
+				<button type="submit" class="x_add-on">Go</button>
+			</span>
+		</li>
+		</block>
+
+		<!--@while($page_no = $page_navigation->getNextPage())-->
+		{@$last_page = $page_no}
+		<li class="x_active"|cond="$page_no == $page"><a  href="{getUrl('page', $page_no)}">{$page_no}</a></li>
+		<!--@end-->
+
+		<block cond="$last_page != $page_navigation->last_page && $last_page + 1 != $page_navigation->last_page">
+		{@$isGoTo = true}
+		<li>
+			<a href="#goTo" data-toggle title="{$lang->cmd_go_to_page}">&hellip;</a>
+			<span cond="$isGoTo" id="goTo" class="x_input-append">
+				<input type="number" min="1" max="{$page_navigation->last_page}" required name="page" title="{$lang->cmd_go_to_page}" />
+				<button type="submit" class="x_add-on">Go</button>
+			</span>
+		</li>
+		</block>
+		<li class="x_disabled"|cond="$page == $page_navigation->last_page"><a href="{getUrl('page', $page_navigation->last_page)}" title="{$page_navigation->last_page}">{$lang->last_page} &raquo;</a></li>
+	</ul>
+</form>
+
+<script type="text/javascript">
+(function($){
+    $(function(){
+        var option = { changeMonth: true, changeYear: true, gotoCurrent: false,yearRange:'-100:+10', onSelect:function(){
+
+            $(this).val(this.value.replace(/-/g,""))}
+        };
+        $.extend(option,$.datepicker.regional['{$lang_type}']);
+        $(".inputDate").datepicker(option);
+		$(".dateRemover").click(function() {
+			$(this).parent().prevAll('input').val('');
+			return false;});
+    });
+})(jQuery);
+
+var null_message = "{$lang->msg_cart_is_null}";
+var delete_message = "{$lang->confirm_delete}";
+var reset_message = "{$lang->confirm_reset}";
+</script>

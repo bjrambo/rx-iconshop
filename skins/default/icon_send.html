@@ -1,0 +1,64 @@
+<!--%import("css/default.css")-->
+<!--%import("lang")-->
+<!--%import("filter/icon_send.xml")-->
+{@
+    $point = $icon_data->price;
+    $send_fee = (int)$iconshop_config->send_fee;
+    if($point && $send_fee) $point+= floor($point * $send_fee / 100);
+}
+<div id="popHeader">
+    <h3 class="xeAdmin">{$icon_data->title} - {$lang->icon_send}</h3>
+</div>
+
+<form action="./" method="post" onsubmit="return procFilter(this, icon_send)">
+<input type="hidden" name="icon_srl" value="{$icon_data->icon_srl}" />
+    <div id="popBody">
+        <table cellspacing="0" class="rowTable">
+        <col width="100" />
+        <col />
+        <tr>
+            <th><div>{$lang->iconInfo}</div></th>
+            <td>
+            <div class="icon_data">
+                <div class="image"><img src="{$icon_data->file1}" alt="{$icon_data->title}" title="{$icon_data->title}" />&nbsp;</div>
+                <div class="info">
+                    <p class="title">{$icon_data->title} {$icon_data->icon}</p>
+                    <p class="content">{$icon_data->price2} <span class="bar">|</span> {sprintf("%s : %s",$lang->total_count,$icon_data->total_count2)} <span class="bar">|</span> {sprintf($lang->level_more,$icon_data->level_limit)}</p>
+                    <p class="content">
+                        {sprintf("%s : %s",$lang->minute_limit,$icon_data->minute2)}
+                    </p>
+                    <!--@if($icon_data->event_limit == "Y")-->
+                    <p class="content">
+                        {sprintf($lang->event_message,($icon_data->event_start)?zDate($icon_data->event_start,'Y/m/d'):"",($icon_data->event_end)?zDate($icon_data->event_end,'Y/m/d'):"")}
+                    </p>
+                    <!--@end-->
+                    <p class="btn">
+                        {$lang->my_point} : {$logged_info->point}{$point_name}<br />
+                        {$lang->icon_price} : {$icon_data->price}{$point_name} <!--@if($icon_data->price && $iconshop_config->send_fee)-->({$lang->fee} {$iconshop_config->send_fee}%) = {$point}{$point_name}<!--@end--><br />
+                        
+                        {$lang->send_my_point} : {$logged_info->point-$point}{$point_name}
+                    </p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><div>{$lang->receiver}</div></th>
+            <td>
+                <input type="text" name="receive_srl" id="receive_srl" class="inputTypeText w100" readonly="readonly" />
+                <a href="{getUrl('module','iconshop','act','dispIconshopMemberSearch','target_id','receive_srl')}" onclick="popopen(this.href,'memberSearch');return false;" class="button"><span>{$lang->cmd_search}</span></a>
+                </td>
+        </tr>
+        <tr>
+            <th><div><label for="send_message">{$lang->send_message} <input type="checkbox" name="send_message" id="send_message" value="Y" checked="checked" onclick="send_message_chk(this.checked)" /></label></div></th>
+            <td><textarea name="content" id="content" rows="10" class="inputTextarea w400"></textarea></td>
+        </tr>
+        </table>
+    </div>
+
+    <div id="popFooter">
+        <span class="button black strong"><input type="submit" value="{$lang->cmd_confirm}" accesskey="s" /></span>
+        <span class="button red"><input type="button" value="{$lang->cmd_close}" onclick="window.close();return false;" /></span>
+    </div>
+</form>
+
+

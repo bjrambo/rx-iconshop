@@ -1,0 +1,17 @@
+<query id="getMemberIcon" action="select">
+    <tables>
+        <table name="iconshop_member" />
+    </tables>
+    <columns>
+        <column name="*" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="icon_srl" var="icon_srl" filter="number" />
+        <condition operation="equal" column="data_srl" var="data_srl" filter="number" pipe="and" />
+        <group pipe="and">
+            <condition operation="equal" column="member_srl" var="member_srl" filter="number" />
+            <condition operation="equal" column="user_id" var="user_id" pipe="or" />
+            <condition operation="equal" column="nick_name" var="nick_name" pipe="or" />
+        </group>
+    </conditions>
+</query>

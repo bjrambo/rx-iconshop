@@ -1,0 +1,20 @@
+<table name="iconshop_admin">
+    <column name="icon_srl" type="number" size="11" notnull="notnull" primary_key="primary_key" />
+    <column name="title" type="varchar" size="250" notnull="notnull" unique="unique_title" />
+    <column name="total_count" type="number" size="11" default="0" index="idx_total_count" />
+    <column name="price" type="number" size="11" default="0" index="idx_price" />
+    <column name="buy_limit" type="char" size="1" default="Y" notnull="notnull" index="idx_buy_limit" />
+    <column name="send_limit" type="char" size="1" default="Y" notnull="notnull" index="idx_send_limit" />
+    <column name="sell_limit" type="char" size="1" default="Y" notnull="notnull" index="idx_sell_limit" />
+    <column name="point_limit" type="char" size="1" default="Y" notnull="notnull" index="idx_point_limit" />
+    <column name="level_limit" type="number" size="11" default="0" />
+    <column name="group_limit" type="varchar" size="255" />
+    <column name="minute_limit" type="char" size="1" default="N" notnull="notnull" index="idx_date_limit" />
+    <column name="minute" type="number" size="11" default="0" />
+    <column name="event_limit" type="char" size="1" default="N" notnull="notnull" index="idx_event_limit" />
+    <column name="event_start" type="date" />
+    <column name="event_end" type="date" />
+    <column name="regdate" type="date" />
+    <column name="content" type="text" />
+    <column name="file1" type="varchar" size="250" />
+</table>

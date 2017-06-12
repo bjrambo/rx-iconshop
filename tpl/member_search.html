@@ -1,0 +1,47 @@
+<!--%import("js/iconshop.js")-->
+<!--%import("../../common/css/popup.css")-->
+<load target="js/board_admin.js" />
+
+
+	<h1>{$lang->memberSearch}</h1>
+
+    <form action="./" method="post">
+        <input type="hidden" name="module" value="iconshop" />
+        <input type="hidden" name="act" value="dispIconshopMemberSearch" />
+        <input type="hidden" name="target_id" value="{$target_id}" />
+        <table class="x_table x_table-striped x_table-hover" cellspacing="0">
+        <tbody>
+            <tr>
+                <td class="nowr">
+                    <select name="search_target">
+                        <option value="member_srl" <!--@if($search_target != "nick_name")-->selected="selected"<!--@end-->>{$lang->no}</option>
+                        <option value="nick_name" <!--@if($search_target == "nick_name")-->selected="selected"<!--@end-->>{$lang->nick_name}</option>
+                    </select>
+                    <input type="text" name="search_keyword" value="{$search_keyword}" /> <input type="submit" value="{$lang->cmd_search}" class="x_btn" />
+                    <p>{$lang->iconSearch_about}</p>
+                </td>
+            </tr>
+            </tr>
+        </tbody>
+        </table>
+        <!--@if($result_list)-->
+        <table class="x_table x_table-striped x_table-hover" cellspacing="0">
+        <thead>
+            <tr>
+                <th scope="col" class="nowr"><div>{$lang->no}</div></th>
+                <th scope="col" class="nowr"><div>{$lang->nick_name}</div></th>
+                <th scope="col" class="nowr"><div>{$lang->cmd_select}</div></th>
+            <tr>
+        </thead>
+        <tbody>
+            <!--@foreach($result_list as $key => $val)-->
+            <tr>
+                <td class="nowr">{$val->member_srl}</td>
+                <td class="nowr">{$val->nick_name}</td>
+                <td class="nowr"><a href="#" onclick="memberSelected('{$target_id}',{$val->member_srl}); return false;" class="x_btn">{$lang->cmd_select}</a></td>
+            </tr>
+            <!--@end-->
+        </tbody>
+        </table>
+        <!--@end-->
+    </form>

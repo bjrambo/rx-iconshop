@@ -1,0 +1,17 @@
+<query id="updateMemberIcon" action="update">
+    <tables>
+        <table name="iconshop_member" />
+    </tables>
+    <columns>
+        <column name="icon_srl" var="icon_srl" filter="number" />
+        <column name="member_srl" var="member_srl" filter="number" />
+        <column name="user_id" var="user_id" />
+        <column name="nick_name" var="nick_name" />
+        <column name="is_selected" var="is_selected" default="N" />
+        <column name="minute_limit" var="minute_limit" default="N" />
+        <column name="end_date" var="end_date" filter="number" />
+    </columns>
+    <conditions>
+        <condition operation="equal" column="data_srl" var="data_srl" notnull="notnull" filter="number" />
+    </conditions>
+</query>

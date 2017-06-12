@@ -1,0 +1,17 @@
+<query id="insertMemberIcon" action="insert">
+    <tables>
+        <table name="iconshop_member" />
+    </tables>
+    <columns>
+        <column name="data_srl" var="data_srl" filter="number" notnull="notnull" />
+        <column name="icon_srl" var="icon_srl" filter="number" notnull="notnull" />
+        <column name="member_srl" var="member_srl" filter="number" notnull="notnull" />
+        <column name="user_id" var="user_id" notnull="notnull" />
+        <column name="nick_name" var="nick_name" notnull="notnull" />
+        <column name="is_selected" var="is_selected" default="N" />
+        <column name="minute_limit" var="minute_limit" default="N" />
+        <column name="start_date" default="curdate()" filter="number" />
+        <column name="end_date" var="end_date" filter="number" />
+        <column name="ipaddress" default="ipaddress()" />
+    </columns>
+</query>
