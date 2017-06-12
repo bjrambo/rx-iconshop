@@ -17,21 +17,61 @@ class iconshop extends ModuleObject
 			if(!$config)
 			{
 				$config = new stdClass();
-				$config->icon_width = 20;
-				$config->icon_height = 20;
-				$config->send_fee = 0;
-				$config->sell_per = 50;
-				$config->log_save_day = 7;
-				$config->new_hour = 24;
-				$config->member_max_count = 100;
-				$config->list_count = 10;
-				$config->cols_list_count = 2;
-				$config->member_info_print = "Y";
-				$config->item_delete_event = "N";
-				$config->item_delete_title = "[nick_name]님이 구입하신 [[icon_title]] 아이콘의 시간이 만료 되었습니다.";
-				$config->item_delete_message = "[nick_name]님이 구입하신 [[icon_title]] 아이콘의 시간이 만료되어 삭제 되었습니다.\n\n[[end_date]]";
-				self::$config = $config;
 			}
+			if(!$config->icon_width)
+			{
+				$config->icon_width = 20;
+			}
+			if(!$config->icon_height)
+			{
+				$config->icon_height = 20;
+			}
+			if(!$config->send_fee)
+			{
+				$config->send_fee = 0;
+			}
+			if(!$config->sell_per)
+			{
+				$config->sell_per = 50;
+			}
+			if(!$config->log_save_day)
+			{
+				$config->log_save_day = 7;
+			}
+			if(!$config->new_hour)
+			{
+				$config->new_hour = 24;
+			}
+			if(!$config->member_max_count)
+			{
+				$config->member_max_count = 100;
+			}
+			if(!$config->list_count)
+			{
+				$config->list_count = 10;
+			}
+			if(!$config->cols_list_count)
+			{
+				$config->cols_list_count = 2;
+			}
+			if(!$config->member_info_print)
+			{
+				$config->member_info_print = "Y";
+			}
+			if(!$config->item_delete_event)
+			{
+				$config->item_delete_event = "N";
+			}
+			if(!$config->item_delete_title)
+			{
+				$config->item_delete_title = "[nick_name]님이 구입하신 [[icon_title]] 아이콘의 시간이 만료 되었습니다.";
+			}
+			if(!$config->item_delete_message)
+			{
+				$config->item_delete_message = "[nick_name]님이 구입하신 [[icon_title]] 아이콘의 시간이 만료되어 삭제 되었습니다.\n\n[[end_date]]";
+			}
+
+			self::$config = $config;
 		}
 
 		return self::$config;
