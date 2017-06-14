@@ -144,30 +144,6 @@ class iconshopAdminView extends iconshop
 	}
 
 	/**
-	 * @brief 회원상품 추가/수정
-	 **/
-	function dispIconshopAdminMemberIconInsert()
-	{
-		$data_srl = Context::get('data_srl');
-
-		// 수정모드일때 원본데이터 가져오기
-		if($data_srl)
-		{
-			$oIconshopModel = getModel('iconshop');
-			$member_icon = $oIconshopModel->getMemberIconByDataSrl($data_srl);
-			if($member_icon)
-			{
-				$icon_data = $oIconshopModel->getIconBySrl($member_icon->icon_srl);
-				Context::set('member_icon_data', $member_icon);
-				Context::set('icon_data', $icon_data);
-			}
-		}
-
-		// 템플릿 파일 지정
-		$this->setTemplateFile('member_icon_insert');
-	}
-
-	/**
 	 * @brief 로그관리
 	 **/
 	function dispIconshopAdminLogList()
