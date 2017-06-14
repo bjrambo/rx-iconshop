@@ -1,11 +1,11 @@
 <!--#include("./header.html")-->
 <!--%import("filter/insert_module.xml")-->
 <form action="./" method="post" onsubmit="return procFilter(this, insert_module)" enctype="multipart/form-data" class="x_form-horizontal">
-<input type="hidden" name="module_srl" value="{$iconshop_info->module_srl}" />
-<input type="hidden" name="mid" value="{$iconshop_info->mid}" />
+	<input type="hidden" name="module_srl" value="{$iconshop_info->module_srl}" />
+	<input type="hidden" name="mid" value="{$iconshop_info->mid}" />
 	<section class="section">
 		<h1>{$lang->subtitle_primary}</h1>
-        <div class="x_control-group">
+		<div class="x_control-group">
 			<label class="x_control-label" for="lang_browser_title">{$lang->browser_title}</label>
 			<div class="x_controls">
 				<input type="text" name="browser_title" id="browser_title" value="<!--@if(strpos($iconshop_info->browser_title, '$user_lang->') === false)-->{$iconshop_info->browser_title}<!--@else-->{htmlspecialchars($iconshop_info->browser_title)}<!--@end-->" class="lang_code" />
@@ -13,41 +13,40 @@
 				<p id="browser_title_help" class="x_help-block" hidden>{$lang->about_browser_title}</p>
 			</div>
 		</div>
-       	<div class="x_control-group">
+		<div class="x_control-group">
 			<label class="x_control-label" for="layout_srl">{$lang->layout}</label>
 			<div class="x_controls">
-            
-            	<select name="layout_srl" id="layout_srl">
+
+				<select name="layout_srl" id="layout_srl">
 					<option value="0">{$lang->notuse}</option>
-					<option loop="$layout_list => $key, $val" value="{$val->layout_srl}" selected="selected"|cond="$iconshop_info->layout_srl== $val->layout_srl">{$val->title} ({$val->layout})</option>
+					<option loop="$layout_list => $key, $val" value="{$val->layout_srl}" selected="selected" |cond="$iconshop_info->layout_srl== $val->layout_srl">{$val->title} ({$val->layout})</option>
 				</select>
-                
+
 				<a href="#layout_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 				<p id="layout_help" class="x_help-block" hidden>{$lang->about_layout}</p>
 			</div>
-        </div>
-       	<div class="x_control-group">
-			<label class="x_control-label" for="mlayout_srl">{$lang->mlayout}</label>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="mlayout_srl">{$lang->mobile} {$lang->layout}</label>
 			<div class="x_controls">
-            
-            	<select name="mlayout_srl" id="mlayout_srl">
+				<select name="mlayout_srl" id="mlayout_srl">
 					<option value="0">{$lang->notuse}</option>
-					<option loop="$mlayout_list => $key, $val" value="{$val->layout_srl}" selected="selected"|cond="$iconshop_info->mlayout_srl == $val->layout_srl">{$val->title} ({$val->mlayout})</option>
+					<option loop="$mlayout_list => $key, $val" value="{$val->layout_srl}" selected="selected" |cond="$iconshop_info->mlayout_srl == $val->layout_srl">{$val->title} ({$val->mlayout})</option>
 				</select>
-                
+
 				<a href="#mlayout_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 				<p id="mlayout_help" class="x_help-block" hidden>{$lang->about_mlayout}</p>
 			</div>
-        </div>
-        <div class="x_control-group">
+		</div>
+		<div class="x_control-group">
 			<label class="x_control-label" for="skin">{$lang->skin}</label>
 			<div class="x_controls">
 				<select name="skin">
-            <option loop="$skin_list=> $key, $val" value="{$key}" selected="selected"|cond="$iconshop_info->skin== $key || (!$iconshop_info->skin && $key=='default')">{$val->title}</option></select>
-            
+					<option loop="$skin_list=> $key, $val" value="{$key}" selected="selected" |cond="$iconshop_info->skin== $key || (!$iconshop_info->skin && $key=='default')">{$val->title}</option>
+				</select>
 			</div>
 		</div>
-      	<div class="x_control-group">
+		<div class="x_control-group">
 			<label class="x_control-label" for="lang_header_text">{$lang->header_text}</label>
 			<div class="x_controls">
 				<textarea name="header_text" id="header_text" class="lang_code" rows="8" cols="42" placeholder="{$lang->about_header_text}"><!--@if(strpos($iconshop_info->header_text, '$user_lang->') === false)-->{$iconshop_info->header_text}<!--@else-->{htmlspecialchars($iconshop_info->header_text)}<!--@end--></textarea>
@@ -63,16 +62,16 @@
 				<p id="footer_text_help" class="x_help-block" hidden>{$lang->about_footer_text}</p>
 			</div>
 		</div>
-    </section>   
-    
-    <section class="section collapsed">
+	</section>
+
+	<section class="section collapsed">
 		<h1>{$lang->subtitle_advanced}</h1>
-        <div class="x_control-group">
+		<div class="x_control-group">
 			<label class="x_control-label" for="module_category_srl">{$lang->module_category}</label>
 			<div class="x_controls">
 				<select name="module_category_srl" id="module_category_srl">
 					<option value="0">{$lang->notuse}</option>
-					<option loop="$module_category => $key, $val" value="{$key}" selected="selected"|cond="$iconshop_info->module_category_srl == $key">{$val->title}</option>
+					<option loop="$module_category => $key, $val" value="{$key}" selected="selected" |cond="$iconshop_info->module_category_srl == $key">{$val->title}</option>
 				</select>
 				<a href="#module_category_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 				<p id="module_category_help" class="x_help-block" hidden>{$lang->about_module_category}</p>
@@ -86,10 +85,10 @@
 				<p id="description_help" class="x_help-block" hidden>{$lang->about_description}</p>
 			</div>
 		</div>
-	</section> 
+	</section>
 
 	<div class="x_clearfix btnArea">
-		
+
 		<div class="x_pull-right">
 			<button class="x_btn x_btn-primary" type="submit">{$lang->cmd_registration}</button>
 		</div>
