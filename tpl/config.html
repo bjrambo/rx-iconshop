@@ -1,8 +1,16 @@
-<!--#include("./header.html")-->
-<!--%import("filter/insert_module.xml")-->
+<include target="./header.html" />
+
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/iconshop/tpl/config/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
 <form action="./" method="post" onsubmit="return procFilter(this, insert_module)" enctype="multipart/form-data" class="x_form-horizontal">
+	<input type="hidden" name="act" value="procIconshopAdminModuleInsert" />
+	<input type="hidden" name="module" value="iconshop" />
+	<input type="hidden" name="XE_VALIDATOR_ID" value="modules/iconshop/tpl/config/1" />
 	<input type="hidden" name="module_srl" value="{$iconshop_info->module_srl}" />
 	<input type="hidden" name="mid" value="{$iconshop_info->mid}" />
+	<input type="hidden" name="error_return_url" value="/index.php?module=admin&act=dispIconshopAdminConfig" />
 	<section class="section">
 		<h1>{$lang->subtitle_primary}</h1>
 		<div class="x_control-group">
@@ -19,7 +27,7 @@
 
 				<select name="layout_srl" id="layout_srl">
 					<option value="0">{$lang->notuse}</option>
-					<option loop="$layout_list => $key, $val" value="{$val->layout_srl}" selected="selected" |cond="$iconshop_info->layout_srl== $val->layout_srl">{$val->title} ({$val->layout})</option>
+					<option loop="$layout_list => $key, $val" value="{$val->layout_srl}" selected="selected"|cond="$iconshop_info->layout_srl== $val->layout_srl">{$val->title} ({$val->layout})</option>
 				</select>
 
 				<a href="#layout_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
@@ -27,13 +35,18 @@
 			</div>
 		</div>
 		<div class="x_control-group">
+			<label class="x_control-label">{$lang->mobile_view}</label>
+			<div class="x_controls">
+				<label class="x_inline" for="use_mobile"><input type="checkbox" name="use_mobile" id="use_mobile" value="Y" checked="checked"|cond="$iconshop_info->use_mobile == 'Y'" /> {$lang->about_mobile_view}</label>
+			</div>
+		</div>
+		<div class="x_control-group">
 			<label class="x_control-label" for="mlayout_srl">{$lang->mobile} {$lang->layout}</label>
 			<div class="x_controls">
 				<select name="mlayout_srl" id="mlayout_srl">
 					<option value="0">{$lang->notuse}</option>
-					<option loop="$mlayout_list => $key, $val" value="{$val->layout_srl}" selected="selected" |cond="$iconshop_info->mlayout_srl == $val->layout_srl">{$val->title} ({$val->mlayout})</option>
+					<option loop="$mlayout_list => $key, $val" value="{$val->layout_srl}" selected="selected"|cond="$iconshop_info->mlayout_srl == $val->layout_srl">{$val->title} ({$val->layout})</option>
 				</select>
-
 				<a href="#mlayout_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 				<p id="mlayout_help" class="x_help-block" hidden>{$lang->about_mlayout}</p>
 			</div>
@@ -41,8 +54,18 @@
 		<div class="x_control-group">
 			<label class="x_control-label" for="skin">{$lang->skin}</label>
 			<div class="x_controls">
-				<select name="skin">
-					<option loop="$skin_list=> $key, $val" value="{$key}" selected="selected" |cond="$iconshop_info->skin== $key || (!$iconshop_info->skin && $key=='default')">{$val->title}</option>
+				<select name="skin" id="skin">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$skin_list=> $key, $val" value="{$key}" selected="selected"|cond="$iconshop_info->skin== $key || (!$iconshop_info->skin && $key=='default')">{$val->title}</option>
+				</select>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="mskin">{$lang->mobile} {$lang->skin}</label>
+			<div class="x_controls">
+				<select name="mskin" id="mskin">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$mskin_list=> $key, $val" value="{$key}" selected="selected"|cond="$iconshop_info->mskin== $key || (!$iconshop_info->mskin && $key=='default')">{$val->title}</option>
 				</select>
 			</div>
 		</div>
@@ -71,7 +94,7 @@
 			<div class="x_controls">
 				<select name="module_category_srl" id="module_category_srl">
 					<option value="0">{$lang->notuse}</option>
-					<option loop="$module_category => $key, $val" value="{$key}" selected="selected" |cond="$iconshop_info->module_category_srl == $key">{$val->title}</option>
+					<option loop="$module_category => $key, $val" value="{$key}" selected="selected"|cond="$iconshop_info->module_category_srl == $key">{$val->title}</option>
 				</select>
 				<a href="#module_category_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 				<p id="module_category_help" class="x_help-block" hidden>{$lang->about_module_category}</p>

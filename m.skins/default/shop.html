@@ -1,0 +1,66 @@
+<!--#include("_header.html")-->
+
+<!--// 테이블형 출력 -->
+<table cellspacing="0" border="1" summary="List of Articles" class="boardList">
+    <tbody>
+    <!--@if(!$icon_list)-->
+    <tr>
+        <td>{$lang->null_shop}</td>
+    </tr>
+    <!--@end-->
+        {@
+            $count = 0;
+            $cell_index = 0;
+        }
+        <!--@foreach($icon_list as $key => $val)-->
+        <!--@if(!$cell_index)--><tr><!--@end-->
+        <td <!--@if(($total_count == $count+1) && ($cols_list_count != $cell_index+1))-->colspan="{$cols_list_count-$cell_index}"<!--@end-->>
+            <div class="icon_data">
+                <div class="image"><img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" />&nbsp;</div>
+                <div class="info">
+                    <p class="title">{$val->title} {$val->icon}</p>
+                    <p class="content">{$val->price2} <span class="bar">|</span> {sprintf("%s : %s",$lang->total_count,$val->total_count2)}</p>
+                    <p class="content">
+                        {sprintf("%s : %s",$lang->minute_limit,$val->minute2)}
+                        <span class="bar">|</span>
+                        {sprintf($lang->level_more,$val->level_limit)}
+                    </p>
+                    <!--@if($val->event_limit == "Y")-->
+                    <p class="content">
+                        {sprintf($lang->event_message,($val->event_start)?zDate($val->event_start,'Y/m/d'):"",($val->event_end)?zDate($val->event_end,'Y/m/d'):"")}
+                    </p>
+                    <!--@end-->
+                    <p class="btn">
+                    <!--@if($val->buy_limit == "Y")--><a onclick="iconBuy({$val->icon_srl});">{$lang->icon_buy}</a><!--@else--><s>{$lang->icon_buy}</s><!--@end--> <span class="bar">|</span>
+                    <!--@if($val->send_limit == "Y")--><a href="{getUrl('module','iconshop','act','dispIconshopIconSend','icon_srl',$val->icon_srl)}" onclick="popopen(this.href,'iconSend');return false;">{$lang->icon_send}</a><!--@else--><s>{$lang->icon_send}</s><!--@end-->
+                    </p>
+                </div>
+            </div>
+        </td>
+        {@
+            $count++;
+            $cell_index++;
+        }
+        <!--@if($total_count==$count || $cell_index == $cols_list_count)--></tr>{@ $cell_index = 0; }<!--@end-->
+        <!--@end-->
+    </tbody>
+</table>
+
+<!-- 페이지 네비게이션 -->
+<div class="pagination a1">
+    <a href="{getUrl('page','','module_srl','')}" class="prevEnd">{$lang->first_page}</a> 
+    <!--@while($page_no = $page_navigation->getNextPage())-->
+        <!--@if($page == $page_no)-->
+            <strong>{$page_no}</strong> 
+        <!--@else-->
+            <a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a> 
+        <!--@end-->
+    <!--@end-->
+    <a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="nextEnd">{$lang->last_page}</a>
+</div>
+
+<script type="text/javascript">
+var confirm_buy = "{$lang->confirm_buy}";
+var confirm_icon_change = "{$lang->confirm_icon_change}";
+</script>
+<!--#include("_footer.html")-->

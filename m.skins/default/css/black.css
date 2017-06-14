@@ -1,0 +1,19 @@
+/* Member Info */
+#iconshop_header .iconshop_member_info { color:#999; }
+
+/* TabMenu */
+#iconshop_header .iconshop_tabmenu ul{ border-bottom:1px solid #1e1e1e; }
+#iconshop_header .iconshop_tabmenu li a{ border:1px solid #333; background:#090909; color:#999; }
+#iconshop_header .iconshop_tabmenu li.active a{ border-bottom:1px solid #000; background:#000; color:#fff; }
+#iconshop_header .iconshop_tabmenu li.active li a{ color:#837f7f; }
+#iconshop_header .iconshop_tabmenu li li.more a{ color:#afafaf; }
+#iconshop_footer { border-top:1px solid #333; }
+
+/* 상품리스트 */
+.boardList td{ border-bottom:1px dotted #333; }
+.icon_data .image { border:1px solid #262626; }
+.icon_data .info .title { color:#fff; }
+.icon_data .info .bar { color:#181818; }
+.icon_data .info .btn { color:#ccc; }
+.icon_data .info .btn a { color:#ccc; }
+.icon_data .info .content { color:#7b797b; }

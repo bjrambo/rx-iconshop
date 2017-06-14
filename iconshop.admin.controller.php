@@ -26,21 +26,30 @@ class iconshopAdminController extends iconshop
 		$args = Context::getRequestVars();
 		$args->mid = 'iconshop';
 		$args->module = 'iconshop';
+		debugPrint($args);
 		if(!$args->module_srl)
 		{
 			return new Object(-1, 'invalid_module');
 		}
 
 		// module_srl의 값에 따라 insert/update
-		$output = $oModuleController->updateModule($args);
-
+		if($args->module_srl)
+		{
+			$output = $oModuleController->updateModule($args);
+		}
+		else
+		{
+			$output = $oModuleController->insertModule($args);
+		}
+		debugPrint($output);
 		// 오류가 있으면 리턴
 		if(!$output->toBool())
 		{
 			return $output;
 		}
+
 		$this->setMessage('success_updated');
-/*
+
 		if(Context::get('success_return_url'))
 		{
 			$this->setRedirectUrl(Context::get('success_return_url'));
@@ -49,7 +58,6 @@ class iconshopAdminController extends iconshop
 		{
 			$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispIconshopAdminConfig'));
 		}
-*/
 	}
 
 	/**
@@ -58,8 +66,7 @@ class iconshopAdminController extends iconshop
 	function procIconshopAdminConfig()
 	{
 		// 설정 정보 가져오기
-		$oModuleModel = getModel('module');
-		$iconshop_config = $oModuleModel->getModuleConfig('iconshop');
+		$iconshop_config = self::getConfig();
 
 		// 변수 정리
 		$args = Context::getRequestVars();
