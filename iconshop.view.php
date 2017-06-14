@@ -14,7 +14,6 @@ class iconshopView extends iconshop
 	 **/
 	function init()
 	{
-		// 로그인정보 가져오기
 		if(!$this->grant->access)
 		{
 			return new Object(-1, 'msg_not_permitted');
