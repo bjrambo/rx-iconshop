@@ -10,16 +10,15 @@
 <!--@if($iconshop_info)-->
 <div>
 	<ul class="x_nav x_nav-tabs">
-		<li <!--@if($act=='dispIconshopAdminConfig')--> class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminConfig')}">{$lang->iconshop_setting}</a></li>
-		<li <!--@if($act=='dispIconshopAdminAddConfig')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminAddConfig')}">{$lang->cmd_addition_setup}</a></li>
-		<li <!--@if($act=='dispIconshopAdminSkinConfig')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminSkinConfig')}">{$lang->skin_config}</a></li>
-		<li <!--@if($act=='dispIconshopAdminIconList')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminIconList')}">{$lang->iconList}</a></li>
-		<li <!--@if($act=='dispIconshopAdminIconInsert')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminIconInsert')}">{$lang->iconInsert}</a></li>
-		<li <!--@if($act=='dispIconshopAdminMemberIconList')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminMemberIconList')}">{$lang->memberIconList}</a></li>
-		<li <!--@if($act=='dispIconshopAdminMemberIconInsert')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminMemberIconInsert')}">{$lang->memberIconInsert}</a></li>
-		<li <!--@if($act=='dispIconshopAdminLogList')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminLogList')}">{$lang->iconshopLogList}</a></li>
-		<li <!--@if($act=='dispIconshopAdminGrantinfo')-->class="x_active"<!--@end-->><a href="{getUrl('','module',$module,'act','dispIconshopAdminGrantinfo')}">{$lang->cmd_manage_grant}</a></li>
+		<li class="x_active"|cond="$act=='dispIconshopAdminConfig'"><a href="{getUrl('','module',$module,'act','dispIconshopAdminConfig')}">{$lang->iconshop_setting}</a></li>
+		<li class="x_active"|cond="$act=='dispIconshopAdminAddConfig'"><a href="{getUrl('','module',$module,'act','dispIconshopAdminAddConfig')}">{$lang->cmd_addition_setup}</a></li>
+		<li class="x_active"|cond="$act=='dispIconshopAdminSkinConfig'"><a href="{getUrl('','module',$module,'act','dispIconshopAdminSkinConfig')}">{$lang->skin_config}</a></li>
+		<li class="x_active"|cond="$act=='dispIconshopAdminIconList'"><a href="{getUrl('','module',$module,'act','dispIconshopAdminIconList')}">{$lang->iconList}</a></li>
+		<li class="x_active"|cond="$act=='dispIconshopAdminIconInsert'"><a href="{getUrl('','module',$module,'act','dispIconshopAdminIconInsert')}">{$lang->iconInsert}</a></li>
+		<li class="x_active"|cond="$act=='dispIconshopAdminMemberIconList'"><a href="{getUrl('','module',$module,'act','dispIconshopAdminMemberIconList')}">{$lang->memberIconList}</a></li>
+		<li class="x_active"|cond="$act=='dispIconshopAdminMemberIconInsert'"><a href="{getUrl('','module',$module,'act','dispIconshopAdminMemberIconInsert')}">{$lang->memberIconInsert}</a></li>
+		<li class="x_active"|cond="$act=='dispIconshopAdminLogList'"><a href="{getUrl('','module',$module,'act','dispIconshopAdminLogList')}">{$lang->iconshopLogList}</a></li>
+		<li class="x_active"|cond="$act=='dispIconshopAdminGrantinfo'"><a href="{getUrl('','module',$module,'act','dispIconshopAdminGrantinfo')}">{$lang->cmd_manage_grant}</a></li>
 	</ul>
 </div>
 <!--@end-->
-
