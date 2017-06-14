@@ -237,4 +237,17 @@ class iconshopAdminView extends iconshop
 		// 템플릿 파일 지정
 		$this->setTemplateFile('icon_search');
 	}
+
+	function dispIconshopAdminGrantinfo()
+	{
+		$module_info = Context::get('iconshop_info');
+
+		// get the grant infotmation from admin module
+		$oModuleAdminModel = getAdminModel('module');
+		$grant_content = $oModuleAdminModel->getModuleGrantHTML($module_info->module_srl, $this->xml_info->grant);
+		Context::set('grant_content', $grant_content);
+
+		$this->setTemplateFile('grant_list');
+	}
+
 }

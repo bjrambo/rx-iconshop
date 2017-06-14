@@ -14,6 +14,12 @@ class iconshopView extends iconshop
 	 **/
 	function init()
 	{
+		// 로그인정보 가져오기
+		if(!$this->grant->access)
+		{
+			return new Object(-1, 'msg_not_permitted');
+		}
+
 		$oModuleModel = getModel('module');
 
 		// 설정 정보 가져오기
@@ -51,11 +57,6 @@ class iconshopView extends iconshop
 		$oModuleModel = getModel('module');
 		$oIconshopModel = getModel('iconshop');
 
-		// 로그인정보 가져오기
-		if(!Context::get('is_logged'))
-		{
-			return new Object(-1, 'msg_not_permitted');
-		}
 		$logged_info = Context::get('logged_info');
 
 		// 포인트/레벨을 구해옴
@@ -85,10 +86,6 @@ class iconshopView extends iconshop
 		$oIconshopModel = getModel('iconshop');
 
 		// 로그인정보 가져오기
-		if(!Context::get('is_logged'))
-		{
-			return new Object(-1, 'msg_not_permitted');
-		}
 		$logged_info = Context::get('logged_info');
 
 		// 포인트/레벨을 구해옴
@@ -119,10 +116,6 @@ class iconshopView extends iconshop
 		$oIconshopModel = getModel('iconshop');
 
 		// 로그인정보 가져오기
-		if(!Context::get('is_logged'))
-		{
-			return new Object(-1, 'msg_not_permitted');
-		}
 		$logged_info = Context::get('logged_info');
 
 		// 회원의 포인트/레벨을 구해옴

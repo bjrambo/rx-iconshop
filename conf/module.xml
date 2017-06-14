@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
+	<grants>
+		<grant name="buy_icon" default="member">
+			<title xml:lang="ko">상품구입</title>
+		</grant>
+	</grants>
 	<actions>
 		<action name="dispIconshopIndex" type="view" standalone="true" index="true"/>
 		<action name="dispIconshopMyIcon" type="view" standalone="true"/>
@@ -21,6 +26,7 @@
 		<action name="dispIconshopAdminMemberIconInsert" type="view" standalone="true"/>
 		<action name="dispIconshopAdminLogList" type="view" standalone="true"/>
 		<action name="dispIconshopAdminIconSearch" type="view" standalone="true"/>
+		<action name="dispIconshopAdminGrantinfo" type="view" standalone="true" />
 
 		<action name="procIconshopAdminConfig" type="controller" standalone="true"/>
 		<action name="procIconshopAdminModuleInsert" type="controller" standalone="true"/>
