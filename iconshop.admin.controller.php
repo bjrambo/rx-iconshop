@@ -26,7 +26,6 @@ class iconshopAdminController extends iconshop
 		$args = Context::getRequestVars();
 		$args->mid = 'iconshop';
 		$args->module = 'iconshop';
-		debugPrint($args);
 		if(!$args->module_srl)
 		{
 			return new Object(-1, 'invalid_module');
@@ -41,7 +40,6 @@ class iconshopAdminController extends iconshop
 		{
 			$output = $oModuleController->insertModule($args);
 		}
-		debugPrint($output);
 		// 오류가 있으면 리턴
 		if(!$output->toBool())
 		{
