@@ -5,6 +5,10 @@
 	<h1>{$lang->iconList}</h1>
 </div>
 
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
 <!-- 검색 -->
 <form action="./" method="get" class="search center x_input-append">
 <input type="hidden" name="module" value="{$module}" />

@@ -1,13 +1,12 @@
 <include target="./header.html" />
 
-<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/iconshop/tpl/config/1'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>
 
 <form action="./" method="post" onsubmit="return procFilter(this, insert_module)" enctype="multipart/form-data" class="x_form-horizontal">
 	<input type="hidden" name="act" value="procIconshopAdminModuleInsert" />
 	<input type="hidden" name="module" value="iconshop" />
-	<input type="hidden" name="XE_VALIDATOR_ID" value="modules/iconshop/tpl/config/1" />
 	<input type="hidden" name="module_srl" value="{$iconshop_info->module_srl}" />
 	<input type="hidden" name="mid" value="{$iconshop_info->mid}" />
 	<input type="hidden" name="error_return_url" value="/index.php?module=admin&act=dispIconshopAdminConfig" />

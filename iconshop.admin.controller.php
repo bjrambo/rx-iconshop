@@ -107,7 +107,17 @@ class iconshopAdminController extends iconshop
 		{
 			return $output;
 		}
+
 		$this->setMessage('success_updated');
+
+		if(Context::get('success_return_url'))
+		{
+			$this->setRedirectUrl(Context::get('success_return_url'));
+		}
+		else
+		{
+			$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispIconshopAdminAddConfig'));
+		}
 	}
 
 	/**
@@ -250,7 +260,16 @@ class iconshopAdminController extends iconshop
 			$oIconshopController->insertIcon($obj);
 		}
 
-		return $this->ErrorMessage('success_saved', 1);
+		$this->setMessage('success_saved');
+
+		if(Context::get('success_return_url'))
+		{
+			$this->setRedirectUrl(Context::get('success_return_url'));
+		}
+		else
+		{
+			$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispIconshopAdminIconList'));
+		}
 	}
 
 	/**
