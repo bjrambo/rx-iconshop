@@ -1,9 +1,10 @@
-<query id="updateIcon" action="update">
+<query id="updateIconSetTotalCount" action="update">
 	<tables>
 		<table name="iconshop_admin" />
 	</tables>
 	<columns>
-		<column name="set_total_count" var="set_total_count" default="0" filter="number" />
+		<column name="set_total_count" var="set_total_count" filter="number" />
+		<column name="total_count" var="total_count" filter="number" />
 	</columns>
 	<conditions>
 		<condition operation="equal" column="icon_srl" var="icon_srl" notnull="notnull" filter="number" />

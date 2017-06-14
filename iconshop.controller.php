@@ -397,7 +397,6 @@ class iconshopController extends iconshop
 	 **/
 	function procIconshopIconSell()
 	{
-		$oModuleModel = getModel('module');
 		$oIconshopModel = getModel('iconshop');
 
 		// 권한 체크
@@ -464,6 +463,30 @@ class iconshopController extends iconshop
 		$args->member_srl = $logged_info->member_srl;
 		$this->deleteMemberIcon($args);
 
+		$args = new stdClass();
+		$args->icon_srl = $icon_data->icon_srl;
+		$args->total_count = $icon_data->total_count + 1;
+		$output = executeQuery('iconshop.updateIconSetTotalCount', $args);
+		if(!$output->toBool())
+		{
+			return $output;
+		}
+		// 기존 상품들의 호환성을 위해서 추가.
+		else
+		{
+			if($args->total_count > $icon_data->set_total_count)
+			{
+				$args = new stdClass();
+				$args->icon_srl = $icon_data->icon_srl;
+				$args->set_total_count = (int)$args->total_count;
+				$output = executeQuery('iconshop.updateIconSetTotalCount', $args);
+				if(!$output->toBool())
+				{
+					return $output;
+				}
+			}
+		}
+
 		// 판매로그 남기기
 		$args = new stdClass();
 		$args->data_srl = $member_icon_data->data_srl;
@@ -516,6 +539,30 @@ class iconshopController extends iconshop
 		$args->data_srl = $member_icon_data->data_srl;
 		$args->member_srl = $logged_info->member_srl;
 		$this->deleteMemberIcon($args);
+
+		$args = new stdClass();
+		$args->icon_srl = $icon_data->icon_srl;
+		$args->total_count = $icon_data->total_count + 1;
+		$output = executeQuery('iconshop.updateIconSetTotalCount', $args);
+		if(!$output->toBool())
+		{
+			return $output;
+		}
+		// 호환성을 위해서 추가함.
+		else
+		{
+			if($args->total_count > $icon_data->set_total_count)
+			{
+				$args = new stdClass();
+				$args->icon_srl = $icon_data->icon_srl;
+				$args->set_total_count = (int)$args->total_count;
+				$output = executeQuery('iconshop.updateIconSetTotalCount', $args);
+				if(!$output->toBool())
+				{
+					return $output;
+				}
+			}
+		}
 
 		// 삭제로그 남기기
 		$args = new stdClass();
