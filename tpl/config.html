@@ -35,23 +35,6 @@
 			</div>
 		</div>
 		<div class="x_control-group">
-			<label class="x_control-label">{$lang->mobile_view}</label>
-			<div class="x_controls">
-				<label class="x_inline" for="use_mobile"><input type="checkbox" name="use_mobile" id="use_mobile" value="Y" checked="checked"|cond="$iconshop_info->use_mobile == 'Y'" /> {$lang->about_mobile_view}</label>
-			</div>
-		</div>
-		<div class="x_control-group">
-			<label class="x_control-label" for="mlayout_srl">{$lang->mobile} {$lang->layout}</label>
-			<div class="x_controls">
-				<select name="mlayout_srl" id="mlayout_srl">
-					<option value="0">{$lang->notuse}</option>
-					<option loop="$mlayout_list => $key, $val" value="{$val->layout_srl}" selected="selected"|cond="$iconshop_info->mlayout_srl == $val->layout_srl">{$val->title} ({$val->layout})</option>
-				</select>
-				<a href="#mlayout_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
-				<p id="mlayout_help" class="x_help-block" hidden>{$lang->about_mlayout}</p>
-			</div>
-		</div>
-		<div class="x_control-group">
 			<label class="x_control-label" for="skin">{$lang->skin}</label>
 			<div class="x_controls">
 				<select name="skin" id="skin">
@@ -60,15 +43,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="x_control-group">
-			<label class="x_control-label" for="mskin">{$lang->mobile} {$lang->skin}</label>
-			<div class="x_controls">
-				<select name="mskin" id="mskin">
-					<option value="0">{$lang->notuse}</option>
-					<option loop="$mskin_list=> $key, $val" value="{$key}" selected="selected"|cond="$iconshop_info->mskin== $key || (!$iconshop_info->mskin && $key=='default')">{$val->title}</option>
-				</select>
-			</div>
-		</div>
+
 		<div class="x_control-group">
 			<label class="x_control-label" for="lang_header_text">{$lang->header_text}</label>
 			<div class="x_controls">
@@ -87,7 +62,38 @@
 		</div>
 	</section>
 
-	<section class="section collapsed">
+	<section class="section">
+		<h1>{$lang->mobile_settings}</h1>
+		<div class="x_control-group">
+			<label class="x_control-label">{$lang->mobile_view}</label>
+			<div class="x_controls">
+				<label class="x_inline" for="use_mobile"><input type="checkbox" name="use_mobile" id="use_mobile" value="Y" checked="checked"|cond="$iconshop_info->use_mobile == 'Y'" /> {$lang->about_mobile_view}</label>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="mlayout_srl">{$lang->mobile} {$lang->layout}</label>
+			<div class="x_controls">
+				<select name="mlayout_srl" id="mlayout_srl">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$mlayout_list => $key, $val" value="{$val->layout_srl}" selected="selected"|cond="$iconshop_info->mlayout_srl == $val->layout_srl">{$val->title} ({$val->layout})</option>
+				</select>
+				<a href="#mlayout_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="mlayout_help" class="x_help-block" hidden>{$lang->about_mlayout}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="mskin">{$lang->mobile} {$lang->skin}</label>
+			<div class="x_controls">
+				<select name="mskin" id="mskin">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$mskin_list=> $key, $val" value="{$key}" selected="selected"|cond="$iconshop_info->mskin== $key || (!$iconshop_info->mskin && $key=='default')">{$val->title}</option>
+				</select>
+			</div>
+		</div>
+	</section>
+
+
+	<section class="section">
 		<h1>{$lang->subtitle_advanced}</h1>
 		<div class="x_control-group">
 			<label class="x_control-label" for="module_category_srl">{$lang->module_category}</label>
