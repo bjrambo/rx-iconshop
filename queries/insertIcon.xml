@@ -6,6 +6,7 @@
         <column name="icon_srl" var="icon_srl" filter="number" notnull="notnull" />
         <column name="title" var="title" notnull="notnull" />
         <column name="total_count" var="total_count" default="0" filter="number" />
+        <column name="set_total_count" var="total_count" default="0" filter="number" />
         <column name="price" var="price" default="0" filter="number" />
         <column name="buy_limit" var="buy_limit" default="Y" />
         <column name="send_limit" var="send_limit" default="Y" />

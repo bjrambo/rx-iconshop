@@ -48,7 +48,8 @@
 					<a href="#{$val->icon_srl}" role="button" data-toggle="modal" class="pull-left"><img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" class="img-polaroid media-object" /></a>
 					<div class="media-body">
 						<a href="#{$val->icon_srl}" role="button" data-toggle="modal">
-							<h5 class="media-heading">{$val->title} {$val->icon}</h5></a>
+							<h5 class="media-heading">{$val->title} {$val->icon}</h5>
+						</a>
 
 
 						<!--@if($val->price2 == 0)-->
@@ -56,7 +57,7 @@
 						<!--@else-->
 						{$val->price2}
 						<!--@end-->
-						/ {sprintf("%s : %s",$lang->total_count,$val->total_count2)}
+						/ {$lang->total_count} : {$val->total_count2} / {$val->set_total_count}개
 						<br />
 
 

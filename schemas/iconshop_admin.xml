@@ -2,6 +2,7 @@
     <column name="icon_srl" type="number" size="11" notnull="notnull" primary_key="primary_key" />
     <column name="title" type="varchar" size="250" notnull="notnull" unique="unique_title" />
     <column name="total_count" type="number" size="11" default="0" index="idx_total_count" />
+	<column name="set_total_count" type="number" size="11" default="0" />
     <column name="price" type="number" size="11" default="0" index="idx_price" />
     <column name="buy_limit" type="char" size="1" default="Y" notnull="notnull" index="idx_buy_limit" />
     <column name="send_limit" type="char" size="1" default="Y" notnull="notnull" index="idx_send_limit" />
