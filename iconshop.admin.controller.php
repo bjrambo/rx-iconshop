@@ -125,6 +125,8 @@ class iconshopAdminController extends iconshop
 	 **/
 	function procIconshopAdminIconInsert()
 	{
+		$oModuleModel = getModel('module');
+
 		// 변수 정리
 		$args = Context::getRequestVars();
 		$obj = new stdClass();
@@ -141,32 +143,24 @@ class iconshopAdminController extends iconshop
 			$icon_data = $oIconshopModel->getIconBySrl($args->icon_srl);
 			if(!$icon_data)
 			{
-				return $this->ErrorMessage('invalid_icon');
+				return new Object(-1,'invalid_icon');
 			}
 			$obj->file1 = $icon_data->file1;
 
 			// 원본데이터의 file1이 없고, 업로드한 파일도 없으면..
 			if((!$icon_data->file1) && (!$args->file1['tmp_name'] || !is_uploaded_file($args->file1['tmp_name'])))
 			{
-				return $this->ErrorMessage('null_file1');
+				return new Object(-1, 'null_file1');
 			}
 		}
 
 		if($icon_data === null && (!$args->file1['tmp_name'] || !is_uploaded_file($args->file1['tmp_name'])))
 		{
-			return $this->ErrorMessage('null_file1');
+			return new Object(-1, 'null_file1');
 		}
 
 
 		// 레벨값이 최대레벨보다 높을경우..
-		$oModuleModel = getModel('module');
-		$point_config = $oModuleModel->getModuleConfig('point');
-		$level_limit = (int)$args->level_limit;
-		if($level_limit > $point_config->max_level)
-		{
-			$level_limit = $point_config->max_level;
-		}
-
 		// 선택한 그룹중 존재하지 않는그룹이 있을경우...
 		$oMemberModel = getModel('member');
 		$member_group_list = $oMemberModel->getGroups(0);
@@ -187,17 +181,8 @@ class iconshopAdminController extends iconshop
 		$obj->icon_srl = $icon_data->icon_srl;
 		$obj->title = $args->title;
 		$obj->total_count = (int)$args->total_count;
+		$obj->set_total_count = $args->total_count;
 		$obj->price = (int)$args->price;
-		$obj->buy_limit = ($args->buy_limit == "Y") ? "Y" : "N";
-		$obj->send_limit = ($args->send_limit == "Y") ? "Y" : "N";
-		$obj->sell_limit = ($args->sell_limit == "Y") ? "Y" : "N";
-		$obj->point_limit = ($args->point_limit == "Y") ? "Y" : "N";
-		$obj->minute_limit = ($args->minute_limit == "Y") ? "Y" : "N";
-		$obj->event_limit = ($args->event_limit == "Y") ? "Y" : "N";
-		$obj->minute = (int)$args->minute;
-		$obj->event_start = (int)$args->event_start;
-		$obj->event_end = (int)$args->event_end;
-		$obj->level_limit = (int)$level_limit;
 		$obj->group_limit = ($group_limit) ? implode(",", $group_limit) : "";
 
 		// 첨부파일이 있을때의 처리
