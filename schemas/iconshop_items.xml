@@ -6,6 +6,5 @@
 	<column name="price" type="number" size="11" default="0" index="idx_price" />
 	<column name="extra_vars" type="bigtext" />
 	<column name="regdate" type="date" />
-	<column name="content" type="bigtext" />
 	<column name="file1" type="varchar" size="500" />
 </table>

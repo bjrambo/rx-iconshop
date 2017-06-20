@@ -8,7 +8,6 @@
         <column name="set_total_count" var="set_total_count" default="0" filter="number" />
         <column name="price" var="price" default="0" filter="number" />
         <column name="extra_vars" var="extra_vars" />
-        <column name="content" var="content" />
         <column name="file1" var="file1" notnull="notnull" />
     </columns>
     <conditions>
