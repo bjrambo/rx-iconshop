@@ -1,7 +1,7 @@
 <query id="getMemberIconListWithAdmin" action="select">
     <tables>
-        <table name="iconshop_member" alias="member" />
-        <table name="iconshop_admin" alias="admin" />
+        <table name="iconshop_user_item" alias="member" />
+        <table name="iconshop_items" alias="admin" />
     </tables>
     <columns>
         <column name="member.*" />

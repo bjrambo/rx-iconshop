@@ -1,6 +1,6 @@
 <query id="getMemberIcon" action="select">
     <tables>
-        <table name="iconshop_member" />
+        <table name="iconshop_user_item" />
     </tables>
     <columns>
         <column name="*" />

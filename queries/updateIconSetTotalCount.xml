@@ -1,6 +1,6 @@
 <query id="updateIconSetTotalCount" action="update">
 	<tables>
-		<table name="iconshop_admin" />
+		<table name="iconshop_items" />
 	</tables>
 	<columns>
 		<column name="set_total_count" var="set_total_count" filter="number" />

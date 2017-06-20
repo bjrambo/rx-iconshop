@@ -1,6 +1,6 @@
 <query id="deleteMemberIcon" action="delete">
     <tables>
-        <table name="iconshop_member" />
+        <table name="iconshop_user_item" />
     </tables>
     <conditions>
         <condition operation="equal" column="data_srl" var="data_srl" filter="number" />
