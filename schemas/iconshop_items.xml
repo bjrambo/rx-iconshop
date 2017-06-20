@@ -1,0 +1,11 @@
+<table name="iconshop_items">
+	<column name="icon_srl" type="number" size="11" notnull="notnull" primary_key="primary_key" />
+	<column name="title" type="varchar" size="250" notnull="notnull" unique="unique_title" />
+	<column name="total_count" type="number" size="11" default="0" index="idx_total_count" />
+	<column name="set_total_count" type="number" size="11" default="0" />
+	<column name="price" type="number" size="11" default="0" index="idx_price" />
+	<column name="extra_vars" type="bigtext" />
+	<column name="regdate" type="date" />
+	<column name="content" type="bigtext" />
+	<column name="file1" type="varchar" size="500" />
+</table>
