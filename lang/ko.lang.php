@@ -24,12 +24,12 @@ $lang->iconshop_setting = "아이콘샵 기본 설정";
 
 // 공통으로 사용되는 변수
 $lang->iconshop_checked_list = array(
-	"Y",
-	"N"
+	'Y' => '제한안함',
+	'N' => '제한함'
 );
 $lang->iconshop_checked_list2 = array(
-	"N",
-	"Y"
+	'N' => '제한안함',
+	'Y' => '제한함'
 );
 
 //  메뉴별 이름

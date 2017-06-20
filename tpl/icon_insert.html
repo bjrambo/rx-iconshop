@@ -34,7 +34,7 @@
 			<div class="x_controls">
 				<select name="buy_limit">
 					<!--@foreach($lang->iconshop_checked_list as $key=>$val)-->
-					<option value="{$val}" <!--@if($val==$icon_data->buy_limit)-->selected="selected"<!--@end-->>{$val}</option>
+					<option value="{$key}" <!--@if($key==$icon_data->buy_limit)-->selected="selected"<!--@end-->>{$val}</option>
 					<!--@end-->
 				</select>
 				<a href="#buy_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
@@ -46,7 +46,7 @@
 			<div class="x_controls">
 				<select name="send_limit">
 					<!--@foreach($lang->iconshop_checked_list as $key=>$val)-->
-					<option value="{$val}" <!--@if($val==$icon_data->send_limit)-->selected="selected"<!--@end-->>{$val}</option>
+					<option value="{$key}" <!--@if($key==$icon_data->send_limit)-->selected="selected"<!--@end-->>{$val}</option>
 					<!--@end-->
 				</select>
 				<a href="#send_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
@@ -59,7 +59,7 @@
 			<div class="x_controls">
 				<select name="sell_limit">
 					<!--@foreach($lang->iconshop_checked_list as $key=>$val)-->
-					<option value="{$val}" <!--@if($val==$icon_data->sell_limit)-->selected="selected"<!--@end-->>{$val}</option>
+					<option value="{$key}" <!--@if($key==$icon_data->sell_limit)-->selected="selected"<!--@end-->>{$val}</option>
 					<!--@end-->
 				</select>
 				<a href="#sell_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
@@ -70,8 +70,8 @@
 			<label class="x_control-label" for="lang_browser_title">{$lang->point_limit}</label>
 			<div class="x_controls">
 				<select name="point_limit">
-					<!--@foreach($lang->iconshop_checked_list as $key=>$val)-->
-					<option value="{$val}" <!--@if($val==$icon_data->point_limit)-->selected="selected"<!--@end-->>{$val}</option>
+					<!--@foreach($lang->iconshop_checked_list as $key => $val)-->
+					<option value="{$key}" <!--@if($key==$icon_data->point_limit)-->selected="selected"<!--@end-->>{$val}</option>
 					<!--@end-->
 				</select>
 				<a href="#point_limit_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
@@ -83,7 +83,7 @@
 			<div class="x_controls">
 				<select name="minute_limit">
 					<!--@foreach($lang->iconshop_checked_list2 as $key=>$val)-->
-					<option value="{$val}" <!--@if($val==$icon_data->minute_limit)-->selected="selected"<!--@end-->>{$val}</option>
+					<option value="{$key}" <!--@if($key==$icon_data->minute_limit)-->selected="selected"<!--@end-->>{$val}</option>
 					<!--@end-->
 				</select>
 				<input type="text" name="minute" value="{$icon_data->minute}" />{$lang->unit_min}
@@ -96,7 +96,7 @@
 			<div class="x_controls">
 				<select name="event_limit">
 					<!--@foreach($lang->iconshop_checked_list2 as $key=>$val)-->
-					<option value="{$val}" <!--@if($val==$icon_data->event_limit)-->selected="selected"<!--@end-->>{$val}</option>
+					<option value="{$key}" <!--@if($val==$icon_data->event_limit)-->selected="selected"<!--@end-->>{$val}</option>
 					<!--@end-->
 				</select>
 				<span>
