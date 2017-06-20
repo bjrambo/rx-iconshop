@@ -1,0 +1,8 @@
+<query id="getPreviousIcons" action="select">
+	<tables>
+		<table name="iconshop_admin" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+</query>

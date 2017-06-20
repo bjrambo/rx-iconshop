@@ -87,12 +87,55 @@ class iconshop extends ModuleObject
 	 **/
 	function moduleInstall()
 	{
+		$oDB = DB::getInstance();
+
 		$oModuleModel = getModel('module');
 		$oModuleController = getController('module');
 		$oAddonAdminController = getAdminController('addon');
 
 		// iconshop 모듈에서 사용할 디렉토리 생성
 		FileHandler::makeDir('./files/iconshop');
+
+		if(!$oDB->isTableExists("iconshop_admin"))
+		{
+			$output = executeQueryArray('iconshop.getPreviousIcons');
+			if($output->toBool())
+			{
+				return $output;
+			}
+			$oDB->begin();
+			if($output->data)
+			{
+				foreach($output->data as $val)
+				{
+					$args = new stdClass();
+					$args->icon_srl = $val->icon_srl;
+					$args->title = $val->title;
+					$args->total_count = $val->total_count;
+					if(!$val->set_total_count)
+					{
+						$args->set_total_count = $val->total_count;
+					}
+					else
+					{
+						$args->set_total_count = $val->set_total_count;
+					}
+					$args->price = $val->price;
+					$args->regdate = $val->regdate;
+					$args->file1 = $val->file1;
+					$args->extra_vars = serialize(new stdClass());
+					$insert_output = executeQuery('iconshop.insertIcon', $args);
+					if(!$insert_output->toBool())
+					{
+						$oDB->rollback();
+						return $insert_output;
+					}
+				}
+			}
+			$oDB->commit();
+
+			$oDB->dropTable('iconshop_admin');
+		}
 
 		// iconshop 모듈 생성
 		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
@@ -150,12 +193,7 @@ class iconshop extends ModuleObject
 		$oAddonAdminModel = getAdminModel('addon');
 
 		// 2010. 06. 25 point_limit 추가
-		if(!$oDB->isColumnExists("iconshop_admin", "point_limit"))
-		{
-			return true;
-		}
-
-		if(!$oDB->isColumnExists('iconshop_admin', 'set_total_count'))
+		if($oDB->isTableExists("iconshop_admin"))
 		{
 			return true;
 		}
@@ -165,6 +203,7 @@ class iconshop extends ModuleObject
 		{
 			return true;
 		}
+
 		// iconshop 모듈이 존재하지 않으면...
 		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
 		if(!$iconshop_info->module_srl)
@@ -204,32 +243,45 @@ class iconshop extends ModuleObject
 		$oModuleController = getController('module');
 		$oAddonAdminController = getAdminController('addon');
 
-		if(!$oDB->isColumnExists("iconshop_admin", "point_limit"))
+		if($oDB->isTableExists("iconshop_admin"))
 		{
-			$oDB->addColumn('iconshop_admin', "point_limit", "char", 1, "Y", "notnull");
-		}
-
-		if(!$oDB->isColumnExists("iconshop_admin", "set_total_count"))
-		{
-			$oDB->addColumn('iconshop_admin', "set_total_count", "number", 11, 0, false);
-			$output = executeQueryArray('iconshop.getIconListByClass');
-			if(!empty($output->data))
+			$output = executeQueryArray('iconshop.getPreviousIcons');
+			if(!$output->toBool())
 			{
-				$oDB->begin();
+				return $output;
+			}
+			$oDB->begin();
+			if($output->data)
+			{
 				foreach($output->data as $val)
 				{
 					$args = new stdClass();
 					$args->icon_srl = $val->icon_srl;
-					$args->set_total_count = $val->total_count;
-					$output = executeQuery('iconshop.updateIconSetTotalCount', $args);
-					if(!$output->toBool())
+					$args->title = $val->title;
+					$args->total_count = $val->total_count;
+					if(!$val->set_total_count)
+					{
+						$args->set_total_count = $val->total_count;
+					}
+					else
+					{
+						$args->set_total_count = $val->set_total_count;
+					}
+					$args->price = $val->price;
+					$args->regdate = $val->regdate;
+					$args->file1 = $val->file1;
+					$args->extra_vars = serialize(new stdClass());
+					$insert_output = executeQuery('iconshop.insertIcon', $args);
+					if(!$insert_output->toBool())
 					{
 						$oDB->rollback();
-						return $output;
+						return $insert_output;
 					}
 				}
-				$oDB->commit();
 			}
+			$oDB->commit();
+
+			$oDB->dropTable('iconshop_admin');
 		}
 
 		// iconshop 모듈에서 사용할 디렉토리 생성

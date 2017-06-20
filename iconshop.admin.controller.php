@@ -130,7 +130,7 @@ class iconshopAdminController extends iconshop
 		$obj = new stdClass();
 		if(!$args->title)
 		{
-			return $this->ErrorMessage('null_title');
+			return new Object(-1, 'null_title');
 		}
 
 		// icon_srl이 있으면 원본 데이터 가져오기
