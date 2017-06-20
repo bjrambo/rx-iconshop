@@ -54,12 +54,6 @@ class iconshopController extends iconshop
 			return new Object(-1, 'invalid_icon');
 		}
 
-		// 조건: 구입가능여부
-		if($icon_data->buy_limit != "Y")
-		{
-			return new Object(-1, 'buy_limit_error');
-		}
-
 		// 이미 보유하고 있는지 검사..
 		$member_icon_data = $oIconshopModel->getMemberIconByIconSrl($icon_data->icon_srl, $logged_info->member_srl);
 		if($member_icon_data->data_srl)
@@ -67,32 +61,10 @@ class iconshopController extends iconshop
 			return new Object(-1, 'already_icon');
 		}
 
-		// 조건:레벨 검사
-		if($icon_data->level_limit > $logged_info->point_level)
-		{
-			return new Object(-1, 'level_limit_error');
-		}
-
 		// 조건:그룹 검사
 		if($icon_data->group_limit && !$oIconshopModel->groupCheck($logged_info->group_list, $icon_data->group_limit_list))
 		{
 			return new Object(-1, 'group_limit_error');
-		}
-
-		// 조건:이벤트기간 검사
-		if($icon_data->event_limit == "Y")
-		{
-			$now = date("Ymd", time());
-			$event_start = zdate($icon_data->event_start, "Ymd");
-			$event_end = zdate($icon_data->event_end, "Ymd");
-			if($event_start && $now < $event_start)
-			{
-				return new Object(-1, 'event_limit_error');
-			}
-			if($event_end && $now > $event_end)
-			{
-				return new Object(-1, 'event_limit_error');
-			}
 		}
 
 		// 조건:갯수 검사
@@ -199,12 +171,6 @@ class iconshopController extends iconshop
 			return new Object(-1, 'invalid_icon');
 		}
 
-		// 조건: 선물가능여부
-		if($icon_data->send_limit != "Y")
-		{
-			return new Object(-1, 'send_limit_error');
-		}
-
 		// 보낸이의 포인트/레벨을 구해옴
 		$point_config = $oModuleModel->getModuleConfig('point');
 		$logged_info->point = $oPointModel->getPoint($logged_info->member_srl);
@@ -222,22 +188,6 @@ class iconshopController extends iconshop
 		}
 		$receive_info->point = $oPointModel->getPoint($receive_info->member_srl);
 		$receive_info->point_level = $oPointModel->getLevel($receive_info->point, $point_config->level_step);
-
-		// 조건:이벤트기간 검사
-		if($icon_data->event_limit == "Y")
-		{
-			$now = date("Ymd", time());
-			$event_start = zdate($icon_data->event_start, "Ymd");
-			$event_end = zdate($icon_data->event_end, "Ymd");
-			if($event_start && $now < $event_start)
-			{
-				return new Object(-1, 'event_limit_error');
-			}
-			if($event_end && $now > $event_end)
-			{
-				return new Object(-1, 'event_limit_error');
-			}
-		}
 
 		// 조건:수량 검사
 		if(!$icon_data->total_count)
@@ -258,16 +208,6 @@ class iconshopController extends iconshop
 		if(($iconshop_config->member_max_count) && ($receive_info->icon_count >= $iconshop_config->member_max_count))
 		{
 			return new Object(-1, 'max_count_error');
-		}
-
-		// 조건:레벨 검사 (보낸이/받는이)
-		if($icon_data->level_limit > $logged_info->point_level)
-		{
-			return new Object(-1, 'level_limit_error');
-		}
-		if($icon_data->level_limit > $receive_info->point_level)
-		{
-			return new Object(-1, 'level_limit_error');
 		}
 
 		// 조건:그룹 검사 (보낸이/받는이)

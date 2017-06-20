@@ -147,8 +147,8 @@
 				</div>
 				<div class="modal-footer">
 
-					<!--@if($val->buy_limit == "Y")--><a onclick="iconBuy({$val->icon_srl});" class="x_btn x_btn-primary">{$lang->icon_buy}</a><!--@else--><a href="#" class="x_btn x_btn-primary disabled">{$lang->icon_buy}</a><!--@end-->
-					<!--@if($val->send_limit == "Y")--><a href="{getUrl('module','iconshop','act','dispIconshopIconSend','icon_srl',$val->icon_srl)}" onclick="popopen(this.href,'iconSend');return false;" class="x_btn x_btn-success">{$lang->icon_send}</a><!--@else--><a href="#" class="x_btn x_btn-success disabled">{$lang->icon_send}</a><!--@end-->
+					<a onclick="iconBuy({$val->icon_srl});" class="x_btn x_btn-primary">{$lang->icon_buy}</a>
+					<a href="{getUrl('module','iconshop','act','dispIconshopIconSend','icon_srl',$val->icon_srl)}" onclick="popopen(this.href,'iconSend');return false;" class="x_btn x_btn-success">{$lang->icon_send}</a>
 					<button class="x_btn" data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
 				</div>
 

@@ -1,0 +1,8 @@
+<query id="getPreviousUserIcons" action="select">
+	<tables>
+		<table name="iconshop_member" />
+	</tables>
+	<columns>
+		<column name="*" />
+	</columns>
+</query>

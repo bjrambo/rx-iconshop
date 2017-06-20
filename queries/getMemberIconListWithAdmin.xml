@@ -6,7 +6,6 @@
     <columns>
         <column name="member.*" />
         <column name="admin.title" />
-        <column name="admin.sell_limit" />
         <column name="admin.file1" />
     </columns>
     <conditions>
@@ -24,8 +23,6 @@
         </group>
         <group pipe="and">
             <condition operation="equal" column="member.member_srl" var="s_member_srl" filter="number" />
-            <condition operation="like" column="member.user_id" var="s_user_id" pipe="or" />
-            <condition operation="like" column="member.nick_name" var="s_nick_name" pipe="or" />
         </group>
     </conditions>
     <navigation>

@@ -198,6 +198,11 @@ class iconshop extends ModuleObject
 			return true;
 		}
 
+		if($oDB->isTableExists('iconshop_member'))
+		{
+			return true;
+		}
+
 		// iconshop 모듈에서 사용할 디렉토리가 없으면
 		if(!is_dir('./files/iconshop'))
 		{
@@ -282,6 +287,40 @@ class iconshop extends ModuleObject
 			$oDB->commit();
 
 			$oDB->dropTable('iconshop_admin');
+		}
+
+		if($oDB->isTableExists('iconshop_member'))
+		{
+			$output = executeQueryArray('iconshop.getPreviousUserIcons');
+			if(!$output->toBool())
+			{
+				return $output;
+			}
+			$oDB->begin();
+			if($output->data)
+			{
+				foreach($output->data as $val)
+				{
+					$args = new stdClass();
+					$args->data_srl = $val->data_srl;
+					$args->icon_srl = $val->icon_srl;
+					$args->member_srl = $val->member_srl;
+					$args->is_selected = $val->is_selected;
+					$args->minute_limit = $val->minuted_limit;
+					$args->start_date = $val->start_date;
+					$args->end_date = $val->end_date;
+					$args->ipaddress = $val->ipaddress;
+
+					$insert_output = executeQuery('iconshop.insertMemberIcon', $args);
+					if(!$insert_output->toBool())
+					{
+						$oDB->rollback();
+						return $insert_output;
+					}
+				}
+			}
+			$oDB->commit();
+			$oDB->dropTable('iconshop_member');
 		}
 
 		// iconshop 모듈에서 사용할 디렉토리 생성
