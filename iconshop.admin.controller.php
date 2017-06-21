@@ -99,10 +99,20 @@ class iconshopAdminController extends iconshop
 		$iconshop_config->item_delete_title = $args->item_delete_title;
 		$iconshop_config->item_delete_message = $args->item_delete_message;
 
+		$iconshop_config->day_price_use = $args->day_price_use;
 
-		// 저장
-		$oModuleController = getController('module');
-		$output = $oModuleController->insertModuleConfig('iconshop', $iconshop_config);
+		$iconshop_config->day_price_data = array();
+		foreach($args->days as $key => $val)
+		{
+			$check_number = intval($val);
+			if($check_number === 0 && $val == null)
+			{
+				continue;
+			}
+			$iconshop_config->day_price_data[$val] = $args->day_price[$key];
+		}
+
+		$output = self::setConfig($iconshop_config);
 		if(!$output->toBool())
 		{
 			return $output;
@@ -177,13 +187,19 @@ class iconshopAdminController extends iconshop
 			}
 		}
 
+		// extra vars 세팅
+		$extra_args = new stdClass();
+		$extra_args->group_limit = $group_limit;
+
+		$extra_vars = serialize($extra_args);
+
 		// 데이터 세팅
 		$obj->icon_srl = $icon_data->icon_srl;
 		$obj->title = $args->title;
 		$obj->total_count = (int)$args->total_count;
 		$obj->set_total_count = $args->total_count;
 		$obj->price = (int)$args->price;
-		$obj->group_limit = ($group_limit) ? implode(",", $group_limit) : "";
+		$obj->extra_vars = $extra_vars;
 
 		// 첨부파일이 있을때의 처리
 		$file1_obj = $args->file1;

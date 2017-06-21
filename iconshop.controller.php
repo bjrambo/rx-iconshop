@@ -31,15 +31,15 @@ class iconshopController extends iconshop
 			return new Object(-1, 'msg_not_permitted');
 		}
 
-		// 넘어온 변수 체크
-		$params = Context::gets('icon_srl', 'is_selected');
-		if(!$params->icon_srl)
+		$obj = Context::getRequestVars();
+
+		if(!$obj->icon_srl)
 		{
 			return new Object(-1, 'invalid_icon');
 		}
-		if($params->is_selected != 'Y')
+		if($obj->is_selected != 'Y')
 		{
-			$params->is_selected = 'N';
+			$obj->is_selected = 'N';
 		}
 
 		// 포인트/레벨을 구해옴
@@ -48,7 +48,7 @@ class iconshopController extends iconshop
 		$logged_info->point_level = $oPointModel->getLevel($logged_info->point, $point_config->level_step);
 
 		// 원본데이터 가져오기
-		$icon_data = $oIconshopModel->getIconBySrl($params->icon_srl);
+		$icon_data = $oIconshopModel->getIconBySrl($obj->icon_srl);
 		if(!$icon_data)
 		{
 			return new Object(-1, 'invalid_icon');
@@ -72,13 +72,11 @@ class iconshopController extends iconshop
 		{
 			return new Object(-1, 'count_limit_error');
 		}
-
 		// 조건:포인트 검사
 		if($icon_data->price > $logged_info->point)
 		{
 			return new Object(-1, 'point_limit_error');
 		}
-
 		// 조건:최대 보유갯수 검사
 		$iconshop_config = self::getConfig();
 		$logged_info->icon_count = $oIconshopModel->getMemberIconCount($logged_info->member_srl);
@@ -93,10 +91,32 @@ class iconshopController extends iconshop
 		$args->member_srl = $logged_info->member_srl;
 		$args->user_id = $logged_info->user_id;
 		$args->nick_name = $logged_info->nick_name;
-		$args->is_selected = $params->is_selected;
-		$args->minute_limit = $icon_data->minute_limit;
-		$args->end_date = date("YmdHis", strtotime("+{$icon_data->minute} minutes", strtotime("now")));
-		$data_srl = $this->insertMemberIcon($args);
+		$args->is_selected = $obj->is_selected;
+
+		if($iconshop_config->day_price_use == 'Y')
+		{
+			// 회원 일자선택에 따른 추가 포인트설정
+			$price = $oIconshopModel->getDayPriceByKey($obj->day_price_key);
+			$icon_data->price = $icon_data->price + $price;
+
+			if($obj->day_price_key)
+			{
+				$args->day_limit = 'Y';
+				$args->end_date = date("YmdHis", strtotime("+$args->day_price_key days", strtotime("now")));
+			}
+			else
+			{
+				$args->day_limit = 'N';
+				$args->end_date = 0;
+			}
+		}
+
+		$data_output = $this->insertMemberIcon($args);
+		if(!$data_output->toBool())
+		{
+			return $data_output;
+		}
+
 
 		// 회원의 포인트 차감
 		if($icon_data->price && $icon_data->point_limit == "Y")
@@ -112,14 +132,14 @@ class iconshopController extends iconshop
 			$this->updateIcon($icon_data);
 		}
 		// 대표아이콘 설정시 딴 아이콘의 is_selected 변경
-		if($params->is_selected == "Y")
+		if($obj->is_selected == "Y")
 		{
 			$this->updateIsSelected($logged_info->member_srl, $icon_data->icon_srl);
 		}
 
 		// 구입로그 남기기
 		$args = new stdClass();
-		$args->data_srl = $data_srl;
+		$args->data_srl = $data_output->data_srl;
 		$args->icon_srl = $icon_data->icon_srl;
 		$args->category_srl = 1;
 		$args->sender_srl = 0;
@@ -130,6 +150,16 @@ class iconshopController extends iconshop
 
 		// 성공 메세지 등록
 		$this->setMessage("success_buy");
+
+		if(Context::get('success_return_url'))
+		{
+			$this->setRedirectUrl(Context::get('success_return_url'));
+		}
+		else
+		{
+			$this->setRedirectUrl(getNotEncodedUrl('', 'mid', 'iconshop'));
+		}
+
 	}
 
 	/**
@@ -238,7 +268,11 @@ class iconshopController extends iconshop
 		$args->is_selected = "N";
 		$args->minute_limit = $icon_data->minute_limit;
 		$args->end_date = date("YmdHis", strtotime("+{$icon_data->minute} minutes", strtotime("now")));
-		$data_srl = $this->insertMemberIcon($args);
+		$data_output = $this->insertMemberIcon($args);
+		if(!$data_output->toBool())
+		{
+			return $data_output;
+		}
 
 		// 모듈설정 가져옴
 		$point = $icon_data->price;
@@ -273,7 +307,7 @@ class iconshopController extends iconshop
 
 		// 선물로그 남기기
 		$args = new stdClass();
-		$args->data_srl = $data_srl;
+		$args->data_srl = $data_output->data_srl;
 		$args->icon_srl = $icon_data->icon_srl;
 		$args->category_srl = 2;
 		$args->sender_srl = $logged_info->member_srl;
@@ -553,11 +587,8 @@ class iconshopController extends iconshop
 	{
 		$args->data_srl = getNextSequence();
 		$output = executeQuery('iconshop.insertMemberIcon', $args);
-		if(!$output->toBool())
-		{
-			return $output;
-		}
-		return $args->data_srl;
+
+		return $output;
 	}
 
 	function updateMemberIcon($args)

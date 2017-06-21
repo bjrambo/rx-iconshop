@@ -7,9 +7,9 @@
  **/
 class iconshop extends ModuleObject
 {
-	protected static $config = NULL;
+	public static $config = NULL;
 
-	protected static function getConfig()
+	public static function getConfig()
 	{
 		if(self::$config === NULL)
 		{
@@ -77,9 +77,12 @@ class iconshop extends ModuleObject
 		return self::$config;
 	}
 
-	function setConfig()
+	protected static function setConfig($config)
 	{
+		$oModuleController = getController('module');
+		$output = $oModuleController->insertModuleConfig('iconshop', $config);
 
+		return $output;
 	}
 
 	/**
@@ -306,7 +309,7 @@ class iconshop extends ModuleObject
 					$args->icon_srl = $val->icon_srl;
 					$args->member_srl = $val->member_srl;
 					$args->is_selected = $val->is_selected;
-					$args->minute_limit = $val->minuted_limit;
+					$args->day_limit = $val->minuted_limit;
 					$args->start_date = $val->start_date;
 					$args->end_date = $val->end_date;
 					$args->ipaddress = $val->ipaddress;

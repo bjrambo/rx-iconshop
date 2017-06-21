@@ -5,7 +5,7 @@
  * @author 러키군 (admin@barch.kr)
  * @brief  iconshop 모듈의 Model class
  **/
-class iconshopModel extends module
+class iconshopModel extends iconshop
 {
 	/**
 	 * @brief 초기화
@@ -308,5 +308,23 @@ class iconshopModel extends module
 			}
 			return $output->data;
 		}
+	}
+
+	function getDayPriceByKey($pKey)
+	{
+		$config = self::getConfig();
+		$price = 0;
+		if(is_array($config->day_price_data))
+		{
+			foreach($config->day_price_data as $key => $val)
+			{
+				if(intval($pKey) === intval($key))
+				{
+					$price = $val;
+					break;
+				}
+			}
+		}
+		return $price;
 	}
 }

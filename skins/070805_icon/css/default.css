@@ -69,7 +69,11 @@
 .icon_data .info .icon_sell a { cursor:pointer; text-decoration:none; color:#333; font-weight:bold; background:url(sell.png) no-repeat center left; padding-left:20px;}
 .icon_data .info .icon_sell a:hover,
 .icon_data .info .icon_sell a:active,
-.icon_data .info .icon_sell a:focus{ text-decoration:underline; color:#333} 
+.icon_data .info .icon_sell a:focus{ text-decoration:underline; color:#333}
+
+.price-list {
+	list-style: none;
+}
 
 
 .sale{ margin-top:10px;}

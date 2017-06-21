@@ -3,7 +3,7 @@
 	<column name="icon_srl" type="number" size="11" notnull="notnull" index="idx_icon_srl" />
 	<column name="member_srl" type="number" size="11" notnull="notnull" index="idx_member_srl" />
 	<column name="is_selected" type="varchar" size="10" default="N" notnull="notnull" index="idx_is_selected" />
-	<column name="minute_limit" type="varchar" size="10" default="N" notnull="notnull" index="idx_minute_limit" />
+	<column name="day_limit" type="varchar" size="10" default="N" notnull="notnull" index="idx_day_limit" />
 	<column name="start_date" type="date" index="idx_start_date" />
 	<column name="end_date" type="date" index="idx_end_date" />
 	<column name="ipaddress" type="varchar" size="128" notnull="notnull" index="idx_ipaddress" />

@@ -60,6 +60,8 @@ class iconshopAdminView extends iconshop
 	 **/
 	function dispIconshopAdminAddConfig()
 	{
+
+
 		// 템플릿 파일 지정
 		$this->setTemplateFile('add_config');
 	}
@@ -115,6 +117,7 @@ class iconshopAdminView extends iconshop
 		{
 			$oIconshopModel = getModel('iconshop');
 			$icon_data = $oIconshopModel->getIconBySrl($icon_srl);
+			$icon_data->extra_vars = unserialize($icon_data->extra_vars);
 			if($icon_data)
 			{
 				Context::set('icon_data', $icon_data);

@@ -7,7 +7,7 @@
         <column name="icon_srl" var="icon_srl" filter="number" notnull="notnull" />
         <column name="member_srl" var="member_srl" filter="number" notnull="notnull" />
         <column name="is_selected" var="is_selected" default="N" />
-        <column name="minute_limit" var="minute_limit" default="N" />
+        <column name="day_limit" var="day_limit" default="N" />
         <column name="start_date" default="curdate()" filter="number" />
         <column name="end_date" var="end_date" filter="number" />
         <column name="ipaddress" default="ipaddress()" />

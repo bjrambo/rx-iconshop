@@ -1,4 +1,5 @@
 <include target="./header.html" />
+<load target="./js/iconshop_admin.js" />
 
 <div class="x_page-header">
 	<h1>{$lang->cmd_addition_setup}</h1>
@@ -110,6 +111,42 @@
 
 				<a href="#sender_help_2" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 				<p id="sender_help_2" class="x_help-block" hidden>{$lang->sender_config_about} {$iconshop_config->item_delete_message}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">기간에 따른 가격 사용여부</label>
+			<div class="x_controls">
+				<label class="x_inline">
+					<input type="radio" id="day_price_use_Y" name="day_price_use" value="Y" checked="checked"|cond="$iconshop_config->day_price_use == 'Y'" /> {$lang->use}
+				</label>
+				<label class="x_inline">
+					<input type="radio" id="day_price_use_N" name="day_price_use" value="N" checked="checked"|cond="$iconshop_config->day_price_use != 'Y'" /> {$lang->notuse}
+				</label>
+				<p class="x_help-block">기간에 따른 가격책정을 사용할지 여부를 정합니다. 이 옵션이 설정되어야 정상적으로 아래의 설정대로 기간에 따라 추가 요금기능이 정상적으로 작동합니다.</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label">기간에 따른 가격</label>
+			<div class="x_controls">
+				<div class="day_number" loop="$iconshop_config->day_price_data => $key,$val">
+					<label class="x_inline">
+						<input type="number" name="days[]" value="{$key}" />일
+					</label>
+					<label class="x_inline">
+						<input type="number" name="day_price[]" value="{$val}" />{$lang->point}
+					</label>
+				</div>
+				<div class="day_number">
+					<label class="x_inline">
+						<input type="number" name="days[]" value="" />일
+					</label>
+					<label class="x_inline">
+						<input type="number" name="day_price[]" value="" />{$lang->point}
+					</label>
+				</div>
+				<a class="more-btn">추가하기</a>
+				<a class="remove-btn">한칸삭제하기</a>
+				<p class="x_help-block">해당 설정 기간에 따라 가격을 설정할 수 있습니다.</p>
 			</div>
 		</div>
 		<div class="x_control-group">

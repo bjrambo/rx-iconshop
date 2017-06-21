@@ -1,3 +1,26 @@
+jQuery(function($){
+	$(document).ready(function(){
+		$('.more-btn').click(function () {
+			var $last_str = $('.day_number').last().val('').clone();
+			addMemberForm($last_str);
+			return false;
+		});
+		$('.remove-btn').click(function () {
+			deleteMemberForm();
+			return false;
+		})
+	});
+});
+
+function addMemberForm(str) {
+	$('.more-btn').before(str);
+}
+
+function deleteMemberForm() {
+	var $last_str = $('.day_number').last();
+	$last_str.remove();
+}
+
 // 회원상품 추가후
 function completeInsertMemberIcon(ret_obj) {
     var error = ret_obj['error'];

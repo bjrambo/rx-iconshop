@@ -8,6 +8,7 @@ function iconBuy(icon_srl) {
     exec_xml('iconshop', 'procIconshopIconBuy', params, completeReload);
 }
 
+
 function iconSelected(data_srl) {
     if(!data_srl) return;
     if(!confirm(confirm_isselected)) return;

@@ -1,4 +1,8 @@
 <include target="_header.html" />
+<div class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
 <block cond="$is_logged">
 	{@
 		$oPointModel = getModel('point');
@@ -40,8 +44,6 @@
 		$count = 0;
 		$cell_index = 0;
 		}
-
-
 		<li loop="$icon_list=>$key,$val">
 			<div class="thumbnail">
 				<div class="media">
@@ -50,8 +52,6 @@
 						<a href="#{$val->icon_srl}" role="button" data-toggle="modal">
 							<h5 class="media-heading">{$val->title} {$val->icon}</h5>
 						</a>
-
-
 						<!--@if($val->price2 == 0)-->
 						<font color="#FF3300">무료</font>
 						<!--@else-->
@@ -59,8 +59,6 @@
 						<!--@end-->
 						/ {$lang->total_count} : {$val->total_count2} / 총{$val->set_total_count}개
 						<br />
-
-
 						{$lang->minute_limit} :
 						<!--@if($val->minute2 == 43200)-->
 						<font color="#FF3300">구입후 한달</font>
@@ -69,89 +67,94 @@
 						<!--@else-->
 						{$val->minute2}
 						<!--@end-->
-
-
 					</div>
 				</div>
-
 			</div>
-
-
 			<div id="{$val->icon_srl}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-header">
-					<button type="button" class="x_close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="myModalLabel">{$lang->icon_buy}/{$lang->icon_send}</h3>
-				</div>
-				<div class="modal-body">
+				<form action="{Context::getRequestUri()}" method="post" ruleset="iconBuy"|cond="$iconshop_config->day_price_use === 'Y'">
+					<input type="hidden" name="module" value="iconshop" />
+					<input type="hidden" name="act" value="procIconshopIconBuy" />
+					<input type="hidden" name="icon_srl" value="{$val->icon_srl}" />
 
-					<h3>{$val->title}</h3>
-
-
-					<p style="color:#00F; font-size:14px;">{$lang->icon_price} : <!--@if($val->price2 == 0)-->
-						<font color="#FF3300">무료</font>
-						<!--@else-->
-						{$val->price2}
-						<!--@end--></p>
-
-					<table style="width:250px; margin:0 auto; text-align:left; border-bottom:1px solid #ccc" class="popicon">
-						<Tr>
-							<Td>{sprintf("%s : %s",$lang->total_count,$val->total_count2)}</Td>
-
-							<Td align="right">{$lang->minute_limit} :
-								<!--@if($val->minute2 == 43200)-->
-								<font color="#FF3300">구입후 한달</font>
-								<!--@elseif($val->minute2 == 10080)-->
-								<font color="#3366CC">구입후 일주일</font>
-								<!--@else-->
-								{$val->minute2}
-								<!--@end-->
-
-							</Td>
-						</Tr>
-					</table>
-
-
-					<div style="clear:both; display:block;text-align:center">
-						<h4>Preview</h4>
-
-						<span style="background:url({$val->file1}) no-repeat left center; padding:10px 0 10px 22px ">{$logged_info->nick_name}</span>
-
+					<div class="modal-header">
+						<button type="button" class="x_close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h3 id="myModalLabel">{$lang->icon_buy}/{$lang->icon_send}</h3>
 					</div>
+					<div class="modal-body">
+						<h3>{$val->title}</h3>
+						<p style="color:#00F; font-size:14px;">{$lang->icon_price} : <!--@if($val->price2 == 0)-->
+							<font color="#FF3300">무료</font>
+							<!--@else-->
+							{$val->price2}
+							<!--@end-->
+						</p>
+						<table style="width:250px; margin:0 auto; text-align:left; border-bottom:1px solid #ccc" class="popicon">
+							<Tr>
+								<Td>{sprintf("%s : %s",$lang->total_count,$val->total_count2)}</Td>
 
-					<div style="clear:both; display:block; text-align:center; padding:20px 0;">
-						구매하실 경우, 선택한 아이콘이 맞는지 꼭 확인하세요.<br />
-						한번 구매하신 상품은 취소가 불가합니다.
+								<Td align="right">{$lang->minute_limit} :
+									<!--@if($val->minute2 == 43200)-->
+									<font color="#FF3300">구입후 한달</font>
+									<!--@elseif($val->minute2 == 10080)-->
+									<font color="#3366CC">구입후 일주일</font>
+									<!--@else-->
+									{$val->minute2}
+									<!--@end-->
+								</Td>
+							</Tr>
+						</table>
+						<div style="clear:both; display:block;text-align:center">
+							<h4>Preview</h4>
+							<span style="background:url({$val->file1}) no-repeat left center; padding:10px 0 10px 22px ">{$logged_info->nick_name}</span>
+						</div>
+						<div style="clear:both; display:block; text-align:center; padding:20px 0;">
+							구매하실 경우, 선택한 아이콘이 맞는지 꼭 확인하세요.<br />
+							한번 구매하신 상품은 취소가 불가합니다.
+						</div>
+						<div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
+							<ul class="price-list">
+								<li class="list-item" loop="$iconshop_config->day_price_data => $key, $val">
+									<label>
+										<input type="radio" value="{$key}" name="day_price_key" />
+										<!--@if($key == 0)-->
+										무제한 : {$val}
+										<!--@else-->
+										{$key}일 : {$val}
+										<!--@end-->
+									</label>
+								</li>
+							</ul>
+						</div>
 
+						<table style="width:250px; margin:0 auto; text-align:left" class="popicon">
+							<tr>
+								<td>구매포인트</td>
+								<td align="right">{$val->price2}</td>
+							</tr>
+							<tr>
+								<td>보유포인트</td>
+								<td align="right">{$point}point</td>
+							</tr>
+							{@ $ipp = $val->price2}
+							{@ $pp = $point - $ipp}
+							<tr style=" font-size:16px; border-top:1px solid #000">
+								<td style="padding:20px 0;">남는포인트</td>
+								<td align="right" style="padding:20px 0;"><font color="#FF0000">{$pp}point
+									<!--@if($pp<0)--><br />{$lang->point_limit_error}<!--@end--></font>
+								</td>
+							</tr>
+						</table>
+						<div>
+							<label><input type="checkbox" name="is_selected" value="Y" />대표아이콘 설정</label>
+						</div>
 					</div>
-
-
-					<table style="width:250px; margin:0 auto; text-align:left" class="popicon">
-						<tr>
-							<td>구매포인트</td>
-							<td align="right">{$val->price2}</td>
-						</tr>
-						<tr>
-							<td>보유포인트</td>
-							<td align="right">{$point}point</td>
-						</tr>
-						{@ $ipp = $val->price2}
-						{@ $pp = $point - $ipp}
-						<tr style=" font-size:16px; border-top:1px solid #000">
-							<td style="padding:20px 0;">남는포인트</td>
-							<td align="right" style="padding:20px 0;"><font color="#FF0000">{$pp}point
-								<!--@if($pp<0)--><br />{$lang->point_limit_error}<!--@end--></font>
-							</td>
-						</tr>
-					</table>
-
-				</div>
-				<div class="modal-footer">
-
-					<a onclick="iconBuy({$val->icon_srl});" class="x_btn x_btn-primary">{$lang->icon_buy}</a>
-					<a href="{getUrl('module','iconshop','act','dispIconshopIconSend','icon_srl',$val->icon_srl)}" onclick="popopen(this.href,'iconSend');return false;" class="x_btn x_btn-success">{$lang->icon_send}</a>
-					<button class="x_btn" data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
-				</div>
-
+					<div class="modal-footer">
+						<!--<a onclick="iconBuy({$val->icon_srl});" class="x_btn x_btn-primary">{$lang->icon_buy}</a>-->
+						<button type="submit" class="x_btn x_btn-primary">{$lang->icon_buy}</button>
+						<!--<a href="{getUrl('module','iconshop','act','dispIconshopIconSend','icon_srl',$val->icon_srl)}" onclick="popopen(this.href,'iconSend');return false;" class="x_btn x_btn-success">{$lang->icon_send}</a>-->
+						<button class="x_btn" data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
+					</div>
+				</form>
 			</div>
 			{@
 			$count++;
