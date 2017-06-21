@@ -1,0 +1,22 @@
+{
+	"name": "rx-iconshop",
+	"version": "0.5",
+	"author": "BJRambo",
+	"keywords": ["XpressEngine", "XE", "iconshop"],
+	"license": "GPL v2",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/bjrambo/rx-iconshop.git"
+	},
+	"bugs": {
+		"url": "https://github.com/bjrambo/rx-iconshop/issues"
+	},
+	"devDependencies": {
+		"grunt": ">0.4.0",
+		"grunt-phplint": "0.0.5"
+	},
+	"main": "Gruntfile.js",
+	"scripts": {
+		"test": "grunt"
+	}
+}

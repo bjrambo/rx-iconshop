@@ -2,8 +2,8 @@
 <module version="0.2">
     <title xml:lang="ko">아이콘샵</title>
     <description xml:lang="ko">포인트를 이용한 아이콘 구입 모듈</description>
-    <version>0.4</version>
-    <date>2010-06-11</date>
+    <version>0.5</version>
+    <date>2017-06-21</date>
     <category>service</category>
 
     <author email_address="admin@barch.kr" link="http://iconshop.xpressengine.net">
