@@ -6,6 +6,7 @@ php:
   - 7.1
 before_script:
   - npm install -g grunt-cli
+  - npm install
 script:
   - grunt lint
 notifications:
