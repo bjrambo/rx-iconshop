@@ -4,7 +4,8 @@ php:
   - 5.6
   - 7.0
   - 7.1
+before_script: composer install
 script:
-  - grunt lint
+  - phpunit
 notifications:
   slack: sosifam:fENoi7OkKYGxig7zErxFPehK
