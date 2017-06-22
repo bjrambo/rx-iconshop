@@ -99,7 +99,7 @@ class iconshop extends ModuleObject
 		// iconshop 모듈에서 사용할 디렉토리 생성
 		FileHandler::makeDir('./files/iconshop');
 
-		if(!$oDB->isTableExists("iconshop_admin"))
+		if($oDB->isTableExists("iconshop_admin"))
 		{
 			$output = executeQueryArray('iconshop.getPreviousIcons');
 			if($output->toBool())
@@ -290,6 +290,13 @@ class iconshop extends ModuleObject
 			$oDB->commit();
 
 			$oDB->dropTable('iconshop_admin');
+			$admin_database_file = _XE_PATH_ . 'modules/schemas/iconshop_admin.xml';
+			$admin_delete_output = FileHandler::removeFile($admin_database_file);
+			if(!$admin_delete_output->toBool())
+			{
+				return $admin_delete_output;
+			}
+
 		}
 
 		if($oDB->isTableExists('iconshop_member'))
@@ -324,6 +331,12 @@ class iconshop extends ModuleObject
 			}
 			$oDB->commit();
 			$oDB->dropTable('iconshop_member');
+			$member_database_file = _XE_PATH_ . 'modules/schemas/iconshop_member.xml';
+			$member_delete_output = FileHandler::removeFile($member_database_file);
+			if(!$member_delete_output->toBool())
+			{
+				return $member_delete_output;
+			}
 		}
 
 		// iconshop 모듈에서 사용할 디렉토리 생성
