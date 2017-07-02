@@ -32,6 +32,16 @@ class iconshopController extends iconshop
 		}
 
 		$obj = Context::getRequestVars();
+		foreach($obj as $key => $val)
+		{
+			$matchBool = preg_match('/_([0-9]+)/u', $key);
+			if($matchBool)
+			{
+				$objName = preg_replace('/_([0-9]+)/u', '', $key);
+				$obj->{$objName} = $val;
+				unset($obj->{$key});
+			}
+		}
 
 		if(!$obj->icon_srl)
 		{

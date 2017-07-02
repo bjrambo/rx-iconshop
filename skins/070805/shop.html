@@ -1,15 +1,15 @@
 <include target="_header.html" />
 
-<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" cond="$XE_VALIDATOR_MESSAGE_TYPE == error">
+<div class="modal {$XE_VALIDATOR_MESSAGE_TYPE}" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" cond="$XE_VALIDATOR_MESSAGE_TYPE">
 	<div class="modal-dialog">
 		<div class="ics-message">
 			<div style="padding-left: 20px;">아이콘샵</div>
 			<button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
 		</div>
-		<Div style="text-align: center; padding: 50px 0; background: #ffffff;">
+		<div style="text-align: center; padding: 50px 0; background: #ffffff;">
 			<div style="font-size: 60px; margin-bottom: 20px; padding: 30px; "><i class="fa fa-exclamation" aria-hidden="true"></i></div>
 			<div>{$XE_VALIDATOR_MESSAGE}</div>
-		</Div>
+		</div>
 		<div class="modal-footer">
 			<button data-dismiss="modal" aria-hidden="true" style="width: 100%;">{$lang->cmd_close}</button>
 		</div>
@@ -102,7 +102,7 @@
   					<form id="buy_{$val->icon_srl}" class="tab-pane fade in active" action="{Context::getRequestUri()}" method="post" ruleset="iconBuy"|cond="$iconshop_config->day_price_use === 'Y'">
   						<input type="hidden" name="module" value="iconshop" />
   						<input type="hidden" name="act" value="procIconshopIconBuy" />
-  						<input type="hidden" name="icon_srl" value="{$val->icon_srl}" />
+  						<input type="hidden" name="icon_srl_{$val->icon_srl}" value="{$val->icon_srl}" />
   						<div style="padding: 20px;">
 	  						<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" style="float: left; display: inline-block; padding:25px 20px;"  />
 	  						<div style="margin-left: 80px;">
@@ -117,9 +117,9 @@
 							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
 								<div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
 									<ul class="price-list" style="list-style: none; margin: 0; padding: 0;">
-										<li loop="$iconshop_config->day_price_data => $key, $val" style="display: block; width: 100%;">
-											<input type="radio" value="{$key}" name="day_price_key" />
-											<label style="margin-left: 5px; vertical-align: middle;"><!--@if($key == 0)-->무제한 <span  style="color: #aaaaaa;">({$val} P)</span><!--@else-->{$key}일 <span  style="color: #aaaaaa;">({$val} P)</span><!--@end--><!--@if($key != 0)--> - {date('Y년 m일 d일까지', strtotime(date('Ymd') . '+' . $key . 'day'))}..<!--@end--></label>
+										<li loop="$iconshop_config->day_price_data => $key, $price" style="display: block; width: 100%;">
+											<input type="radio" value="{$key}" name="day_price_key_{$val->icon_srl}" />
+											<label style="margin-left: 5px; vertical-align: middle;"><!--@if($key == 0)-->무제한 <span  style="color: #aaaaaa;">({$price} P)</span><!--@else-->{$key}일 <span  style="color: #aaaaaa;">({$price} P)</span><!--@end--><!--@if($key != 0)--> - {date('Y년 m일 d일까지', strtotime(date('Ymd') . '+' . $key . 'day'))}..<!--@end--></label>
 										</li>
 									</ul>
 								</div>
@@ -129,7 +129,7 @@
 						<div style="padding: 0px 20px;" >
 						<div>사용 설정</div>
 							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
-								<input type="checkbox" name="is_selected" value="Y" />
+								<input type="checkbox" name="is_selected_{$val->icon_srl}" value="Y" />
 								<label style="margin-left: 5px; vertical-align: middle;">대표아이콘 설정</label>
 							</div>
 						</div>
