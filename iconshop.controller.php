@@ -86,7 +86,6 @@ class iconshopController extends iconshop
 		}
 
 		$data_output = $this->insertIcondata($logged_info, $obj, $icon_data);
-		debugPrint($data_output);
 		if(!$data_output->toBool())
 		{
 			return $data_output;
