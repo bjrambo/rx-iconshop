@@ -119,7 +119,7 @@
 									<ul class="price-list" style="list-style: none; margin: 0; padding: 0;">
 										<li loop="$iconshop_config->day_price_data => $key, $val" style="display: block; width: 100%;">
 											<input type="radio" value="{$key}" name="day_price_key" />
-											<label style="margin-left: 5px; vertical-align: middle;"><!--@if($key == 0)-->무제한 <span  style="color: #aaaaaa;">({$val} P)</span><!--@else-->{$key}일 <span  style="color: #aaaaaa;">({$val} P)</span><!--@end--><!--@if($key != 0)--> - 00년 00월 00일까지..<!--@end--></label>
+											<label style="margin-left: 5px; vertical-align: middle;"><!--@if($key == 0)-->무제한 <span  style="color: #aaaaaa;">({$val} P)</span><!--@else-->{$key}일 <span  style="color: #aaaaaa;">({$val} P)</span><!--@end--><!--@if($key != 0)--> - {date('Y년 m일 d일까지', strtotime(date('Ymd') . '+' . $key . 'day'))}..<!--@end--></label>
 										</li>
 									</ul>
 								</div>
