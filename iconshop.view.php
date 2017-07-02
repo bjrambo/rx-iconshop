@@ -65,12 +65,22 @@ class iconshopView extends iconshop
 
 		// 상품정보 가져오기
 		$icon_list = $oIconshopModel->getShopIconList(10);
+		$myIconSrlNumber = $oIconshopModel->getMyIconListByIndex();
 
+		$myIconSrls = array();
+		if($myIconSrlNumber !== false)
+		{
+			foreach($myIconSrlNumber as $val)
+			{
+				$myIconSrls[] = $val->icon_srl;
+			}
+		}
 		Context::set('menu', 'shop');
 		Context::set('total_count', $icon_list->total_count);
 		Context::set('total_page', $icon_list->total_page);
 		Context::set('page', $icon_list->page);
 		Context::set('icon_list', $icon_list->data);
+		Context::set('myIconSrls', $myIconSrls);
 		Context::set('page_navigation', $icon_list->page_navigation);
 		$this->setTemplateFile('shop');
 	}

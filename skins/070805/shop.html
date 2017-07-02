@@ -7,7 +7,7 @@
 			<button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
 		</div>
 		<div style="text-align: center; padding: 50px 0; background: #ffffff;">
-			<div style="font-size: 60px; margin-bottom: 20px; padding: 30px; "><i class="fa fa-exclamation" aria-hidden="true"></i></div>
+			<div style="font-size: 60px; margin-bottom: 20px; padding: 30px; "><i class="fa fa-exclamation"|cond="$XE_VALIDATOR_MESSAGE_TYPE == 'error'" class="fa fa-smile-o"|cond="$XE_VALIDATOR_MESSAGE_TYPE != 'error'" aria-hidden="true"></i></div>
 			<div>{$XE_VALIDATOR_MESSAGE}</div>
 		</div>
 		<div class="modal-footer">
@@ -15,9 +15,6 @@
 		</div>
 	</div>
 </div>
-
-
-
   
 <div class="ics-list">
 	<div class="ics-list-hd" style="padding: 20px 0;">
@@ -155,7 +152,7 @@
 						</div>
 						
 						<div class="modal-footer">
-							<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button><button class="buy" type="submit" >{$lang->icon_buy}</button>
+							<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button><button class="buy" type="submit" disabled="disabled"|cond="in_array($val->icon_srl, $myIconSrls)" >{$lang->icon_buy}<block cond="in_array($val->icon_srl, $myIconSrls)">이미구입한 상품</block></button>
 						</div>
 					</form>
 				</div>

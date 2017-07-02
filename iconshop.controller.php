@@ -140,7 +140,7 @@ class iconshopController extends iconshop
 		}
 		else
 		{
-			$this->setRedirectUrl(getNotEncodedUrl('', 'mid', 'iconshop', 'act', 'dispIconshopMyIcon'));
+			$this->setRedirectUrl(getNotEncodedUrl('', 'mid', 'iconshop')); //, 'act', 'dispIconshopMyIcon'
 		}
 
 	}

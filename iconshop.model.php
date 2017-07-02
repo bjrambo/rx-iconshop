@@ -165,7 +165,7 @@ class iconshopModel extends iconshop
 	function getMyIconList($member_srl, $list_count = 10, $page_count = 10)
 	{
 		// 모듈설정 가져옴
-		$iconshop_config = Context::get('module_config');
+		$iconshop_config = self::getConfig();
 
 		// 검색/정렬옵션
 		$search_keyword = trim(Context::get('search_keyword'));
@@ -196,6 +196,24 @@ class iconshopModel extends iconshop
 			}
 		}
 		return $output;
+	}
+
+	function getMyIconListByIndex()
+	{
+		if(!Context::get('is_logged'))
+		{
+			return false;
+		}
+
+		$args = new stdClass();
+		$args->member_srl = Context::get('logged_info')->member_srl;
+		$output = executeQueryArray('iconshop.getMemberIconListByIndex', $args);
+		if(empty($output->data))
+		{
+			return false;
+		}
+
+		return $output->data;
 	}
 
 	/**
