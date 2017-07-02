@@ -1,0 +1,15 @@
+<filter name="icon_send" module="iconshop" act="procIconshopIconSend" confirm_msg_code="confirm_send">
+    <form>
+        <node target="receive_srl" required="true" filter="number" />
+    </form>
+    <parameter>
+        <param name="icon_srl" target="icon_srl" />
+        <param name="receive_srl" target="receive_srl" />
+        <param name="send_message_chk" target="send_message_chk" />
+        <param name="content" target="content" />
+    </parameter>
+    <response callback_func="completeClose">
+        <tag name="error" />
+        <tag name="message" />
+    </response>
+</filter>

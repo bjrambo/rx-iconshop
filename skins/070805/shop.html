@@ -1,0 +1,179 @@
+<include target="_header.html" />
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" cond="$XE_VALIDATOR_MESSAGE_TYPE == error">
+	<div class="modal-dialog">
+		<div class="ics-message">
+			<div style="padding-left: 20px;">아이콘샵</div>
+			<button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
+		</div>
+		<Div style="text-align: center; padding: 50px 0; background: #ffffff;">
+			<div style="font-size: 60px; margin-bottom: 20px; padding: 30px; "><i class="fa fa-exclamation" aria-hidden="true"></i></div>
+			<div>{$XE_VALIDATOR_MESSAGE}</div>
+		</Div>
+		<div class="modal-footer">
+			<button data-dismiss="modal" aria-hidden="true" style="width: 100%;">{$lang->cmd_close}</button>
+		</div>
+	</div>
+</div>
+
+
+
+  
+<div class="ics-list">
+	<div class="ics-list-hd" style="padding: 20px 0;">
+		총 <strong>{number_format($total_count)}개</strong> 의 상품이 조회되었습니다.
+		<div style="float: right;">인기순 / 최신순 </div>
+	</div>
+	
+	<!--@if(!$icon_list)-->
+		{$lang->null_shop}
+	<!--@end-->
+
+	<!--// 테이블형 출력 -->
+	<ul class="ics-list-ul">
+		<li loop="$icon_list=>$key,$val">
+			<div class="list-item" style="padding-bottom: 30px;">
+				<a href="#{$val->icon_srl}" role="button" data-toggle="modal" style="padding:20px;display: inline-block;  border: 1px solid #eee;"><img src="{$val->file1}" alt="{$val->title}" title="{$val->title}"  /></a>
+				<div class="media-body" style="display: inline-block; vertical-align: top; padding-left: 10px;">
+					<div style="padding: 8px 0;">{cut_str($val->title, 10, '...')} {$val->icon}</div>
+					<div><a href="#">1차카테고리</a></div>
+					<Div>재고 {$val->total_count} / {$val->set_total_count}</Div>
+				</div>
+			</div>
+			<div id="{$val->icon_srl}" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				<div class="nav">
+					<ul class="nav-tabs">
+						<li class="active"><a data-toggle="tab" href="#buy_{$val->icon_srl}">구매하기</a></li>
+						<li><a data-toggle="tab" href="#gift_{$val->icon_srl}" >선물하기</a></li>
+  					</ul>
+  				
+  				<button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
+				</div>
+  				<div class="tab-content">
+	  				<div id="gift_{$val->icon_srl}" class="tab-pane fade">
+						<div style="padding: 20px;">
+	  						<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" style="float: left; display: inline-block; padding:25px 20px;"  />
+	  						<div style="margin-left: 80px;">
+		  						<div style="font-size: 18px;">{$val->title}</div>
+		  						<div style="color: #aaa">1차카테고리 - 2차카테고리</div>
+		  						<div style="border-top: 1px solid #000000; padding-top: 5px; margin-top: 5px;">판매가격 <span style="font-size: 16px"><!--@if($val->price2 == 0)-->무료<!--@else-->{$val->price2}<!--@end--></span></div>
+		  						<Div>재고 {$val->total_count}</Div>
+	  						</div>
+  						</div>
+						<div style="padding: 0px 20px;" >
+							<div>사용기간 선택</div>
+							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+								<div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
+									동시적용하니 안됨..
+								</div>
+							</Div>
+						</div>
+						<div style="padding: 0px 20px;" >
+						<div>선물할 친구</div>
+							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+								검색
+							</div>
+						</div>
+						
+						<div style="padding: 0px 20px;" >
+						<div>최종 결제 금액</div>
+							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; overflow: hidden; white-space:nowrap; text-align: center;">
+								<div style="width: 33%; display: inline-block; padding: 10px 0; position: relative; ">
+									<div>판매가격</div>
+									<div style="font-size: 16px;">00P</div>
+									<div style="position: absolute; right:-9px; top:33%;">&#43;</div>
+								</div>
+								<div style="width: 33%;display: inline-block; padding: 10px 0; position: relative;">
+									<div>사용기간</div>
+									<div style="font-size: 16px;">00P</div>
+									<div style="position: absolute; right:-9px; top:33%;">&#61;</div>
+								</div>
+								<div style="width: 33%;display: inline-block; background: #f7f7f7; padding: 10px 0;">
+									<div>최종결제금액</div>
+									<div style="font-size: 16px; color:#d52828;">00P</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button><button class="gift" type="submit" >선물</button>
+						</div>
+    				</div>
+  					<form id="buy_{$val->icon_srl}" class="tab-pane fade in active" action="{Context::getRequestUri()}" method="post" ruleset="iconBuy"|cond="$iconshop_config->day_price_use === 'Y'">
+  						<input type="hidden" name="module" value="iconshop" />
+  						<input type="hidden" name="act" value="procIconshopIconBuy" />
+  						<input type="hidden" name="icon_srl" value="{$val->icon_srl}" />
+  						<div style="padding: 20px;">
+	  						<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" style="float: left; display: inline-block; padding:25px 20px;"  />
+	  						<div style="margin-left: 80px;">
+		  						<div style="font-size: 18px;">{$val->title}</div>
+		  						<div style="color: #aaa">1차카테고리 - 2차카테고리</div>
+		  						<div style="border-top: 1px solid #000000; padding-top: 5px; margin-top: 5px;">판매가격 <span style="font-size: 16px"><!--@if($val->price2 == 0)-->무료<!--@else-->{$val->price2}<!--@end--></span></div>
+		  						<Div>재고 {$val->total_count}</Div>
+	  						</div>
+  						</div>
+						<div style="padding: 0px 20px;" >
+							<div>사용기간 선택</div>
+							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+								<div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
+									<ul class="price-list" style="list-style: none; margin: 0; padding: 0;">
+										<li loop="$iconshop_config->day_price_data => $key, $val" style="display: block; width: 100%;">
+											<input type="radio" value="{$key}" name="day_price_key" />
+											<label style="margin-left: 5px; vertical-align: middle;"><!--@if($key == 0)-->무제한 <span  style="color: #aaaaaa;">({$val} P)</span><!--@else-->{$key}일 <span  style="color: #aaaaaa;">({$val} P)</span><!--@end--><!--@if($key != 0)--> - 00년 00월 00일까지..<!--@end--></label>
+										</li>
+									</ul>
+								</div>
+							</Div>
+						</div>
+						
+						<div style="padding: 0px 20px;" >
+						<div>사용 설정</div>
+							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+								<input type="checkbox" name="is_selected" value="Y" />
+								<label style="margin-left: 5px; vertical-align: middle;">대표아이콘 설정</label>
+							</div>
+						</div>
+						
+						<div style="padding: 0px 20px;" >
+						<div>최종 결제 금액</div>
+							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; overflow: hidden; white-space:nowrap; text-align: center;">
+								<div style="width: 30%; display: inline-block; padding: 10px 0; position: relative; ">
+									<div>판매가격</div>
+									<div style="font-size: 16px;">00P</div>
+								</div>
+								<div style="width: 5%; display: inline-block; padding: 20px 0; vertical-align: top;">&#43;</div>
+								<div style="width: 30%;display: inline-block; padding: 10px 0; position: relative;">
+									<div>사용기간</div>
+									<div style="font-size: 16px;">00P</div>
+								</div>
+								<div style="width: 5%; display: inline-block; padding: 20px 0; vertical-align: top; ">&#61;</div>
+								<div style="width: 30%;display: inline-block; background: #f7f7f7; padding: 10px 0;">
+									<div>최종결제금액</div>
+									<div style="font-size: 16px; color:#d52828;">00P</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="modal-footer">
+							<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button><button class="buy" type="submit" >{$lang->icon_buy}</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</li>
+	</ul>
+
+	<div class="ics-pagination">
+		<a href="{getUrl('page','','module_srl','')}">&laquo;</a>
+		<!--@while($page_no = $page_navigation->getNextPage())-->
+			<a href="{getUrl('page',$page_no,'module_srl','')}" class="active"|cond="$page == $page_no">{$page_no}</a>
+		<!--@end-->
+		<a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" >&raquo;</a>
+	</div>
+</div>
+<script type="text/javascript">
+jQuery(function($) { 
+    $('#myModal').modal('show'); 
+}); 
+</script>
+<include target="_footer.html" />

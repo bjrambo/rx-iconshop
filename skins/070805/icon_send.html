@@ -1,0 +1,75 @@
+<!--%import("css/default.css")-->
+<!--%import("lang")-->
+<!--%import("filter/icon_send.xml")-->
+{@
+$point = $icon_data->price;
+$send_fee = (int)$iconshop_config->send_fee;
+if($point && $send_fee) $point+= floor($point * $send_fee / 100);
+}
+<div id="popHeader">
+	<h3 class="xeAdmin">{$icon_data->title} - {$lang->icon_send}</h3>
+</div>
+
+<form action="./" method="post" onsubmit="return procFilter(this, icon_send)">
+	<input type="hidden" name="icon_srl" value="{$icon_data->icon_srl}" />
+	<div id="popBody">
+		<table cellspacing="0" class="rowTable">
+			<col width="150px" />
+			<col />
+
+			<tr>
+				<th>{$lang->icon_title}</th>
+				<td>{$icon_data->title} {$icon_data->icon}</td>
+			</tr>
+
+			<tr>
+				<th>{$lang->iconInfo}</th>
+				<td><img src="{$icon_data->file1}" alt="{$icon_data->title}" title="{$icon_data->title}" /></td>
+			</tr>
+
+			<tr>
+				<th>{$lang->icon_total_count}</th>
+				<td>{sprintf("%s",$icon_data->total_count2)}</td>
+			</tr>
+
+
+			<tr>
+				<th>{$lang->icon_price}</th>
+				<td><span class="icon_p"><!--@if($point == 0)-->
+                    무료
+					<!--@else-->
+                    {$point}
+					<!--@end--></span></td>
+			</tr>
+
+			<tr>
+				<th>{$lang->my_point}</th>
+				<td><span class="icon_p">{$logged_info->point}</span></td>
+			</tr>
+
+			<tr>
+				<th>{$lang->send_my_point}</th>
+				<td><span class="icon_p" style="color:#F00">{$logged_info->point-$point}</span></td>
+			</tr>
+
+			<tr>
+				<th>
+					<div>{$lang->receiver}</div>
+				</th>
+				<td>
+					<input type="text" name="receive_srl" id="receive_srl" class="iText" readonly="readonly" style=" height:19px; width:100px" />
+					<span class="btn25"><a href="{getUrl('module','iconshop','act','dispIconshopMemberSearch','target_id','receive_srl')}" onclick="popopen(this.href,'memberSearch');return false;">{$lang->cmd_search}</a></span>
+
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="send_message" id="send_message" value="N" checked="checked" onclick="send_message_chk(this.checked)" />
+	</div>
+
+	<div id="popFooter">
+		<span class="button black strong"><input type="submit" value="{$lang->cmd_confirm}" accesskey="s" /></span>
+		<span class="button red"><input type="button" value="{$lang->cmd_close}" onclick="window.close();return false;" /></span>
+	</div>
+</form>
+
+

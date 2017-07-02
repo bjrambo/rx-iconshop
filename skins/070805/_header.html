@@ -1,0 +1,53 @@
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+<load target="css/default.css" />
+<load target="js/default.js" />
+<script src="https://use.fontawesome.com/911a477176.js"></script>
+
+<div id="ics-hd">
+	<div class="ics-nav" >
+		<a href="{getUrl('act',$val['act'],'page',1,'search_keyword','')}" class="ics-nav-item" class="ics-nav-item active"|cond="$menu == $key" loop="$iconshop_main_menu => $key,$val">{$val['title']}</a>
+		
+		<!-- 1차 분류는 드롭다운 형식으로 구성 -->
+		<div class="dropdown ">
+			<button class="dropdown-toggle" type="button" id="cate" data-toggle="dropdown" >1차카테고리</button>
+			<ul class="dropdown-menu" role="menu"  aria-labelledby="cate">
+				<li><a href="#" class="item">사람</a></li>
+				<li><a href="#" class="item">사물</a></li>
+				<li><a href="#" class="item">식물</a></li>
+				<li><a href="#" class="item">기타</a></li>
+				<li><a href="#" class="item">말풍선</a></li>
+				<li><a href="#" class="item">애니메이션</a></li>
+			</ul>
+		</div>
+		
+		<!-- 상품 검색 -->
+		<a href="{getUrl('','module','admin','act','dispIconshopAdminConfig')}" onclick="window.open(this.href);return false;" cond="$grant->manager" class="ics-nav-item">상점설정</a>
+		<form action="./" method="get" style="float: right;" >
+			<input type="hidden" name="mid" value="{$mid}" />
+			<input type="hidden" name="act" value="{$act}" />
+			<input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}"  />
+			<button type="submit" ><i class="fa fa-search" aria-hidden="true"></i></button>
+		</form>
+	</div>
+	<div style="padding: 10px 0; border-bottom: 1px solid #eeeeee;">
+		<div class="ics-nav-title" style="display: block; font-weight: 800; padding: 10px 0;">
+			<!-- 1차 메뉴명 출력, 현재는 분류가 출력이 안됨.. -->
+			<block loop="$iconshop_main_menu => $key,$val" cond="$menu == $key">
+				{$val['title']}
+			</block>
+		</div>
+		
+		<!--@if($act != 'dispIconshopMyIcon')-->
+		<!-- 1차 메뉴 선택시 나오는 2차 메뉴 -->
+		<Div class="ics-nav-2th">
+			<ul>
+				<li><a href="#" >전체</a></li>
+				<li><a href="#" >테스트</a></li>
+				<li><a href="#" >테스트</a></li>
+				<li><a href="#" >테스트</a></li>
+				<li><a href="#" >테스트</a></li>
+			</ul>
+		</Div>
+		<!--@end-->
+	</div>
+</div>
