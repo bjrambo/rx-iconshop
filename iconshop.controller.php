@@ -85,38 +85,12 @@ class iconshopController extends iconshop
 			return new Object(-1, 'max_count_error');
 		}
 
-		// 상품 회원DB에 추가
-		$args = new stdClass();
-		$args->icon_srl = $icon_data->icon_srl;
-		$args->member_srl = $logged_info->member_srl;
-		$args->user_id = $logged_info->user_id;
-		$args->nick_name = $logged_info->nick_name;
-		$args->is_selected = $obj->is_selected;
-
-		if($iconshop_config->day_price_use == 'Y')
-		{
-			// 회원 일자선택에 따른 추가 포인트설정
-			$price = $oIconshopModel->getDayPriceByKey($obj->day_price_key);
-			$icon_data->price = $icon_data->price + $price;
-
-			if($obj->day_price_key)
-			{
-				$args->day_limit = 'Y';
-				$args->end_date = date("YmdHis", strtotime("+$args->day_price_key days", strtotime("now")));
-			}
-			else
-			{
-				$args->day_limit = 'N';
-				$args->end_date = 0;
-			}
-		}
-
-		$data_output = $this->insertMemberIcon($args);
+		$data_output = $this->insertIcondata($logged_info, $obj, $icon_data);
+		debugPrint($data_output);
 		if(!$data_output->toBool())
 		{
 			return $data_output;
 		}
-
 
 		// 회원의 포인트 차감
 		if($icon_data->price && $icon_data->point_limit == "Y")
@@ -157,7 +131,7 @@ class iconshopController extends iconshop
 		}
 		else
 		{
-			$this->setRedirectUrl(getNotEncodedUrl('', 'mid', 'iconshop'));
+			$this->setRedirectUrl(getNotEncodedUrl('', 'mid', 'iconshop', 'act', 'dispIconshopMyIcon'));
 		}
 
 	}
@@ -180,22 +154,23 @@ class iconshopController extends iconshop
 		}
 
 		// 넘어온 변수 체크
-		$params = Context::gets('icon_srl', 'receive_srl', 'send_message', 'content');
-		if(!$params->icon_srl)
+		$obj = Context::getRequestVars();
+
+		if(!$obj->icon_srl)
 		{
 			return new Object(-1, 'invalid_icon');
 		}
-		if(!$params->receive_srl)
+		if(!$obj->receive_srl)
 		{
 			return new Object(-1, 'invalid_receive');
 		}
-		if($params->send_message != "Y")
+		if($obj->send_message != "Y")
 		{
-			$params->send_message = "N";
+			$obj->send_message = "N";
 		}
 
 		// 원본데이터 가져오기
-		$icon_data = $oIconshopModel->getIconBySrl($params->icon_srl);
+		$icon_data = $oIconshopModel->getIconBySrl($obj->icon_srl);
 		if(!$icon_data)
 		{
 			return new Object(-1, 'invalid_icon');
@@ -207,7 +182,7 @@ class iconshopController extends iconshop
 		$logged_info->point_level = $oPointModel->getLevel($logged_info->point, $point_config->level_step);
 
 		// 받는이의 정보 구해옴
-		$receive_info = $oMemberModel->getMemberInfoByMemberSrl($params->receive_srl);
+		$receive_info = $oMemberModel->getMemberInfoByMemberSrl($obj->receive_srl);
 		if(!$receive_info->member_srl)
 		{
 			return new Object(-1, 'invalid_receive');
@@ -259,16 +234,7 @@ class iconshopController extends iconshop
 			return new Object(-1, 'point_limit_error');
 		}
 
-		// 상품 회원DB에 추가 (받는이)
-		$args = new stdClass();
-		$args->icon_srl = $icon_data->icon_srl;
-		$args->member_srl = $receive_info->member_srl;
-		$args->user_id = $receive_info->user_id;
-		$args->nick_name = $receive_info->nick_name;
-		$args->is_selected = "N";
-		$args->minute_limit = $icon_data->minute_limit;
-		$args->end_date = date("YmdHis", strtotime("+{$icon_data->minute} minutes", strtotime("now")));
-		$data_output = $this->insertMemberIcon($args);
+		$data_output = $this->insertIcondata($receive_info, $obj, $icon_data);
 		if(!$data_output->toBool())
 		{
 			return $data_output;
@@ -297,12 +263,12 @@ class iconshopController extends iconshop
 		}
 
 		// 쪽지발송...
-		if($params->send_message == "Y" && $params->content)
+		if($obj->send_message == "Y" && $obj->content)
 		{
 			$title = sprintf(Context::getLang('send_message_title'), $logged_info->nick_name, $icon_data->title);
-			$content = nl2br(trim(removeHackTag($params->content)));
+			$content = nl2br(trim(removeHackTag($obj->content)));
 			$oCommunicationController = getController('communication');
-			$output = $oCommunicationController->sendMessage($logged_info->member_srl, $receive_info->member_srl, $title, $content); // 쪽지발송
+			$oCommunicationController->sendMessage($logged_info->member_srl, $receive_info->member_srl, $title, $content);
 		}
 
 		// 선물로그 남기기
@@ -318,6 +284,45 @@ class iconshopController extends iconshop
 
 		// 성공 메세지 등록
 		$this->setMessage("success_send");
+
+		if(Context::get('success_return_url'))
+		{
+			$this->setRedirectUrl(Context::get('success_return_url'));
+		}
+		else
+		{
+			$this->setRedirectUrl(getNotEncodedUrl('', 'mid', 'iconshop'));
+		}
+	}
+
+	function insertIcondata($member_info, $obj, &$icon_data)
+	{
+		$iconshop_config = self::getConfig();
+		$args = new stdClass();
+		$args->icon_srl = $icon_data->icon_srl;
+		$args->member_srl = $member_info->member_srl;
+		$args->user_id = $member_info->user_id;
+		$args->nick_name = $member_info->nick_name;
+		$args->is_selected = $obj->is_selected;
+
+		if($iconshop_config->day_price_use === 'Y')
+		{
+			$price = getModel('iconshop')->getDayPriceByKey($obj->day_price_key);
+			$icon_data->price = $icon_data->price + $price;
+
+			if($obj->day_price_key)
+			{
+				$args->day_limit = 'Y';
+				$args->end_date = date("YmdHis", strtotime("+$args->day_price_key days", strtotime("now")));
+			}
+			else
+			{
+				$args->day_limit = 'N';
+				$args->end_date = 0;
+			}
+		}
+		$data_output = $this->insertMemberIcon($args);
+		return $data_output;
 	}
 
 	/**

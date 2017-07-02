@@ -113,13 +113,13 @@
 						</div>
 						<div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
 							<ul class="price-list">
-								<li class="list-item" loop="$iconshop_config->day_price_data => $key, $val">
+								<li class="list-item" loop="$iconshop_config->day_price_data => $key, $price">
 									<label>
 										<input type="radio" value="{$key}" name="day_price_key" />
 										<!--@if($key == 0)-->
-										무제한 : {$val}
+										무제한 : {$price}
 										<!--@else-->
-										{$key}일 : {$val}
+										{$key}일 : {$price}
 										<!--@end-->
 									</label>
 								</li>
@@ -151,7 +151,7 @@
 					<div class="modal-footer">
 						<!--<a onclick="iconBuy({$val->icon_srl});" class="x_btn x_btn-primary">{$lang->icon_buy}</a>-->
 						<button type="submit" class="x_btn x_btn-primary">{$lang->icon_buy}</button>
-						<!--<a href="{getUrl('module','iconshop','act','dispIconshopIconSend','icon_srl',$val->icon_srl)}" onclick="popopen(this.href,'iconSend');return false;" class="x_btn x_btn-success">{$lang->icon_send}</a>-->
+						<a href="{getUrl('act','dispIconshopIconSend','icon_srl', $val->icon_srl)}" onclick="popopen(this.href,'iconSend');return false;" class="x_btn x_btn-success">{$lang->icon_send}</a>
 						<button class="x_btn" data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
 					</div>
 				</form>

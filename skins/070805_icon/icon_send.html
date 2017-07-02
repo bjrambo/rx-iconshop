@@ -62,6 +62,23 @@ if($point && $send_fee) $point+= floor($point * $send_fee / 100);
 
 				</td>
 			</tr>
+			<tr cond="$iconshop_config->day_price_use === 'Y'">
+				<th>사용기간</th>
+				<td>
+					<ul class="price-list">
+						<li class="list-item" loop="$iconshop_config->day_price_data => $key, $price">
+							<label>
+								<input type="radio" value="{$key}" name="day_price_key" />
+								<!--@if($key == 0)-->
+								무제한 : {$price}
+								<!--@else-->
+								{$key}일 : {$price}
+								<!--@end-->
+							</label>
+						</li>
+					</ul>
+				</td>
+			</tr>
 		</table>
 		<input type="hidden" name="send_message" id="send_message" value="N" checked="checked" onclick="send_message_chk(this.checked)" />
 	</div>
