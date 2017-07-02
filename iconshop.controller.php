@@ -322,7 +322,7 @@ class iconshopController extends iconshop
 			if($obj->day_price_key)
 			{
 				$args->day_limit = 'Y';
-				$args->end_date = date("YmdHis", strtotime("+$args->day_price_key days", strtotime("now")));
+				$args->end_date = date("YmdHis", strtotime("+$obj->day_price_key days", strtotime("now")));
 			}
 			else
 			{
