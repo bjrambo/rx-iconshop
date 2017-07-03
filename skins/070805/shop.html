@@ -15,13 +15,13 @@
 		</div>
 	</div>
 </div>
-  
+
 <div class="ics-list">
 	<div class="ics-list-hd" style="padding: 20px 0;">
 		총 <strong>{number_format($total_count)}개</strong> 의 상품이 조회되었습니다.
 		<div style="float: right;">인기순 / 최신순 </div>
 	</div>
-	
+
 	<!--@if(!$icon_list)-->
 		{$lang->null_shop}
 	<!--@end-->
@@ -44,38 +44,52 @@
 						<li class="active"><a data-toggle="tab" href="#buy_{$val->icon_srl}">구매하기</a></li>
 						<li><a data-toggle="tab" href="#gift_{$val->icon_srl}" >선물하기</a></li>
   					</ul>
-  				
-  				<button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
+  				    <button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
 				</div>
   				<div class="tab-content">
-	  				<div id="gift_{$val->icon_srl}" class="tab-pane fade">
+				    <form id="gift_{$val->icon_srl}" class="tab-pane fade" action="{Context::getRequestUri()}" method="post" ruleset="iconBuy"|cond="$iconshop_config->day_price_use === 'Y'">
+					    <input type="hidden" name="module" value="iconshop" />
+					    <input type="hidden" name="act" value="procIconshopIconSend" />
+					    <input type="hidden" name="icon_srl" value="{$val->icon_srl}" />
 						<div style="padding: 20px;">
 	  						<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" style="float: left; display: inline-block; padding:25px 20px;"  />
 	  						<div style="margin-left: 80px;">
 		  						<div style="font-size: 18px;">{$val->title}</div>
 		  						<div style="color: #aaa">1차카테고리 - 2차카테고리</div>
 		  						<div style="border-top: 1px solid #000000; padding-top: 5px; margin-top: 5px;">판매가격 <span style="font-size: 16px"><!--@if($val->price2 == 0)-->무료<!--@else-->{$val->price2}<!--@end--></span></div>
-		  						<Div>재고 {$val->total_count}</Div>
+		  						<div>재고 {$val->total_count}</div>
 	  						</div>
   						</div>
+					    <div style="padding: 0 20px;" >
+						    <div>사용기간 선택</div>
+						    <div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+							    <div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
+								    <ul class="price-list" style="list-style: none; margin: 0; padding: 0;">
+									    <li loop="$iconshop_config->day_price_data => $key, $price" style="display: block; width: 100%;">
+										    <input type="radio" value="{$key}" name="day_price_key_{$val->icon_srl}" />
+										    <label style="margin-left: 5px; vertical-align: middle;"><!--@if($key == 0)-->무제한 <span  style="color: #aaaaaa;">({$price} P)</span><!--@else-->{$key}일 <span  style="color: #aaaaaa;">({$price} P)</span><!--@end--><!--@if($key != 0)--> - {date('Y년 m일 d일까지', strtotime(date('Ymd') . '+' . $key . 'day'))}..<!--@end--></label>
+									    </li>
+								    </ul>
+							    </div>
+						    </div>
+					    </div>
+
 						<div style="padding: 0px 20px;" >
-							<div>사용기간 선택</div>
-							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
-								<div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
-									동시적용하니 안됨..
-								</div>
-							</Div>
-						</div>
-						<div style="padding: 0px 20px;" >
-						<div>선물할 친구</div>
-							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
-								검색
+							<div>선물할 친구</div>
+							<div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+								<input type="text" name="receive_srl" id="receive_srl_{$val->icon_srl}" class="iText" readonly="readonly" style=" height:19px; width:100px" />
+								<span class="btn25"><a href="{getUrl('module','iconshop','act','dispIconshopMemberSearch','target_id','receive_srl_'.$val->icon_srl)}" onclick="popopen(this.href,'memberSearch');return false;">{$lang->cmd_search}</a></span>
 							</div>
 						</div>
-						
+				        <div style="padding: 0px 20px;">
+						    <div>쪽지 전송 여부</div>
+							<div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+								<input type="checkbox" name="send_message" id="send_message" value="Y" checked="checked" onclick="send_message_chk(this.checked)" />
+							</div>
+						</div>
 						<div style="padding: 0px 20px;" >
-						<div>최종 결제 금액</div>
-							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; overflow: hidden; white-space:nowrap; text-align: center;">
+							<div>최종 결제 금액</div>
+							<div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; overflow: hidden; white-space:nowrap; text-align: center;">
 								<div style="width: 33%; display: inline-block; padding: 10px 0; position: relative; ">
 									<div>판매가격</div>
 									<div style="font-size: 16px;">00P</div>
@@ -95,7 +109,7 @@
 						<div class="modal-footer">
 							<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button><button class="gift" type="submit" >선물</button>
 						</div>
-    				</div>
+    				</form>
   					<form id="buy_{$val->icon_srl}" class="tab-pane fade in active" action="{Context::getRequestUri()}" method="post" ruleset="iconBuy"|cond="$iconshop_config->day_price_use === 'Y'">
   						<input type="hidden" name="module" value="iconshop" />
   						<input type="hidden" name="act" value="procIconshopIconBuy" />
@@ -111,7 +125,7 @@
   						</div>
 						<div style="padding: 0px 20px;" >
 							<div>사용기간 선택</div>
-							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+							<div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
 								<div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
 									<ul class="price-list" style="list-style: none; margin: 0; padding: 0;">
 										<li loop="$iconshop_config->day_price_data => $key, $price" style="display: block; width: 100%;">
@@ -120,9 +134,9 @@
 										</li>
 									</ul>
 								</div>
-							</Div>
+							</div>
 						</div>
-						
+
 						<div style="padding: 0px 20px;" >
 						<div>사용 설정</div>
 							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
@@ -130,7 +144,7 @@
 								<label style="margin-left: 5px; vertical-align: middle;">대표아이콘 설정</label>
 							</div>
 						</div>
-						
+
 						<div style="padding: 0px 20px;" >
 						<div>최종 결제 금액</div>
 							<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; overflow: hidden; white-space:nowrap; text-align: center;">
@@ -150,7 +164,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="modal-footer">
 							<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button><button class="buy" type="submit" disabled="disabled"|cond="in_array($val->icon_srl, $myIconSrls)" >{$lang->icon_buy}<block cond="in_array($val->icon_srl, $myIconSrls)">이미구입한 상품</block></button>
 						</div>
@@ -169,8 +183,8 @@
 	</div>
 </div>
 <script type="text/javascript">
-jQuery(function($) { 
-    $('#myModal').modal('show'); 
-}); 
+jQuery(function($) {
+    $('#myModal').modal('show');
+});
 </script>
 <include target="_footer.html" />

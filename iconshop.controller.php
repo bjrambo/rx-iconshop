@@ -162,7 +162,6 @@ class iconshopController extends iconshop
 			return new Object(-1, 'msg_not_permitted');
 		}
 
-		// 넘어온 변수 체크
 		$obj = Context::getRequestVars();
 
 		if(!$obj->icon_srl)

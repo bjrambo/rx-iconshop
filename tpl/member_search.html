@@ -14,8 +14,8 @@
 			<tr>
 				<td class="nowr">
 					<select name="search_target">
-						<option value="member_srl" <!--@if($search_target != "nick_name")-->selected="selected"<!--@end-->>{$lang->no}</option>
-						<option value="nick_name" <!--@if($search_target == "nick_name")-->selected="selected"<!--@end-->>{$lang->nick_name}</option>
+						<option value="nick_name" <!--@if($search_target != "member_srl")-->selected="selected"<!--@end-->>{$lang->nick_name}</option>
+						<option value="member_srl" <!--@if($search_target == "member_srl")-->selected="selected"<!--@end-->>{$lang->no}</option>
 					</select>
 					<input type="text" name="search_keyword" value="{$search_keyword}" />
 					<input type="submit" value="{$lang->cmd_search}" class="x_btn" />
