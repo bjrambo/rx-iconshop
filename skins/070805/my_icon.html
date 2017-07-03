@@ -17,7 +17,7 @@
 			<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" style="padding:25px 20px;display: inline-block;  border: 1px solid #eee;" />
 			<div style="display: inline-block; vertical-align: top; padding-left: 10px;">
 				<div>구매</div>
-				<div>00.00.00 (00 / ~ 00.00.00)</div>
+				<div>구매일 : {zdate($val->start_date, 'Y.m.d')} (만료일 : {zdate($val->end_date, 'Y.m.d')})</div>
 				<div style="font-size: 14px;">{$val->title}</div>
 				<div style="color: #aaa">1차카테고리 - 2차카테고리</div>
 			</div>
