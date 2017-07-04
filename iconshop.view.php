@@ -90,6 +90,10 @@ class iconshopView extends iconshop
 	 **/
 	function dispIconshopMyIcon()
 	{
+		if(!Context::get('is_logged'))
+		{
+			return new Object(-1, 'msg_not_permitted');
+		}
 		$oPointModel = getModel('point');
 		$oModuleModel = getModel('module');
 		$oIconshopModel = getModel('iconshop');
