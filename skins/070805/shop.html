@@ -8,7 +8,7 @@
 		</div>
 		<div style="text-align: center; padding: 50px 0; background: #ffffff;">
 			<div style="font-size: 60px; margin-bottom: 20px; padding: 30px; ">
-				<i class="fa fa-exclamation" |cond="$XE_VALIDATOR_MESSAGE_TYPE == 'error'" class="fa fa-smile-o" |cond="$XE_VALIDATOR_MESSAGE_TYPE != 'error'" aria-hidden="true"></i>
+				<i class="fa fa-exclamation"|cond="$XE_VALIDATOR_MESSAGE_TYPE == 'error'" class="fa fa-smile-o"|cond="$XE_VALIDATOR_MESSAGE_TYPE != 'error'" aria-hidden="true"></i>
 			</div>
 			<div>{$XE_VALIDATOR_MESSAGE}</div>
 		</div>
@@ -49,7 +49,7 @@
 						<button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
 					</div>
 					<div class="tab-content">
-						<form id="gift_{$val->icon_srl}" class="tab-pane fade" action="{Context::getRequestUri()}" method="post" ruleset="iconBuy" |cond="$iconshop_config->day_price_use === 'Y'">
+						<form id="gift_{$val->icon_srl}" class="tab-pane fade" action="{Context::getRequestUri()}" method="post" ruleset="iconBuy"|cond="$iconshop_config->day_price_use === 'Y'">
 							<input type="hidden" name="module" value="iconshop" />
 							<input type="hidden" name="act" value="procIconshopIconSend" />
 							<input type="hidden" name="icon_srl" value="{$val->icon_srl}" />
@@ -118,7 +118,7 @@
 								<button class="gift" type="submit">선물</button>
 							</div>
 						</form>
-						<form id="buy_{$val->icon_srl}" class="tab-pane fade in active" action="{Context::getRequestUri()}" method="post" ruleset="iconBuy" |cond="$iconshop_config->day_price_use === 'Y'">
+						<form id="buy_{$val->icon_srl}" class="tab-pane fade in active" action="{Context::getRequestUri()}" method="post" ruleset="iconBuy"|cond="$iconshop_config->day_price_use === 'Y'">
 							<input type="hidden" name="module" value="iconshop" />
 							<input type="hidden" name="act" value="procIconshopIconBuy" />
 							<input type="hidden" name="icon_srl_{$val->icon_srl}" value="{$val->icon_srl}" />
@@ -180,7 +180,7 @@
 
 							<div class="modal-footer">
 								<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
-								<button class="buy" type="submit" disabled="disabled" |cond="in_array($val->icon_srl, $myIconSrls)">{$lang->icon_buy}
+								<button class="buy" type="submit" disabled="disabled"|cond="in_array($val->icon_srl, $myIconSrls)">{$lang->icon_buy}
 									<block cond="in_array($val->icon_srl, $myIconSrls)">이미구입한 상품</block>
 								</button>
 							</div>
@@ -194,7 +194,7 @@
 	<div class="ics-pagination">
 		<a href="{getUrl('page','','module_srl','')}">&laquo;</a>
 		<!--@while($page_no = $page_navigation->getNextPage())-->
-		<a href="{getUrl('page',$page_no,'module_srl','')}" class="active" |cond="$page == $page_no">{$page_no}</a>
+		<a href="{getUrl('page',$page_no,'module_srl','')}" class="active"|cond="$page == $page_no">{$page_no}</a>
 		<!--@end-->
 		<a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}">&raquo;</a>
 	</div>
