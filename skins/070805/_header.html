@@ -21,7 +21,7 @@
 		</div>
 		
 		<!-- 상품 검색 -->
-		<a href="{getUrl('','module','admin','act','dispIconshopAdminConfig')}" onclick="window.open(this.href);return false;" cond="$grant->manager" class="ics-nav-item">상점설정</a>
+		<a href="{getUrl('','module','admin','act','dispIconshopAdminConfig', 'module_srl', $module_info->module_srl)}" onclick="window.open(this.href);return false;" cond="$grant->manager" class="ics-nav-item">상점설정</a>
 		<form action="./" method="get" style="float: right;" >
 			<input type="hidden" name="mid" value="{$mid}" />
 			<input type="hidden" name="act" value="{$act}" />

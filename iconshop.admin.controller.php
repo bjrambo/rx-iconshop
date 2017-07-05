@@ -54,7 +54,7 @@ class iconshopAdminController extends iconshop
 		}
 		else
 		{
-			$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispIconshopAdminConfig'));
+			$this->setRedirectUrl(getNotEncodedUrl('', 'module', 'admin', 'act', 'dispIconshopAdminConfig', 'module_srl', $args->module_srl));
 		}
 	}
 
