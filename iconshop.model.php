@@ -359,7 +359,6 @@ class iconshopModel extends iconshop
 
 		$total_point_price = $icon_info->price + $day_price;
 
-		$this->add('total_point_price', $total_point_price);
-		$this->add('icon_price', $icon_info->price);
+		return $total_point_price;
 	}
 }
