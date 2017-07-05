@@ -17,12 +17,10 @@ class iconshopAdminView extends iconshop
 		$oModuleModel = getModel('module');
 
 		// 설정 정보 가져오기
-		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
 		$iconshop_config = $oModuleModel->getModuleConfig('iconshop');
 		$module_category = $oModuleModel->getModuleCategories();
 
 		// 설정 변수 지정
-		Context::set('iconshop_info', $iconshop_info);
 		Context::set('iconshop_config', $iconshop_config);
 		Context::set('module_category', $module_category);
 
@@ -30,26 +28,69 @@ class iconshopAdminView extends iconshop
 		$this->setTemplatePath($this->module_path . 'tpl');
 	}
 
+	function dispIconshopAdminIndex()
+	{
+		$args = new stdClass();
+		$args->module = 'iconshop';
+		$args->page = Context::get('page');
+		$args->sort_index = 'module_srl';
+		$args->list_count = 20;
+		$args->page_count = 10;
+		$args->s_module_category_srl = Context::get('module_category_srl');
+
+		$search_target = Context::get('search_target');
+		$search_keyword = Context::get('search_keyword');
+
+		switch($search_target)
+		{
+			case 'mid':
+				$args->s_mid = $search_keyword;
+				break;
+			case 'browser_title':
+				$args->s_browser_title = $search_keyword;
+				break;
+		}
+
+		$output = executeQuery('iconshop.getIconshopModuleList', $args);
+		// use context::set to setup variables on the templates
+		Context::set('total_count', $output->total_count);
+		Context::set('total_page', $output->total_page);
+		Context::set('page', $output->page);
+		Context::set('iconshop_list', $output->data);
+		Context::set('page_navigation', $output->page_navigation);
+
+		$this->setTemplateFile('index');
+	}
+
+
 	/**
 	 * @brief 기본 설정
 	 **/
 	function dispIconshopAdminConfig()
 	{
+		$module_srl = Context::get('module_srl');
+
+		if($module_srl)
+		{
+			$module_info = getModel('module')->getModuleInfoByModuleSrl($module_srl);
+			Context::set('iconshop_info', $module_info);
+		}
+
 		// 스킨목록 가져오기
 		$oModuleModel = getModel('module');
 		$skin_list = $oModuleModel->getSkins($this->module_path);
-		Context::set('skin_list', $skin_list);
-
 		$mskin_list = $oModuleModel->getSkins($this->module_path, 'm.skins');
-		Context::set('mskin_list', $mskin_list);
 
 		// 레이아웃 목록을 구해옴
 		$oLayoutModel = getModel('layout');
 		$layout_list = $oLayoutModel->getLayoutList();
-		Context::set('layout_list', $layout_list);
-
 		$mlayout_list = $oLayoutModel->getLayoutList(0, 'M');
+
+		Context::set('skin_list', $skin_list);
+		Context::set('mskin_list', $mskin_list);
+		Context::set('layout_list', $layout_list);
 		Context::set('mlayout_list', $mlayout_list);
+
 
 		// 템플릿 파일 지정
 		$this->setTemplateFile('config');
