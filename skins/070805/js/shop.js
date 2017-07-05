@@ -23,4 +23,3 @@ jQuery(function($) {
 		});
 	});
 });
-var st = $(":input:radio[name=search_type]:checked").val();
