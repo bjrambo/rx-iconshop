@@ -345,4 +345,21 @@ class iconshopModel extends iconshop
 		}
 		return $price;
 	}
+
+	function getPricePoint()
+	{
+		$icon_srl = Context::get('icon_srl');
+		$day_price = intval(Context::get('day_price'));
+		if(!is_numeric($day_price))
+		{
+			return new Object(-1, '가격정보를 가져오는 과정에서 문제가 발생했습니다.');
+		}
+
+		$icon_info = $this->getIconBySrl($icon_srl);
+
+		$total_point_price = $icon_info->price + $day_price;
+
+		$this->add('total_point_price', $total_point_price);
+		$this->add('icon_price', $icon_info->price);
+	}
 }

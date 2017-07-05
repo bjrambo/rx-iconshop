@@ -36,5 +36,7 @@
 		<action name="procIconshopAdminMemberIconDelete" type="controller" standalone="true"/>
 		<action name="procIconshopAdminLogDelete" type="controller" standalone="true"/>
 		<action name="procIconshopAdminLogReset" type="controller" standalone="true"/>
+
+		<action name="getPricePoint" type="model" />
 	</actions>
 </module>

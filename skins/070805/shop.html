@@ -69,8 +69,8 @@
 								<div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
 									<div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
 										<ul class="price-list" style="list-style: none; margin: 0; padding: 0;">
-											<li loop="$iconshop_config->day_price_data => $key, $price" style="display: block; width: 100%;">
-												<input type="radio" value="{$key}" name="day_price_key_{$val->icon_srl}" />
+											<li loop="$iconshop_config->day_price_data => $key, $price" style="display: block; width: 100%;" class="g_selected_days">
+												<input type="radio" value="{$key}" name="day_price_key_{$val->icon_srl}" data-icon-srl="{$val->icon_srl}" data-day-price="{$price}" />
 												<label style="margin-left: 5px; vertical-align: middle;"><!--@if($key == 0)-->무제한
 													<span style="color: #aaaaaa;">({$price} P)</span><!--@else-->{$key}일
 													<span style="color: #aaaaaa;">({$price} P)</span><!--@end--><!--@if($key != 0)--> - {date('Y년 m일 d일까지', strtotime(date('Ymd') . '+' . $key . 'day'))}..<!--@end-->
@@ -99,17 +99,17 @@
 								<div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; overflow: hidden; white-space:nowrap; text-align: center;">
 									<div style="width: 33%; display: inline-block; padding: 10px 0; position: relative; ">
 										<div>판매가격</div>
-										<div style="font-size: 16px;">00P</div>
+										<div id="g_icon_price_{$val->icon_srl}" style="font-size: 16px;">00P</div>
 										<div style="position: absolute; right:-9px; top:33%;">&#43;</div>
 									</div>
 									<div style="width: 33%;display: inline-block; padding: 10px 0; position: relative;">
 										<div>사용기간</div>
-										<div style="font-size: 16px;">00P</div>
+										<div id="g_day_price_{$val->icon_srl}" style="font-size: 16px;">00P</div>
 										<div style="position: absolute; right:-9px; top:33%;">&#61;</div>
 									</div>
 									<div style="width: 33%;display: inline-block; background: #f7f7f7; padding: 10px 0;">
 										<div>최종결제금액</div>
-										<div style="font-size: 16px; color:#d52828;">00P</div>
+										<div id="g_total_icon_price_{$val->icon_srl}" style="font-size: 16px; color:#d52828;">00P</div>
 									</div>
 								</div>
 							</div>
@@ -138,8 +138,8 @@
 								<div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
 									<div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
 										<ul class="price-list" style="list-style: none; margin: 0; padding: 0;">
-											<li loop="$iconshop_config->day_price_data => $key, $price" style="display: block; width: 100%;">
-												<input type="radio" value="{$key}" name="day_price_key_{$val->icon_srl}" />
+											<li loop="$iconshop_config->day_price_data => $key, $price" style="display: block; width: 100%;" class="selected_days">
+												<input type="radio" value="{$key}" name="day_price_key_{$val->icon_srl}" data-icon-srl="{$val->icon_srl}" data-day-price="{$price}" />
 												<label style="margin-left: 5px; vertical-align: middle;"><!--@if($key == 0)-->무제한
 													<span style="color: #aaaaaa;">({$price} P)</span><!--@else-->{$key}일
 													<span style="color: #aaaaaa;">({$price} P)</span><!--@end--><!--@if($key != 0)--> - {date('Y년 m일 d일까지', strtotime(date('Ymd') . '+' . $key . 'day'))}..<!--@end-->
@@ -163,17 +163,17 @@
 								<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; overflow: hidden; white-space:nowrap; text-align: center;">
 									<div style="width: 30%; display: inline-block; padding: 10px 0; position: relative; ">
 										<div>판매가격</div>
-										<div style="font-size: 16px;">00P</div>
+										<div id="icon_price_{$val->icon_srl}" style="font-size: 16px;">00P</div>
 									</div>
 									<div style="width: 5%; display: inline-block; padding: 20px 0; vertical-align: top;">&#43;</div>
 									<div style="width: 30%;display: inline-block; padding: 10px 0; position: relative;">
 										<div>사용기간</div>
-										<div style="font-size: 16px;">00P</div>
+										<div id="day_price_{$val->icon_srl}" style="font-size: 16px;">00P</div>
 									</div>
 									<div style="width: 5%; display: inline-block; padding: 20px 0; vertical-align: top; ">&#61;</div>
 									<div style="width: 30%;display: inline-block; background: #f7f7f7; padding: 10px 0;">
 										<div>최종결제금액</div>
-										<div style="font-size: 16px; color:#d52828;">00P</div>
+										<div id="total_icon_price_{$val->icon_srl}" style="font-size: 16px; color:#d52828;">00P</div>
 									</div>
 								</div>
 							</div>
