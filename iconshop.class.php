@@ -140,6 +140,19 @@ class iconshop extends ModuleObject
 			$oDB->dropTable('iconshop_admin');
 		}
 
+		// iconshop 모듈 생성
+		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
+		if(!$iconshop_info->module_srl)
+		{
+			$args = new stdClass();
+			$args->mid = 'iconshop';
+			$args->module = 'iconshop';
+			$args->browser_title = '아이콘샵';
+			$args->site_srl = 0;
+			$args->skin = 'default';
+			$oModuleController->insertModule($args);
+		}
+
 		// 아이콘샵 모듈의 기본설정 저장
 		$config = new stdClass();
 		$config->icon_width = 20;
@@ -155,11 +168,8 @@ class iconshop extends ModuleObject
 		$config->item_delete_event = "N";
 		$config->item_delete_title = "[nick_name]님이 구입하신 [[icon_title]] 아이콘의 시간이 만료 되었습니다.";
 		$config->item_delete_message = "[nick_name]님이 구입하신 [[icon_title]] 아이콘의 시간이 만료되어 삭제 되었습니다.\n\n[[end_date]]";
-		$output = self::setConfig($config);
-		if(!$output->toBool())
-		{
-			return $output;
-		}
+		$oModuleController->insertModuleConfig('iconshop', $config);
+
 		// 회원 모듈 설정에서 이미지 마크 사용시...
 		$member_config = getModel('member')->getMemberConfig();
 		if($member_config->image_mark == 'Y')
