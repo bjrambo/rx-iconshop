@@ -9,3 +9,5 @@ before_script:
   - npm install
 script:
   - grunt lint
+notifications:
+  slack: xetown:zh0LVRZzrgaTq2mbATAvKpX7
