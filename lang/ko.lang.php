@@ -198,4 +198,4 @@ $lang->success_buy = "상품을 구입 했습니다.";
 $lang->success_send = "상품을 선물 했습니다.";
 $lang->success_sell = "상품을 판매 하였습니다. (+%d 획득)";
 $lang->success_isselected = "대표아이콘으로 설정되었습니다.";
-$lang->msg_not_iconshop_module = '모듈이 존재하지 않습니다. 모듈을 생성해주세요.';
+?>

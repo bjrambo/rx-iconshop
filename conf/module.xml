@@ -27,7 +27,6 @@
 		<action name="dispIconshopAdminLogList" type="view" standalone="true"/>
 		<action name="dispIconshopAdminIconSearch" type="view" standalone="true"/>
 		<action name="dispIconshopAdminGrantinfo" type="view" standalone="true" />
-		<action name="dispIconshopAdminIndex" type="view" standalone="true" />
 
 		<action name="procIconshopAdminConfig" type="controller" standalone="true"/>
 		<action name="procIconshopAdminModuleInsert" type="controller" standalone="true"/>
