@@ -8,7 +8,7 @@
 	<input type="hidden" name="act" value="procIconshopAdminModuleInsert" />
 	<input type="hidden" name="module" value="iconshop" />
 	<input type="hidden" name="module_srl" value="{$iconshop_info->module_srl}" />
-	<input type="hidden" name="mid" value="{$iconshop_info->mid}" />
+	<input type="hidden" name="mid" value="{$iconshop_info->mid}" cond="$logged_info->is_admin != 'Y'" />
 	<input type="hidden" name="error_return_url" value="/index.php?module=admin&act=dispIconshopAdminConfig" />
 	<section class="section">
 		<h1>{$lang->subtitle_primary}</h1>
@@ -18,6 +18,14 @@
 				<input type="text" name="browser_title" id="browser_title" value="<!--@if(strpos($iconshop_info->browser_title, '$user_lang->') === false)-->{$iconshop_info->browser_title}<!--@else-->{htmlspecialchars($iconshop_info->browser_title)}<!--@end-->" class="lang_code" />
 				<a href="#browser_title_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
 				<p id="browser_title_help" class="x_help-block" hidden>{$lang->about_browser_title}</p>
+			</div>
+		</div>
+		<div class="x_control-group" cond="$logged_info->is_admin == 'Y'">
+			<label class="x_control-label" for="mid">{$lang->mid}</label>
+			<div class="x_controls">
+				<input type="text" name="mid" id="mid" value="{$iconshop_info->mid}" />
+				<a href="#module_name_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="module_name_help" class="x_help-block" hidden>{$lang->about_mid}</p>
 			</div>
 		</div>
 		<div class="x_control-group">
@@ -90,8 +98,6 @@
 			</div>
 		</div>
 	</section>
-
-
 	<section class="section">
 		<h1>{$lang->subtitle_advanced}</h1>
 		<div class="x_control-group">

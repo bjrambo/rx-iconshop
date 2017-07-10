@@ -70,6 +70,10 @@ class iconshop extends ModuleObject
 			{
 				$config->item_delete_message = "[nick_name]님이 구입하신 [[icon_title]] 아이콘의 시간이 만료되어 삭제 되었습니다.\n\n[[end_date]]";
 			}
+			if(!$config->use_cache)
+			{
+				$config->use_cache = 'N';
+			}
 
 			self::$config = $config;
 		}
@@ -83,6 +87,66 @@ class iconshop extends ModuleObject
 		$output = $oModuleController->insertModuleConfig('iconshop', $config);
 
 		return $output;
+	}
+
+	protected static function getIconShopModuleInfo()
+	{
+		if($oCacheHandler = self::getCacheHandler())
+		{
+			if(($module_info = $oCacheHandler->get($oCacheHandler->getGroupKey('iconshop', "iconshop:iconshopinfo"), time() - 86400)) !== false)
+			{
+				return $module_info;
+			}
+		}
+
+		$args = new stdClass();
+		$args->module = 'iconshop';
+		$output = executeQuery('iconshop.getIconshopModuleSrl', $args);
+		if(is_array($output->data) || !$output->data->module_srl)
+		{
+			return false;
+		}
+
+		$module_srl = $output->data->module_srl;
+		$module_info = getModel('module')->getModuleInfoByModuleSrl($module_srl);
+
+		if($oCacheHandler)
+		{
+			$oCacheHandler->put($oCacheHandler->getGroupKey('iconshop', "iconshop:iconshopinfo"), $module_info, 86400);
+		}
+
+		return $module_info;
+	}
+
+	protected static function clearCacheByIconshopInfo()
+	{
+		$oCacheHandler = self::getCacheHandler();
+		if(!$oCacheHandler)
+		{
+			return;
+		}
+		$oCacheHandler->delete($oCacheHandler->getGroupKey('iconshop', "iconshop:iconshopinfo"));
+	}
+
+	protected static function getCacheHandler()
+	{
+		static $oCacheHandler = null;
+		if($oCacheHandler === null)
+		{
+			if(self::getConfig()->use_cache !== 'Y')
+			{
+				$oCacheHandler = false;
+			}
+			else
+			{
+				$oCacheHandler = CacheHandler::getInstance('object');
+				if(!$oCacheHandler->isSupport())
+				{
+					$oCacheHandler = false;
+				}
+			}
+		}
+		return $oCacheHandler;
 	}
 
 	/**
@@ -141,7 +205,7 @@ class iconshop extends ModuleObject
 		}
 
 		// iconshop 모듈 생성
-		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
+		$iconshop_info = self::getIconShopModuleInfo();
 		if(!$iconshop_info->module_srl)
 		{
 			$args = new stdClass();
@@ -213,7 +277,7 @@ class iconshop extends ModuleObject
 		}
 
 		// iconshop 모듈이 존재하지 않으면...
-		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
+		$iconshop_info = self::getIconShopModuleInfo();
 		if(!$iconshop_info->module_srl)
 		{
 			return true;
@@ -346,7 +410,7 @@ class iconshop extends ModuleObject
 		}
 
 		// iconshop 모듈 생성
-		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
+		$iconshop_info = self::getIconShopModuleInfo();
 		if(!$iconshop_info->module_srl)
 		{
 			$args = new stdClass();

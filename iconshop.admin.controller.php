@@ -24,7 +24,6 @@ class iconshopAdminController extends iconshop
 
 		// request 값을 모두 받음
 		$args = Context::getRequestVars();
-		$args->mid = 'iconshop';
 		$args->module = 'iconshop';
 		if(!$args->module_srl)
 		{
@@ -47,6 +46,9 @@ class iconshopAdminController extends iconshop
 		}
 
 		$this->setMessage('success_updated');
+
+		// 캐시를 삭제합니다.
+		self::clearCacheByIconshopInfo();
 
 		if(Context::get('success_return_url'))
 		{
@@ -98,6 +100,7 @@ class iconshopAdminController extends iconshop
 		$iconshop_config->item_delete_event = $args->item_delete_event;
 		$iconshop_config->item_delete_title = $args->item_delete_title;
 		$iconshop_config->item_delete_message = $args->item_delete_message;
+		$iconshop_config->use_cache = $args->use_cache;
 
 		$iconshop_config->day_price_use = $args->day_price_use;
 

@@ -17,7 +17,7 @@ class iconshopAdminView extends iconshop
 		$oModuleModel = getModel('module');
 
 		// 설정 정보 가져오기
-		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
+		$iconshop_info = self::getIconShopModuleInfo();
 		$iconshop_config = $oModuleModel->getModuleConfig('iconshop');
 		$module_category = $oModuleModel->getModuleCategories();
 
@@ -60,7 +60,7 @@ class iconshopAdminView extends iconshop
 	 **/
 	function dispIconshopAdminAddConfig()
 	{
-
+		Context::set('object_cache_available', preg_match('/^(apc|file|memcache|redis|wincache|xcache|sqlite)/', Context::getDBInfo()->use_object_cache));
 
 		// 템플릿 파일 지정
 		$this->setTemplateFile('add_config');

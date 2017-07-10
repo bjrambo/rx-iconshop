@@ -22,7 +22,7 @@ class iconshopView extends iconshop
 		$oModuleModel = getModel('module');
 
 		// 설정 정보 가져오기
-		$iconshop_info = $oModuleModel->getModuleInfoByMid('iconshop');
+		$iconshop_info = self::getIconShopModuleInfo();
 		$iconshop_config = self::getConfig();
 		$colorset = $oModuleModel->getModuleSkinVars($iconshop_info->module_srl);
 		// 설정 변수 지정
