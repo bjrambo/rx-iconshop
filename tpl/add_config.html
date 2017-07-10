@@ -40,11 +40,11 @@
 		<div class="x_control-group">
 			<label class="x_control-label">캐시사용</label>
 			<div class="x_controls">
-				<select name="attendance_use_cache" disabled="disabled"|cond="!$object_cache_available">
-					<option value="Y" selected="selected"|cond="$iconshop_config->use_cache == 'Y' && $object_cache_available">{$lang->attendance_yes}</option>
-					<option value="N" selected="selected"|cond="$iconshop_config->use_cache != 'Y' || !$object_cache_available">{$lang->attendance_no}</option>
+				<select name="use_cache" disabled="disabled"|cond="!$object_cache_available">
+					<option value="Y" selected="selected"|cond="$iconshop_config->use_cache == 'Y' && $object_cache_available">{$lang->use}</option>
+					<option value="N" selected="selected"|cond="$iconshop_config->use_cache != 'Y' || !$object_cache_available">{$lang->notuse}</option>
 				</select>
-				<p>{$lang->attendance_use_cache_help}</p>
+				<p>오브젝트 캐쉬를 사용하여 아이콘샵의 성능을 높입니다.</p>
 			</div>
 		</div>
 		<div class="x_control-group">

@@ -156,7 +156,6 @@ class iconshop extends ModuleObject
 	{
 		$oDB = DB::getInstance();
 
-		$oModuleModel = getModel('module');
 		$oModuleController = getController('module');
 		$oAddonAdminController = getAdminController('addon');
 
