@@ -11,5 +11,6 @@
         <column name="start_date" default="curdate()" filter="number" />
         <column name="end_date" var="end_date" filter="number" />
         <column name="ipaddress" default="ipaddress()" />
+	    <column name="category_srl" var="category_srl" default="0" />
     </columns>
 </query>

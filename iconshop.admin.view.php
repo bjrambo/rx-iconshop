@@ -55,6 +55,36 @@ class iconshopAdminView extends iconshop
 		$this->setTemplateFile('config');
 	}
 
+	function dispIconshopAdminCategoryInfo()
+	{
+		$iconshop_info = Context::get('iconshop_info');
+		$category_content = $this->getCategoryHTML($iconshop_info->module_srl);
+		Context::set('category_content', $category_content);
+
+		Context::set('module_info', $this->module_info);
+		$this->setTemplateFile('category_list');
+	}
+
+	function getCategoryHTML($module_srl)
+	{
+		$category_xml_file = getModel('document')->getCategoryXmlFile($module_srl);
+		Context::set('category_xml_file', $category_xml_file);
+
+		Context::loadJavascriptPlugin('ui.tree');
+
+		// Get a list of member groups
+		$oMemberModel = getModel('member');
+		$group_list = $oMemberModel->getGroups();
+		Context::set('group_list', $group_list);
+
+		$security = new Security();
+		$security->encodeHTML('group_list..title');
+
+		// Get information of module_grants
+		$oTemplate = &TemplateHandler::getInstance();
+		return $oTemplate->compile($this->module_path.'tpl', 'category_insert');
+	}
+
 	/**
 	 * @brief 추가 설정
 	 **/

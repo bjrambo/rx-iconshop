@@ -8,6 +8,7 @@
         <column name="is_selected" var="is_selected" default="N" />
         <column name="day_limit" var="day_limit" default="N" />
         <column name="end_date" var="end_date" filter="number" />
+	    <column name="category_srl" var="category_srl" default="0" />
     </columns>
     <conditions>
         <condition operation="equal" column="data_srl" var="data_srl" notnull="notnull" filter="number" />

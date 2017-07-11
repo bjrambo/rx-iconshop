@@ -252,6 +252,7 @@ class iconshopAdminController extends iconshop
 				FileHandler::removeFile($icon_data->file1);
 			}
 		}
+		$obj->category_srl = $args->category_srl;
 
 		// icon_data가 있으면 Update, 없으면 Insert
 		$oIconshopController = getController('iconshop');

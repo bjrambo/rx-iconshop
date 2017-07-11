@@ -312,6 +312,7 @@ class iconshopController extends iconshop
 		$args->user_id = $member_info->user_id;
 		$args->nick_name = $member_info->nick_name;
 		$args->is_selected = $obj->is_selected;
+		$args->category_srl = $obj->category_srl;
 
 		if($iconshop_config->day_price_use === 'Y')
 		{

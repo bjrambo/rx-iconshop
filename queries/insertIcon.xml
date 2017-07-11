@@ -10,6 +10,7 @@
         <column name="price" var="price" default="0" filter="number" />
         <column name="file1" var="file1" notnull="notnull" />
         <column name="extra_vars" var="extra_vars" />
+        <column name="category_srl" var="category_srl" default="0" filter="number" />
         <column name="regdate" default="curdate()" />
     </columns>
 </query>
