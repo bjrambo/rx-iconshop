@@ -25,7 +25,11 @@ class iconshopView extends iconshop
 		$iconshop_info = self::getIconShopModuleInfo();
 		$iconshop_config = self::getConfig();
 		$colorset = $oModuleModel->getModuleSkinVars($iconshop_info->module_srl);
+
+		$category_list = getModel('document')->getCategoryList($iconshop_info->module_srl);
+
 		// 설정 변수 지정
+		Context::set('category_list', $category_list);
 		Context::set('iconshop_info', $iconshop_info);
 		Context::set('iconshop_config', $iconshop_config);
 		Context::set('cols_list_count', $iconshop_config->cols_list_count);

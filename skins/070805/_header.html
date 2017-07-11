@@ -39,15 +39,17 @@
 		
 		<!--@if($act != 'dispIconshopMyIcon')-->
 		<!-- 1차 메뉴 선택시 나오는 2차 메뉴 -->
-		<Div class="ics-nav-2th">
+		<div class="ics-nav-2th">
 			<ul>
-				<li><a href="#" >전체</a></li>
-				<li><a href="#" >테스트</a></li>
-				<li><a href="#" >테스트</a></li>
-				<li><a href="#" >테스트</a></li>
-				<li><a href="#" >테스트</a></li>
+				<li>
+					<a href="#" >전체</a>
+				</li>
+				<li loop="$category_list => $key, $val">
+					<a href="{getUrl('', 'mid', $val->mid, 'category_srl', $val->category_srl)}" >{$val->title} </a>
+				</li>
+
 			</ul>
-		</Div>
+		</div>
 		<!--@end-->
 	</div>
 </div>
