@@ -52,7 +52,7 @@ $lang->iconshop_main_menu = array(
 		"act" => "dispIconshopIndex"
 	),
 	"my_icon" => array(
-		"title" => "내 보관함",
+		"title" => "마이페이지",
 		"act" => "dispIconshopMyIcon"
 	)
 );

@@ -238,7 +238,8 @@
 }
 
 
-#ics-hd .ics-nav .ics-nav-item:hover {
+#ics-hd .ics-nav .ics-nav-item:hover,
+#ics-hd .ics-nav .ics-nav-item.active {
 	border-bottom: 2px solid #000000;
 }
 
