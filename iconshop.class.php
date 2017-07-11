@@ -199,7 +199,6 @@ class iconshop extends ModuleObject
 				}
 			}
 			$oDB->commit();
-
 			$oDB->dropTable('iconshop_admin');
 		}
 
@@ -265,6 +264,16 @@ class iconshop extends ModuleObject
 		}
 
 		if($oDB->isTableExists('iconshop_member'))
+		{
+			return true;
+		}
+
+		if(!$oDB->isColumnExists('iconshop_items', 'category_srl'))
+		{
+			return true;
+		}
+
+		if(!$oDB->isColumnExists('iconshop_user_item', 'category_srl'))
 		{
 			return true;
 		}
@@ -351,9 +360,8 @@ class iconshop extends ModuleObject
 				}
 			}
 			$oDB->commit();
-
 			$oDB->dropTable('iconshop_admin');
-			$admin_database_file = _XE_PATH_ . 'modules/schemas/iconshop_admin.xml';
+			$admin_database_file = $this->module_path . 'schemas/iconshop_admin.xml';
 			$admin_delete_output = FileHandler::removeFile($admin_database_file);
 			if(!$admin_delete_output->toBool())
 			{
@@ -394,12 +402,22 @@ class iconshop extends ModuleObject
 			}
 			$oDB->commit();
 			$oDB->dropTable('iconshop_member');
-			$member_database_file = _XE_PATH_ . 'modules/schemas/iconshop_member.xml';
+			$member_database_file = $this->module_path . 'schemas/iconshop_member.xml';
 			$member_delete_output = FileHandler::removeFile($member_database_file);
 			if(!$member_delete_output->toBool())
 			{
 				return $member_delete_output;
 			}
+		}
+
+		if(!$oDB->isColumnExists('iconshop_items', 'category_srl'))
+		{
+			$oDB->addColumn('iconshop_items', 'category_srl', 'number', '11', null, true);
+		}
+
+		if(!$oDB->isColumnExists('iconshop_user_item', 'category_srl'))
+		{
+			$oDB->addColumn('iconshop_user_item', 'category_srl', 'number', '11', null, true);
 		}
 
 		// iconshop 모듈에서 사용할 디렉토리 생성
