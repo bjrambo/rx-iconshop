@@ -53,10 +53,10 @@ class iconshopModel extends iconshop
 	/**
 	 * @brief 상품목록 구해옴 (상점)
 	 **/
-	function getShopIconList($list_count = 10, $page_count = 10)
+	function getShopIconList()
 	{
 		// 모듈설정 가져옴
-		$iconshop_config = Context::get('module_config');
+		$iconshop_config = Context::get('iconshop_config');
 
 		// 검색/정렬옵션
 		$search_keyword = trim(Context::get('search_keyword'));
@@ -68,8 +68,8 @@ class iconshopModel extends iconshop
 		// 기타 변수들 정리
 		$args->page = Context::get('page');
 		$args->list_count = ($iconshop_config->list_count) ? $iconshop_config->list_count : 10;
-		$args->page_count = (int)$page_count;
-
+		$args->page_count = 10;
+		$args->category_srl = Context::get('category_srl');
 		$output = executeQueryArray("iconshop.getIconList", $args);
 
 		if($output->data)

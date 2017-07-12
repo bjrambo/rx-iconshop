@@ -273,10 +273,21 @@ class iconshop extends ModuleObject
 			return true;
 		}
 
+		if(!$oDB->isIndexExists('iconshop_items', 'idx_category_srl'))
+		{
+			return true;
+		}
+
 		if(!$oDB->isColumnExists('iconshop_user_item', 'category_srl'))
 		{
 			return true;
 		}
+
+		if(!$oDB->isIndexExists('iconshop_user_item', 'idx_category_srl'))
+		{
+			return true;
+		}
+
 
 		// iconshop 모듈에서 사용할 디렉토리가 없으면
 		if(!is_dir('./files/iconshop'))
@@ -412,12 +423,22 @@ class iconshop extends ModuleObject
 
 		if(!$oDB->isColumnExists('iconshop_items', 'category_srl'))
 		{
-			$oDB->addColumn('iconshop_items', 'category_srl', 'number', '11', null, true);
+			$oDB->addColumn('iconshop_items', 'category_srl', 'number', '11', '0', true);
 		}
 
 		if(!$oDB->isColumnExists('iconshop_user_item', 'category_srl'))
 		{
-			$oDB->addColumn('iconshop_user_item', 'category_srl', 'number', '11', null, true);
+			$oDB->addColumn('iconshop_user_item', 'category_srl', 'number', '11', '0', true);
+		}
+
+		if(!$oDB->isIndexExists('iconshop_items', 'idx_category_srl'))
+		{
+			$oDB->addIndex('iconshop_items', 'idx_category_srl', array('category_srl'));
+		}
+
+		if(!$oDB->isIndexExists('iconshop_user_item', 'idx_category_srl'))
+		{
+			$oDB->addIndex('iconshop_user_item', 'idx_category_srl', array('category_srl'));
 		}
 
 		// iconshop 모듈에서 사용할 디렉토리 생성

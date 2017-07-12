@@ -27,7 +27,6 @@ class iconshopView extends iconshop
 		$colorset = $oModuleModel->getModuleSkinVars($iconshop_info->module_srl);
 
 		$category_list = getModel('document')->getCategoryList($iconshop_info->module_srl);
-
 		// 설정 변수 지정
 		Context::set('category_list', $category_list);
 		Context::set('iconshop_info', $iconshop_info);
@@ -68,7 +67,7 @@ class iconshopView extends iconshop
 		$logged_info->point_level = $oPointModel->getLevel($logged_info->point, $point_config->level_step);
 
 		// 상품정보 가져오기
-		$icon_list = $oIconshopModel->getShopIconList(10);
+		$icon_list = $oIconshopModel->getShopIconList();
 		$myIconSrlNumber = $oIconshopModel->getMyIconListByIndex();
 
 		$myIconSrls = array();

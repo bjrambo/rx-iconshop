@@ -8,15 +8,27 @@
 		<a href="{getUrl('act',$val['act'],'page',1,'search_keyword','')}" class="ics-nav-item <!--@if($menu == $key)-->active<!--@end-->" loop="$iconshop_main_menu => $key,$val">{$val['title']}</a>
 		
 		<!-- 1차 분류는 드롭다운 형식으로 구성 -->
+		{@ $cate_list = array(); $current_key = null; }
+		<!--@foreach($category_list as $key=>$val)-->
+		<!--@if(!$val->depth)-->
+		{@
+		$cate_list[$key] = $val;
+		$cate_list[$key]->children = array();
+		$current_key = $key;
+		}
+		<!--@elseif($current_key)-->
+		{@ $cate_list[$current_key]->children[] = $val }
+		<!--@end-->
+		<!--@end-->
 		<div class="dropdown ">
 			<button class="dropdown-toggle" type="button" id="cate" data-toggle="dropdown" >1차카테고리</button>
 			<ul class="dropdown-menu" role="menu"  aria-labelledby="cate">
-				<li><a href="#" class="item">사람</a></li>
-				<li><a href="#" class="item">사물</a></li>
-				<li><a href="#" class="item">식물</a></li>
-				<li><a href="#" class="item">기타</a></li>
-				<li><a href="#" class="item">말풍선</a></li>
-				<li><a href="#" class="item">애니메이션</a></li>
+				<li>
+					<a href="{getUrl('', 'mid', $iconshop_info->mid, 'category_srl', '')}" >전체</a>
+				</li>
+				<li loop="$cate_list => $key, $val">
+					<a href="{getUrl('', 'mid', $val->mid, 'category_srl', $val->category_srl)}" >{$val->title} </a>
+				</li>
 			</ul>
 		</div>
 		
@@ -42,12 +54,11 @@
 		<div class="ics-nav-2th">
 			<ul>
 				<li>
-					<a href="#" >전체</a>
+					<a href="{getUrl('', 'mid', $iconshop_info->mid, 'category_srl', '')}" >전체</a>
 				</li>
-				<li loop="$category_list => $key, $val">
-					<a href="{getUrl('', 'mid', $val->mid, 'category_srl', $val->category_srl)}" >{$val->title} </a>
-				</li>
-
+				<block loop="$cate_list=>$key,$val" cond="$category_srl==$val->category_srl"></a>
+					<li loop="$val->children=>$idx,$item" class="on_"|cond="$category==$item->category_srl"><a href="{getUrl(category,$item->category_srl,'document_srl','', 'page', '')}">{$item->title}</a></li>
+				</block>
 			</ul>
 		</div>
 		<!--@end-->

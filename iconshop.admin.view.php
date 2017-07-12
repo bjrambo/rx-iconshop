@@ -142,12 +142,16 @@ class iconshopAdminView extends iconshop
 		$group_list = $oMemberModel->getGroups(0);
 		Context::set('group_list', $group_list);
 
+		$category_list = getModel('document')->getCategoryList(Context::get('iconshop_info')->module_srl);
+		Context::set('category_list', $category_list);
+
 		// 원본 데이터 가져오기
 		if($icon_srl)
 		{
 			$oIconshopModel = getModel('iconshop');
 			$icon_data = $oIconshopModel->getIconBySrl($icon_srl);
 			$icon_data->extra_vars = unserialize($icon_data->extra_vars);
+			debugPrint($icon_data);
 			if($icon_data)
 			{
 				Context::set('icon_data', $icon_data);
