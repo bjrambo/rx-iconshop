@@ -5,7 +5,7 @@
 <load target="js/shop.js" />
 <div id="ics-hd">
 	<div class="ics-nav" >
-		<a href="{getUrl('act',$val['act'],'page',1,'search_keyword','')}" class="ics-nav-item <!--@if($menu == $key)-->active<!--@end-->" loop="$iconshop_main_menu => $key,$val">{$val['title']}</a>
+		<a href="{getUrl('', 'mid', $iconshop_info->mid, 'act',$val['act'],'page',1,'search_keyword','')}" class="ics-nav-item <!--@if($menu == $key)-->active<!--@end-->" loop="$iconshop_main_menu => $key,$val">{$val['title']}</a>
 		
 		<!-- 1차 분류는 드롭다운 형식으로 구성 -->
 		{@ $cate_list = array(); $current_key = null; }
