@@ -24,6 +24,8 @@ class iconshopController extends iconshop
 		$oModuleModel = getModel('module');
 		$oIconshopModel = getModel('iconshop');
 
+		$iconshop_info = self::getIconShopModuleInfo();
+
 		// 권한 체크
 		$logged_info = Context::get('logged_info');
 		if(!Context::get('is_logged'))
@@ -140,7 +142,7 @@ class iconshopController extends iconshop
 		}
 		else
 		{
-			$this->setRedirectUrl(getNotEncodedUrl('', 'mid', 'iconshop')); //, 'act', 'dispIconshopMyIcon'
+			$this->setRedirectUrl(getNotEncodedUrl('', 'mid', $iconshop_info->mid)); //, 'act', 'dispIconshopMyIcon'
 		}
 
 	}
