@@ -16,6 +16,7 @@
 		<action name="procIconshopIconSelected" type="controller" standalone="true"/>
 		<action name="procIconshopIconSell" type="controller" standalone="true"/>
 		<action name="procIconshopIconDelete" type="controller" standalone="true"/>
+		<action name="procIconshopInsertMyIcon" type="controller" standalone="true" />
 
 		<action name="dispIconshopAdminConfig" type="view" standalone="true" admin_index="true"/>
 		<action name="dispIconshopAdminAddConfig" type="view" standalone="true"/>

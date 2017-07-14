@@ -28,6 +28,14 @@
 			</div>
 		</div>
 		<div class="x_control-group">
+			<label class="x_control-label" for="user_insert_price">유저 아이콘 등록 가격</label>
+			<div class="x_controls">
+				<input type="text" name="user_insert_price" value="{$iconshop_config->user_insert_price}" class="inputTypeText w60" id="user_insert_price" />
+			</div>
+			<p>유저가 등록할때 사용되는 가격 정보입니다. 해당 가격에 사용 기간을 설정하여 (설정가격 + 기간에 따른 가격) 으로 계산됩니다.</p>
+		</div>
+
+		<div class="x_control-group">
 			<label class="x_control-label" for="member_info_print">{$lang->member_info_print}</label>
 			<div class="x_controls">
 				<select name="member_info_print" id="member_info_print">

@@ -104,7 +104,7 @@ class iconshopController extends iconshop
 		}
 
 		// 회원의 포인트 차감
-		if($icon_data->price && $icon_data->point_limit == "Y")
+		if($icon_data->price)
 		{
 			$oPointController = getController('point');
 			$oPointController->setPoint($logged_info->member_srl, $icon_data->price, 'minus');
@@ -144,7 +144,6 @@ class iconshopController extends iconshop
 		{
 			$this->setRedirectUrl(getNotEncodedUrl('', 'mid', $iconshop_info->mid)); //, 'act', 'dispIconshopMyIcon'
 		}
-
 	}
 
 	/**
@@ -259,7 +258,7 @@ class iconshopController extends iconshop
 		}
 
 		// 회원의 포인트 차감
-		if($icon_data->price && $icon_data->point_limit == "Y")
+		if($icon_data->price)
 		{
 			$oPointController = getController('point');
 			$oPointController->setPoint($logged_info->member_srl, $point, 'minus');
@@ -304,6 +303,148 @@ class iconshopController extends iconshop
 			$this->setRedirectUrl(getNotEncodedUrl('', 'mid', 'iconshop'));
 		}
 	}
+
+	function procIconshopInsertMyIcon()
+	{
+		if(Context::get('is_logged'))
+		{
+			return new Object(-1, '로그인 하지 않은 사람은 이용할 수 없습니다.');
+		}
+		$logged_info = Context::get('logged_info');
+
+		$iconshop_config = self::getConfig();
+		$iconshop_info = self::getIconShopModuleInfo();
+
+		$obj = Context::getRequestVars();
+
+		$args = new stdClass();
+		$args->member_srl = $logged_info->member_srl;
+		$args->title = $obj->title;
+		$args->total_count = 1;
+		$args->set_total_count = 1;
+		$args->price = -1;
+		$args->extra_vars = serialize(new stdClass());
+		$args->regdate = date('YmdHis');
+		$file1_obj = $args->file1;
+		if($file1_obj['tmp_name'])
+		{
+			// 이미지 파일이 아니면 무시
+			if(!preg_match("/\.(jpg|jpeg|gif|png)$/i", $file1_obj['name'], $file1_ext))
+			{
+				return new Object(-1, 'invalid_image_format');
+			}
+
+			// 경로를 정해서 업로드
+			$path = './files/iconshop/';
+
+			// 디렉토리 생성
+			if(!is_dir($path))
+			{
+				FileHandler::makeDir($path);
+			}
+
+			// 이미지 길이제한 구해옴
+			$max_width = $iconshop_config->icon_width;
+			$max_height = $iconshop_config->icon_height;
+
+			// 파일 정보 구함
+			list($width, $height, $type, $attrs) = @getimagesize($file1_obj['tmp_name']);
+
+			// 길이제한이 있을경우 리사이징
+			if(($max_width && $max_height) && ($width > $max_width || $height > $max_height))
+			{
+				$filename = sprintf("%s%s.gif", $path, md5($file1_obj['name']));
+				FileHandler::createImageFile($file1_obj['tmp_name'], $filename, $max_width, $max_height, 'gif');
+			}
+			else
+			{
+				$filename = sprintf("%s%s.%s", $path, md5($file1_obj['name']), $file1_ext[1]);
+				//TODO(bJRAmbo) : check again
+				@move_uploaded_file($file1_obj['tmp_name'], $filename);
+			}
+			$obj->file1 = $filename;
+		}
+		if(!$args->icon_srl)
+		{
+			$args->icon_srl = getNextSequence();
+			$output = executeQuery('iconshop.insertIcon', $args);
+			if(!$output->toBool())
+			{
+				return $output;
+			}
+		}
+		else
+		{
+			$output = executeQuery('iconshop.updateIcon', $args);
+			if(!$output->toBool())
+			{
+				return $output;
+			}
+		}
+
+		$my_args = new stdClass();
+		$my_args->data_srl = getNextSequence();
+		$my_args->icon_srl = $args->icon_srl;
+		$my_args->member_srl = $obj->member_srl;
+		$my_args->is_selected = $obj->is_selected;
+		$my_args->day_limit = 'Y';
+		$user_price = $iconshop_config->user_insert_price;
+		if($iconshop_config->day_price_use === 'Y')
+		{
+			$price = getModel('iconshop')->getDayPriceByKey($obj->day_price_key);
+			$user_price = $iconshop_config->user_insert_price + $price;
+
+			if($obj->day_price_key)
+			{
+				$args->day_limit = 'Y';
+				$args->end_date = date("YmdHis", strtotime("+$obj->day_price_key days", strtotime("now")));
+			}
+			else
+			{
+				$args->day_limit = 'N';
+				$args->end_date = 0;
+			}
+		}
+		$data_output = $this->insertMemberIcon($args);
+		if(!$data_output->toBool())
+		{
+			return $data_output;
+		}
+		else
+		{
+			if($user_price)
+			{
+				$point_output = getController('point')->setPoint($logged_info->member_srl, $user_price, 'minus');
+			}
+		}
+
+		// 대표아이콘 설정시 딴 아이콘의 is_selected 변경
+		if($obj->is_selected == "Y")
+		{
+			$this->updateIsSelected($logged_info->member_srl, $args->icon_srl);
+		}
+
+		// 구입로그 남기기
+		$log_args = new stdClass();
+		$log_args->data_srl = $data_output->data_srl;
+		$log_args->icon_srl = $args->icon_srl;
+		$log_args->category_srl = 1;
+		$log_args->sender_srl = 0;
+		$log_args->receive_srl = $logged_info->member_srl;
+		$log_args->point = $args->price;
+		$log_args->content = sprintf("%s(%s) [%s] 아이콘을 등록", $logged_info->user_id, $logged_info->nick_name, $icon_data->title);
+		$this->insertLog($args);
+
+		if(Context::get('success_return_url'))
+		{
+			$this->setRedirectUrl(Context::get('success_return_url'));
+		}
+		else
+		{
+			$this->setRedirectUrl(getNotEncodedUrl('', 'mid', $iconshop_info->mid, 'act', 'dispIconshopMyIcon', 'page', Context::get('page')));
+		}
+	}
+
 
 	function insertIcondata($member_info, $obj, &$icon_data)
 	{

@@ -2,68 +2,72 @@
 <div class="my-icon">
 	<a href="#my_{$val->icon_srl}" role="button" data-toggle="modal" style="text-decoration: none; color: #000000; float: right;">&#43; 아이콘 등록하기</a>
 	<div class="modal hide" id="my_{$val->icon_srl}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="ics-mod">
-				<div class="ics-mod-hd">
-					<div class="title">등록하기</div>
-					<button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
-				</div>
-				<div class="ics-mod-bd">
-					<div class="box">
-						<div class="box-hd">이름</div>
-						<div class="box-line">
-							<input type="text" style=" overflow: hidden; padding:0; outline: none; width: 100%; border: 0;" placeholder="이름">
-						</div>
+		<form action="{Context::getRequestUri()}" method="post" >
+			<input type="hidden" name="module" value="iconshop" />
+			<input type="hidden" name="act" value="procIconshopInsertMyIcon" />
+			<div class="modal-dialog">
+				<div class="ics-mod">
+					<div class="ics-mod-hd">
+						<div class="title">등록하기</div>
+						<button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
 					</div>
-					<div class="box">
-						<div class="box-hd">파일등록</div>
-						<div class="box-line">첨부하기</div>
-						<div style="padding: 10px 0;">
-							<div style="font-size: 10px;">이미지 사이즈 00 x 00, 파일크기 00MB 이하, 확장자 JPG,GIF만 등록가능</div>
+					<div class="ics-mod-bd">
+						<div class="box">
+							<div class="box-hd">이름</div>
+							<div class="box-line">
+								<input type="text" name="title" style=" overflow: hidden; padding:0; outline: none; width: 100%; border: 0;" placeholder="이름">
+							</div>
+						</div>
+						<div class="box">
+							<div class="box-hd">파일등록</div>
+							<div class="box-line"><input type="file" name="file1" value="" /></div>
 							<div style="padding: 10px 0;">
-								등록된 파일 이미지
-								<div style="float: right">
-									<input type="checkbox">
-									<label> 삭제</label>
+								<div style="font-size: 10px;">이미지 사이즈 00 x 00, 파일크기 00MB 이하, 확장자 JPG,GIF만 등록가능</div>
+								<div style="padding: 10px 0;">
+									등록된 파일 이미지
+									<div style="float: right">
+										<input type="checkbox">
+										<label> 삭제</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="box">
+							<div class="box-hd">최종결제금액</div>
+							<div class="box-line end">
+								<div class="col">
+									<div class="title">등록금액</div>
+									<div >00P</div>
+									<div class="mark" >&#45;</div>
+								</div>
+								<div class="col">
+									<div class="title">수정금액</div>
+									<div >00P</div>
+									<div class="mark" >&#61;</div>
+								</div>
+								<div class="col total">
+									<div class="title">최종결제금액</div>
+									<div >00P</div>
+								</div>
+							</div>
+						</div>
+						<div class="box">
+							<div class="box-hd">주의사항</div>
+							<div class="box-line etc">
+								<div class="box-etc">
+									<span> 등록된 아이템은 판매가 되지 않습니다.</span>
+									<span> 수정할 경우 수수료가 발생합니다. 등록하실 때 유의하세요.</span>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="box">
-						<div class="box-hd">최종결제금액</div>
-						<div class="box-line end">
-							<div class="col">
-								<div class="title">등록금액</div>
-								<div >00P</div>
-								<div class="mark" >&#45;</div>
-							</div>
-							<div class="col">
-								<div class="title">수정금액</div>
-								<div >00P</div>
-								<div class="mark" >&#61;</div>
-							</div>
-							<div class="col total">
-								<div class="title">최종결제금액</div>
-								<div >00P</div>
-							</div>
-						</div>
+					<div class="icd-mod-fo">
+						<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
+						<button type="button" class="yellow" >등록하기</button>
 					</div>
-					<div class="box">
-						<div class="box-hd">주의사항</div>
-						<div class="box-line etc">
-							<div class="box-etc">
-								<span> 등록된 아이템은 판매가 되지 않습니다.</span>
-								<span> 수정할 경우 수수료가 발생합니다. 등록하실 때 유의하세요.</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="icd-mod-fo">
-					<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
-					<button type="button" class="yellow" >등록하기</button>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </div>
 <div class="ics-list-no" style=" text-align: center;" cond="!$icon_list">

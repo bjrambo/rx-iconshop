@@ -8,4 +8,5 @@
 	<column name="category_srl" type="number" size="11" default="0" notnull="notnull" />
 	<column name="regdate" type="date" />
 	<column name="file1" type="varchar" size="500" />
+	<column name="member_srl" type="number" size="11" default="0" />
 </table>

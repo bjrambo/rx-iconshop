@@ -283,6 +283,11 @@ class iconshop extends ModuleObject
 			return true;
 		}
 
+		if(!$oDB->isColumnExists('iconshop_items', 'member_srl'))
+		{
+			return true;
+		}
+
 		if(!$oDB->isIndexExists('iconshop_user_item', 'idx_category_srl'))
 		{
 			return true;
@@ -424,6 +429,11 @@ class iconshop extends ModuleObject
 		if(!$oDB->isColumnExists('iconshop_items', 'category_srl'))
 		{
 			$oDB->addColumn('iconshop_items', 'category_srl', 'number', '11', '0', true);
+		}
+
+		if(!$oDB->isColumnExists('iconshop_items', 'member_srl'))
+		{
+			$oDB->addColumn('iconshop_items', 'member_srl', 'number', '11', '0', true);
 		}
 
 		if(!$oDB->isColumnExists('iconshop_user_item', 'category_srl'))
