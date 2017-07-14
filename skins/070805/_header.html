@@ -33,19 +33,19 @@
 	<!-- 카테고리를 사용할때만 나오는 메뉴(아직 사용에 따른 보기 기능구현 안됨) -->
 	<div class="ics-nav-sub"  >
 		<div class="ics-nav-1th" >
-			<block loop="$cate_list=>$key,$val" cond="$category_srl==$val->category_srl">
-				<a href="{getUrl('', 'mid', $val->mid, 'category_srl', $val->category_srl)}" >{$val->title}</a>
+			<block loop="$cate_list=>$key,$val" cond="$category==$val->category_srl">
+				<a href="{getUrl('', 'mid', $val->mid, 'category', $val->category_srl, 'category_srl', $val->category_srl)}" >{$val->title}</a>
 			</block>
 		</div>
 		<!-- 1차 메뉴 선택시 나오는 2차 메뉴 -->
 		<div class="ics-nav-2th" cond="$act != 'dispIconshopMyIcon'">
 			<ul>
 				<li loop="$cate_list => $key, $val" cond="!$category_srl">
-					<a href="{getUrl('', 'mid', $val->mid, 'category_srl', $val->category_srl)}" >{$val->title} </a>
+					<a href="{getUrl('', 'mid', $val->mid, 'category', $val->category_srl, 'category_srl', $val->category_srl)}" >{$val->title} </a>
 				</li>
-				<block loop="$cate_list=>$key,$val" cond="$category_srl==$val->category_srl">
+				<block loop="$cate_list=>$key,$val" cond="$category==$val->category_srl">
 					<li loop="$val->children=>$idx,$item" >
-						<a href="{getUrl(category,$item->category_srl,'document_srl','', 'page', '')}" class="active"|cond="$category==$item->category_srl">{$item->title}</a>
+						<a href="{getUrl('', 'mid', $val->mid, 'category', $val->category_srl, 'category_srl', $item->category_srl)}" class="active"|cond="$category_srl==$item->category_srl">{$item->title}</a>
 					</li>
 				</block>
 			</ul>
