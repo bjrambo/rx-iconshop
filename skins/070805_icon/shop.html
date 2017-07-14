@@ -1,187 +1,207 @@
 <include target="_header.html" />
-<div class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
-	<p>{$XE_VALIDATOR_MESSAGE}</p>
+
+<div class="modal {$XE_VALIDATOR_MESSAGE_TYPE}" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" cond="$XE_VALIDATOR_MESSAGE">
+	<div class="modal-dialog">
+		<div class="ics-message">
+			<div style="padding-left: 20px;">아이콘샵</div>
+			<button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
+		</div>
+		<div style="text-align: center; padding: 50px 0; background: #ffffff;">
+			<div style="font-size: 60px; margin-bottom: 20px; padding: 30px; ">
+				<i class="fa fa-exclamation"|cond="$XE_VALIDATOR_MESSAGE_TYPE == 'error'" class="fa fa-smile-o"|cond="$XE_VALIDATOR_MESSAGE_TYPE != 'error'" aria-hidden="true"></i>
+			</div>
+			<div>{$XE_VALIDATOR_MESSAGE}</div>
+		</div>
+		<div class="modal-footer">
+			<button data-dismiss="modal" aria-hidden="true" style="width: 100%;">{$lang->cmd_close}</button>
+		</div>
+	</div>
 </div>
 
-<block cond="$is_logged">
-	{@
-		$oPointModel = getModel('point');
-		$point = $oPointModel->getPoint($logged_info->member_srl);
-		$oModuleModel = getModel('module');
-		$config = $oModuleModel->getModuleConfig('point');
-		$level = $oPointModel->getLevel($point, $config->level_step);
-		$level_count = $level+1; $nextPoint = $config->level_step[$level_count];
-	}
-</block>
-
-<div class="x">
-
-	<div class="x_clearfix">
-		<div class="x_pull-left">
-			해당 조건에 대해 <b style="color:#FF3333">{number_format($total_count)}</b> 개의 아이콘이 있습니다.
-		</div>
-
-
-		<form action="./" method="get" class="x_pull-right">
-			<input type="hidden" name="mid" value="{$mid}" />
-			<input type="hidden" name="act" value="{$act}" />
-
-			<span class="x_input-append">
-		<input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" style="width:100px" />
-
-        <button type="submit" class="x_btn x_btn-inverse">{$lang->cmd_search}</button>
-        </span>
-
-		</form>
+<div class="ics-list">
+	<div class="ics-list-hd" style="padding: 20px 0;">
+		총 <strong>{number_format($total_count)}개</strong> 의 상품이 조회되었습니다.
+		<div style="float: right;">인기순 / 최신순</div>
 	</div>
 
+	<!--@if(!$icon_list)-->
+	{$lang->null_shop}
+	<!--@end-->
+
 	<!--// 테이블형 출력 -->
-	<ul class="thumbnails">
-		<!--@if(!$icon_list)-->
-		<li>{$lang->null_shop}</li>
-		<!--@end-->
-		{@
-		$count = 0;
-		$cell_index = 0;
-		}
+	<ul class="ics-list-ul">
 		<li loop="$icon_list=>$key,$val">
-			<div class="thumbnail">
-				<div class="media">
-					<a href="#{$val->icon_srl}" role="button" data-toggle="modal" class="pull-left"><img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" class="img-polaroid media-object" /></a>
-					<div class="media-body">
-						<a href="#{$val->icon_srl}" role="button" data-toggle="modal">
-							<h5 class="media-heading">{$val->title} {$val->icon}</h5>
-						</a>
-						<!--@if($val->price2 == 0)-->
-						<font color="#FF3300">무료</font>
-						<!--@else-->
-						{$val->price2}
-						<!--@end-->
-						/ {$lang->total_count} : {$val->total_count2} / 총{$val->set_total_count}개
-						<br />
-						{$lang->minute_limit} :
-						<!--@if($val->minute2 == 43200)-->
-						<font color="#FF3300">구입후 한달</font>
-						<!--@elseif($val->minute2 == 10080)-->
-						<font color="#3366CC">구입후 일주일</font>
-						<!--@else-->
-						{$val->minute2}
-						<!--@end-->
+			<div class="list-item" style="padding-bottom: 30px;">
+				<a href="#{$val->icon_srl}" role="button" data-toggle="modal" style="padding:20px;display: inline-block;  border: 1px solid #eee;"><img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" /></a>
+				<div class="media-body" style="display: inline-block; vertical-align: top; padding-left: 10px;">
+					<div style="padding: 8px 0;">{cut_str($val->title, 10, '...')} {$val->icon}</div>
+					<div><a href="#">1차카테고리</a></div>
+					<Div>재고 {$val->total_count} / {$val->set_total_count}</Div>
+				</div>
+			</div>
+			<div id="{$val->icon_srl}" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="nav">
+						<ul class="nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#buy_{$val->icon_srl}">구매하기</a></li>
+							<li><a data-toggle="tab" href="#gift_{$val->icon_srl}">선물하기</a></li>
+						</ul>
+						<button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
+					</div>
+					<div class="tab-content">
+						<form id="gift_{$val->icon_srl}" class="tab-pane fade" action="{Context::getRequestUri()}" method="post" ruleset="iconBuy"|cond="$iconshop_config->day_price_use === 'Y'">
+							<input type="hidden" name="module" value="iconshop" />
+							<input type="hidden" name="act" value="procIconshopIconSend" />
+							<input type="hidden" name="icon_srl" value="{$val->icon_srl}" />
+							<div style="padding: 20px;">
+								<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" style="float: left; display: inline-block; padding:25px 20px;" />
+								<div style="margin-left: 80px;">
+									<div style="font-size: 18px;">{$val->title}</div>
+									<div style="color: #aaa">1차카테고리 - 2차카테고리</div>
+									<div style="border-top: 1px solid #000000; padding-top: 5px; margin-top: 5px;">판매가격
+										<span style="font-size: 16px"><!--@if($val->price2 == 0)-->무료<!--@else-->{$val->price2}<!--@end--></span>
+									</div>
+									<div>재고 {$val->total_count}</div>
+								</div>
+							</div>
+							<div style="padding: 0 20px;">
+								<div>사용기간 선택</div>
+								<div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+									<div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
+										<ul class="price-list" style="list-style: none; margin: 0; padding: 0;">
+											<li loop="$iconshop_config->day_price_data => $key, $price" style="display: block; width: 100%;" class="g_selected_days">
+												<input type="radio" value="{$key}" name="day_price_key_{$val->icon_srl}" data-icon-price="{$val->price}" data-icon-srl="{$val->icon_srl}" data-day-price="{$price}" />
+												<label style="margin-left: 5px; vertical-align: middle;"><!--@if($key == 0)-->무제한
+													<span style="color: #aaaaaa;">({$price} P)</span><!--@else-->{$key}일
+													<span style="color: #aaaaaa;">({$price} P)</span><!--@end--><!--@if($key != 0)--> - {date('Y년 m일 d일까지', strtotime(date('Ymd') . '+' . $key . 'day'))}..<!--@end-->
+												</label>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							<div style="padding: 0px 20px;">
+								<div>선물할 친구</div>
+								<div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+									<input type="text" name="receive_srl" id="receive_srl_{$val->icon_srl}" class="iText" readonly="readonly" style=" height:19px; width:100px" />
+									<span class="btn25"><a href="{getUrl('module','iconshop','act','dispIconshopMemberSearch','target_id','receive_srl_'.$val->icon_srl)}" onclick="popopen(this.href,'memberSearch');return false;">{$lang->cmd_search}</a></span>
+								</div>
+							</div>
+							<div style="padding: 0px 20px;">
+								<div>쪽지 전송 여부</div>
+								<div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+									<input type="checkbox" name="send_message" id="send_message" value="Y" checked="checked" onclick="send_message_chk(this.checked)" />
+								</div>
+							</div>
+							<div style="padding: 0px 20px;">
+								<div>최종 결제 금액</div>
+								<div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; overflow: hidden; white-space:nowrap; text-align: center;">
+									<div style="width: 33%; display: inline-block; padding: 10px 0; position: relative; ">
+										<div>판매가격</div>
+										<div id="g_icon_price_{$val->icon_srl}" style="font-size: 16px;">00P</div>
+										<div style="position: absolute; right:-9px; top:33%;">&#43;</div>
+									</div>
+									<div style="width: 33%;display: inline-block; padding: 10px 0; position: relative;">
+										<div>사용기간</div>
+										<div id="g_day_price_{$val->icon_srl}" style="font-size: 16px;">00P</div>
+										<div style="position: absolute; right:-9px; top:33%;">&#61;</div>
+									</div>
+									<div style="width: 33%;display: inline-block; background: #f7f7f7; padding: 10px 0;">
+										<div>최종결제금액</div>
+										<div id="g_total_icon_price_{$val->icon_srl}" style="font-size: 16px; color:#d52828;">00P</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
+								<button class="gift" type="submit">선물</button>
+							</div>
+						</form>
+						<form id="buy_{$val->icon_srl}" class="tab-pane fade in active" action="{Context::getRequestUri()}" method="post" ruleset="iconBuy"|cond="$iconshop_config->day_price_use === 'Y'">
+							<input type="hidden" name="module" value="iconshop" />
+							<input type="hidden" name="act" value="procIconshopIconBuy" />
+							<input type="hidden" name="icon_srl_{$val->icon_srl}" value="{$val->icon_srl}" />
+							<div style="padding: 20px;">
+								<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" style="float: left; display: inline-block; padding:25px 20px;" />
+								<div style="margin-left: 80px;">
+									<div style="font-size: 18px;">{$val->title}</div>
+									<div style="color: #aaa">1차카테고리 - 2차카테고리</div>
+									<div style="border-top: 1px solid #000000; padding-top: 5px; margin-top: 5px;">판매가격
+										<span style="font-size: 16px"><!--@if($val->price2 == 0)-->무료<!--@else-->{$val->price2}<!--@end--></span>
+									</div>
+									<Div>재고 {$val->total_count}</Div>
+								</div>
+							</div>
+							<div style="padding: 0px 20px;">
+								<div>사용기간 선택</div>
+								<div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+									<div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
+										<ul class="price-list" style="list-style: none; margin: 0; padding: 0;">
+											<li loop="$iconshop_config->day_price_data => $key, $price" style="display: block; width: 100%;" class="selected_days">
+												<input type="radio" value="{$key}" name="day_price_key_{$val->icon_srl}" data-icon-price="{$val->price}" data-icon-srl="{$val->icon_srl}" data-day-price="{$price}" />
+												<label style="margin-left: 5px; vertical-align: middle;"><!--@if($key == 0)-->무제한
+													<span style="color: #aaaaaa;">({$price} P)</span><!--@else-->{$key}일
+													<span style="color: #aaaaaa;">({$price} P)</span><!--@end--><!--@if($key != 0)--> - {date('Y년 m일 d일까지', strtotime(date('Ymd') . '+' . $key . 'day'))}..<!--@end-->
+												</label>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							<div style="padding: 0px 20px;">
+								<div>사용 설정</div>
+								<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
+									<input type="checkbox" name="is_selected_{$val->icon_srl}" value="Y" />
+									<label style="margin-left: 5px; vertical-align: middle;">대표아이콘 설정</label>
+								</div>
+							</div>
+
+							<div style="padding: 0px 20px;">
+								<div>최종 결제 금액</div>
+								<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; overflow: hidden; white-space:nowrap; text-align: center;">
+									<div style="width: 30%; display: inline-block; padding: 10px 0; position: relative; ">
+										<div>판매가격</div>
+										<div id="icon_price_{$val->icon_srl}" style="font-size: 16px;">00P</div>
+									</div>
+									<div style="width: 5%; display: inline-block; padding: 20px 0; vertical-align: top;">&#43;</div>
+									<div style="width: 30%;display: inline-block; padding: 10px 0; position: relative;">
+										<div>사용기간</div>
+										<div id="day_price_{$val->icon_srl}" style="font-size: 16px;">00P</div>
+									</div>
+									<div style="width: 5%; display: inline-block; padding: 20px 0; vertical-align: top; ">&#61;</div>
+									<div style="width: 30%;display: inline-block; background: #f7f7f7; padding: 10px 0;">
+										<div>최종결제금액</div>
+										<div id="total_icon_price_{$val->icon_srl}" style="font-size: 16px; color:#d52828;">00P</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
+								<button class="buy" type="submit" disabled="disabled"|cond="in_array($val->icon_srl, $myIconSrls)">{$lang->icon_buy}
+									<block cond="in_array($val->icon_srl, $myIconSrls)">이미구입한 상품</block>
+								</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
-			<div id="{$val->icon_srl}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<form action="{Context::getRequestUri()}" method="post" ruleset="iconBuy"|cond="$iconshop_config->day_price_use === 'Y'">
-					<input type="hidden" name="module" value="iconshop" />
-					<input type="hidden" name="act" value="procIconshopIconBuy" />
-					<input type="hidden" name="icon_srl" value="{$val->icon_srl}" />
-
-					<div class="modal-header">
-						<button type="button" class="x_close" data-dismiss="modal" aria-hidden="true">×</button>
-						<h3 id="myModalLabel">{$lang->icon_buy}/{$lang->icon_send}</h3>
-					</div>
-					<div class="modal-body">
-						<h3>{$val->title}</h3>
-						<p style="color:#00F; font-size:14px;">{$lang->icon_price} : <!--@if($val->price2 == 0)-->
-							<font color="#FF3300">무료</font>
-							<!--@else-->
-							{$val->price2}
-							<!--@end-->
-						</p>
-						<table style="width:250px; margin:0 auto; text-align:left; border-bottom:1px solid #ccc" class="popicon">
-							<Tr>
-								<Td>{sprintf("%s : %s",$lang->total_count,$val->total_count2)}</Td>
-
-								<Td align="right">{$lang->minute_limit} :
-									<!--@if($val->minute2 == 43200)-->
-									<font color="#FF3300">구입후 한달</font>
-									<!--@elseif($val->minute2 == 10080)-->
-									<font color="#3366CC">구입후 일주일</font>
-									<!--@else-->
-									{$val->minute2}
-									<!--@end-->
-								</Td>
-							</Tr>
-						</table>
-						<div style="clear:both; display:block;text-align:center">
-							<h4>Preview</h4>
-							<span style="background:url({$val->file1}) no-repeat left center; padding:10px 0 10px 22px ">{$logged_info->nick_name}</span>
-						</div>
-						<div style="clear:both; display:block; text-align:center; padding:20px 0;">
-							구매하실 경우, 선택한 아이콘이 맞는지 꼭 확인하세요.<br />
-							한번 구매하신 상품은 취소가 불가합니다.
-						</div>
-						<div class="select-price-guid" cond="$iconshop_config->day_price_use === 'Y'">
-							<ul class="price-list">
-								<li class="list-item" loop="$iconshop_config->day_price_data => $key, $price">
-									<label>
-										<input type="radio" value="{$key}" name="day_price_key" />
-										<!--@if($key == 0)-->
-										무제한 : {$price}
-										<!--@else-->
-										{$key}일 : {$price}
-										<!--@end-->
-									</label>
-								</li>
-							</ul>
-						</div>
-
-						<table style="width:250px; margin:0 auto; text-align:left" class="popicon">
-							<tr>
-								<td>구매포인트</td>
-								<td align="right">{$val->price2}</td>
-							</tr>
-							<tr>
-								<td>보유포인트</td>
-								<td align="right">{$point}point</td>
-							</tr>
-							{@ $ipp = $val->price2}
-							{@ $pp = $point - $ipp}
-							<tr style=" font-size:16px; border-top:1px solid #000">
-								<td style="padding:20px 0;">남는포인트</td>
-								<td align="right" style="padding:20px 0;"><font color="#FF0000">{$pp}point
-									<!--@if($pp<0)--><br />{$lang->point_limit_error}<!--@end--></font>
-								</td>
-							</tr>
-						</table>
-						<div>
-							<label><input type="checkbox" name="is_selected" value="Y" />대표아이콘 설정</label>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<!--<a onclick="iconBuy({$val->icon_srl});" class="x_btn x_btn-primary">{$lang->icon_buy}</a>-->
-						<button type="submit" class="x_btn x_btn-primary">{$lang->icon_buy}</button>
-						<a href="{getUrl('act','dispIconshopIconSend','icon_srl', $val->icon_srl)}" onclick="popopen(this.href,'iconSend');return false;" class="x_btn x_btn-success">{$lang->icon_send}</a>
-						<button class="x_btn" data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
-					</div>
-				</form>
-			</div>
-			{@
-			$count++;
-			$cell_index++;
-			}
 		</li>
 	</ul>
 
-	<div class="x_clearfix">
-		<!-- 페이지 네비게이션 -->
-		<div class="x_pagination">
-			<ul>
-				<li><a href="{getUrl('page','','module_srl','')}" class="direction">&laquo;</a></li>
-				<!--@while($page_no = $page_navigation->getNextPage())-->
-				<li class="x_active" |cond="$page == $page_no">
-					<a href="{getUrl('page',$page_no,'module_srl','')}">{$page_no}</a></li>
-				<!--@end-->
-				<li><a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="direction">&raquo;</a>
-				</li>
-			</ul>
-		</div>
-
-
+	<div class="ics-pagination">
+		<a href="{getUrl('page','','module_srl','')}">&laquo;</a>
+		<!--@while($page_no = $page_navigation->getNextPage())-->
+		<a href="{getUrl('page',$page_no,'module_srl','')}" class="active"|cond="$page == $page_no">{$page_no}</a>
+		<!--@end-->
+		<a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}">&raquo;</a>
 	</div>
 </div>
 <script type="text/javascript">
-	var confirm_buy = "{$lang->confirm_buy}";
-	var confirm_icon_change = "{$lang->confirm_icon_change}";
+	jQuery(function ($) {
+		$('#myModal').modal('show');
+	});
 </script>
 <include target="_footer.html" />

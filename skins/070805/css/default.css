@@ -1,3 +1,4 @@
+/* Bootstrap Modal */
 
 .modal-backdrop {
   position: fixed;
@@ -40,8 +41,6 @@
   position: relative;
   width: auto;
   margin: 10px;
-  border: 1px solid #000000;
-  background: #ffffff;
 }
 
 .modal {
@@ -98,240 +97,540 @@
   visibility: hidden;
 }
 
-.modal .ics-message,
-.modal .nav{
-	border-bottom: 1px solid #eee;
-	display: block;
-	position: relative;
-	background: #ffffff !important;
+/* Modal Custom */
+
+.ics-mod{
+  border: 1px solid #000000;
+  background: #ffffff;
 }
 
-.modal .ics-message{
-	padding: 20px 0px;
-	margin: 0;
-	border-bottom: 1px solid #eee;
+.ics-mod .close{
+  position:absolute;
+  right: 0px;
+  top: 0px;
+  border: none;
+  background: none;
+  font-size: 30px;
+  color: #000000;
+  cursor: pointer;
+  padding: 10px 20px;
+  outline:0;
 }
 
-.modal .nav-tabs{
-	list-style: none;
-	margin: 0;
-	padding: 0 20px;
-}
-.modal .nav-tabs:after{
-	display: inherit;
-	content: "";
-	clear: both;
+.ics-mod-hd .title{
+  padding-left: 20px;
+  font-weight: 800;
 }
 
-.modal .nav-tabs li{
-	display: inline-block;
-	float: left;
-	position: relative;
-	margin: 0;
-	padding: 0;
-	width: auto;
-	margin-right: 20px;
+.ics-mod-hd {
+  border-bottom: 1px solid #eee;
+  display: block;
+  position: relative;
+  background: #ffffff !important;
+  padding: 20px 0px;
+  margin: 0;
 }
 
-.modal .nav-tabs li a {
-	text-decoration: none;
-	display: inline-block;
-	padding: 20px 0px;
-	color: #555555;
-	float: left;
+.ics-mod-bd.error{
+  text-align: center;
+  padding: 50px 0;
+  background: #ffffff;
 }
 
-.modal .nav-tabs > .active > a,
-.modal .nav-tabs > .active > a:hover,
-.modal .nav-tabs > .active > a:focus {
+.ics-mod-bd .icon{
+  font-size: 80px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.ics-mod-bd .my{
+  text-align: center;
+  padding: 50px 0;
+}
+
+.ics-mod-bd .icon .e{
+  color: #ff9494;
+}
+
+.ics-mod-bd .icon .s{
+  color: #ffdc2e;
+}
+
+.icd-mod-fo{
+  border-top: 1px solid #000000;
+  white-space: nowrap;
+  overflow: hidden;
+  background: #ffffff;
+  letter-spacing: 0px;
+  word-spacing: 0px;
+  font-size: 0;
+}
+
+.icd-mod-fo:after{
+  content: '';
+  display: block;
+  clear: both;
+}
+	
+.icd-mod-fo button{
+  border:none;
+  display:inline-block;
+  outline:0;
+  padding:16px 0;
+  vertical-align:middle;
+  overflow:hidden;
+  color:inherit;
+  background-color:inherit;
+  text-align:left;
+  cursor:pointer;
+  margin: 0;
+  width: 50%;
+  text-align: center;
+  text-decoration: none;
+  color: #000000;
+}
+
+.icd-mod-fo button:hover{
+  background-color: #f2f3f7;
+}
+
+.icd-mod-fo button:disabled {
+  background: #dddddd !important;
+  cursor: default;
+}
+
+.icd-mod-fo .full{
+  width: 100%;
+}
+
+.icd-mod-fo .yellow{
+  background-color: #ffdc2e;
+}
+
+.icd-mod-fo .pink{
+  background-color: #ff9494;
+}
+
+
+/* Modal Custom Nav - Header */
+
+.ics-mod-nav{
+  border-bottom: 1px solid #eee;
+  display: block;
+  position: relative;
+  background: #ffffff !important;
+}
+
+.ics-mod-nav .tabs{
+  list-style: none;
+  margin: 0;
+  padding: 0 20px;
+}
+.ics-mod-nav .tabs:after{
+  display: inherit;
+  content: "";
+  clear: both;
+}
+
+.ics-mod-nav .tabs li{
+  display: inline-block;
+  float: left;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  margin-right: 20px;
+}
+
+.ics-mod-nav .tabs li a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 20px 0px;
+  color: #555555;
+  float: left;
+}
+
+.ics-mod-nav .tabs .active a,
+.ics-mod-nav .tabs .active a:hover{
   color: #000000;
   cursor: default;
   border-bottom: 2px solid #000000;
 }
 
-.modal .tab-content .tab-pane{
+
+/* Modal Custom Nav - Body */
+
+.ics-mod-bd .tab-pane {
   display: none;
 }
 
-.modal .tab-content .active {
+.ics-mod-bd .active {
   display: block;
 }
 
-.modal .tab-content {
-	background: #fafafa !important;
+.ics-mod-bd {
+  background: #fafafa;
 }
 
-	.ics-list-ul:after{content:"";display:table;clear:both}
-	.ics-list-ul{
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-	.ics-list-ul li{
-		display: inline-block;
-		width: 50%;
-	}
-	.ics-list-button{
-		color: #fff;
-		text-decoration: none;
-		padding: 5px 0;
-		width: 50%;
-		display: inline-block;
-		text-align: center;
-		float: left;
-	}
-	.ics-list-button.buy{background-color: #ffdc2e;}
-	.ics-list-button.gift{background-color: #ff9494;}
-
-.modal-footer{
-	border-top: 1px solid #000000;
-	white-space: nowrap;
-	overflow: hidden;
-	background: #ffffff;
-}	
-.modal-footer button{
-	border:none;
-	display:inline-block;
-	outline:0;
-	padding:16px 0;
-	vertical-align:middle;
-	overflow:hidden;
-	color:inherit;
-	background-color:inherit;
-	text-align:left;
-	cursor:pointer;
-	white-space:nowrap;
-	margin: 0;
-	width: 50%;
-	text-align: center;
+.ics-mod-bd .box {
+  padding: 0 20px;
 }
 
-
-.modal-footer button:hover{
-	background-color: #f2f3f7;
-}
-.modal-footer .buy{
-	background-color: #ffdc2e;
+.ics-mod-bd .box-hd{
+  padding-bottom: 3px;
 }
 
-.modal-footer .gift{
-	background-color: #ff9494;
+/* 상품설명 구간 */
+
+.ics-mod-bd .box.item {
+  padding: 20px;
 }
 
+.ics-mod-bd .box img {
+  float: left;
+  display: inline-block;
+  padding:15px 20px;
+  width: 19px;
+  height: 19px;
+}
+
+.ics-mod-bd .box:after{
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.ics-mod-bd .box .item-info {
+  margin-left: 70px;
+  font-size: 11px;
+}
+
+.ics-mod-bd .box .item-info .title {
+  font-size: 18px;
+}
+
+.ics-mod-bd .box .item-info .cat {
+  color: #aaa;
+  font-size: 11px;
+  padding-top: 8px;
+}
+
+.ics-mod-bd .box .item-info .price {
+  border-top: 1px solid #000000;
+  padding-top: 5px;
+  margin-top: 5px;
+}
+
+.ics-mod-bd .box .item-info .price .count{
+  font-size: 13px;
+  color: #cb2c2c;
+  margin-left: 5px;
+}
+
+.ics-mod-bd .box .box-line{
+  border: 1px solid #cccccc; 
+  background: #ffffff;
+  margin: 5px 0 20px;
+  padding:10px 15px;
+}
+
+.ics-mod-bd .box .box-line.end{
+  overflow: hidden;
+  white-space:nowrap;
+  text-align: center;
+  padding: 0;
+}
+
+.ics-mod-bd .box .box-line.etc{
+  padding: 0;
+}
+
+/* Modal 기간선택 구간 */
+
+.ics-mod-bd .box .price-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ics-mod-bd .box .price-list li{
+  display: block;
+  width: 100%;
+  padding: 3px 0;
+}
+
+.ics-mod-bd .box .price-list input[type='radio']{
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.ics-mod-bd .box .price-list .price{
+  color: #cb2c2c;
+}
+.ics-mod-bd .box .price-list .date{
+  font-size: 11px;
+}
+
+/* Modal 친구검색 구간 */
+
+.ics-mod-bd .box .gift-search input[type='text']{
+  border:none;
+}
+
+.ics-mod-bd .box .gift-search a{
+  float: right;
+  display: inline;
+  padding:0px 10px;
+  text-decoration: none;
+  color: #000000;
+}
+
+/* Modal 기타 구간 */
+.ics-mod-bd .box .box-etc{
+  background:#f7f7f7;
+  padding:10px 15px;
+  font-size: 11px;
+  color:#333333;
+}
+
+.ics-mod-bd .box .box-etc span{
+  display: block;
+  padding-left: 15px;
+  position: relative;
+}
+
+.ics-mod-bd .box .box-etc span:after{
+  content: '';
+  display: block;
+  position: absolute;
+  left:2px;
+  top:6px;
+  width: 2px;
+  height: 2px;
+  background: #333333;
+}
+
+.ics-mod-bd .box .check{
+  padding:10px 15px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.ics-mod-bd .box .check input[type='checkbox']{
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* Modal 최종결제 구간 */
+
+.ics-mod-bd .box .col {
+  width: 33.33333%;
+  display: inline-block;
+  padding: 10px 0;
+  position: relative;
+  font-size: 16px;
+}
+
+.ics-mod-bd .box .col.total{
+  background: #f7f7f7;
+  color:#d52828;
+}
+
+.ics-mod-bd .box .col .mark{
+  position: absolute;
+  right:-9px;
+  z-index: 99;
+  top:33%;
+  font-size: 16px;
+}
+
+.ics-mod-bd .box .col .title{
+  font-size: 11px;
+  padding-bottom: 5px;
+  color: #000000;
+}
+
+/* 검색 부분 */
+
+.ics-search {
+  position: relative;
+  overflow: hidden;
+  float: right;
+}
+
+.ics-search input[type='text']{
+  outline: none;
+  border:none;
+  padding: 5px;
+  background:#eeeeee;
+  vertical-align: top;
+  margin: 0;
+  display: inline;
+  border-left: 1px solid #eeeeee;
+  height: 25px;
+  width: 70px;
+  padding-right: 40px;
+  border-radius: none;
+}
+
+.ics-search button{
+  font-size: 16px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: none;
+  position: absolute;
+  right: 0; top:0;
+  padding: 8px 10px;
+}
 
 /* ICS NAVIGATION BAR */
-#ics-hd .ics-nav{
+.ics-nav{
 	width:100%;
 	border-top: 1px solid #eeeeee;
 	border-bottom: 1px solid #eeeeee;
-	padding: 1px 0;
+	padding: 0;
+	margin-bottom: 10px;
 }
-#ics-hd .ics-nav .ics-nav-item{
-	padding:8px 2px;
+
+.ics-nav:after{
+	content: '';
+	clear:both;
+	display: block; 
+}
+
+.ics-nav .ics-nav-item{
+	display:inline-block;
+	padding:10px 2px;
 	text-decoration: none;
 	color:inherit;
-	float: left;
 	cursor: pointer;
 	border-bottom: 2px solid none;
 	margin-left: 0;
 	margin-right: 20px;
+	margin-bottom: -1px;
 }
 
 
-#ics-hd .ics-nav .ics-nav-item:hover,
-#ics-hd .ics-nav .ics-nav-item.active {
+.ics-nav .ics-nav-item:hover,
+.ics-nav .ics-nav-item.active {
 	border-bottom: 2px solid #000000;
 }
 
-#ics-hd .dropdown {
-	position: relative;
-	display: inline-block;
+/* 2차 메뉴 */
+
+.ics-nav-sub{
+  padding: 10px 0 20px;
+  border-bottom: 1px solid #eeeeee;
 }
 
-#ics-hd .dropdown-toggle {
-  *margin-bottom: -3px;
+.ics-nav-sub a{
+  text-decoration: none;
+  color: #000000;
 }
 
-#ics-hd .dropdown button{
-	border:none;
-	display:inline-block;
-	outline:0;
-	padding:8px 2px;
-	vertical-align:middle;
-	overflow:hidden;
-	color:inherit;
-	background-color:inherit;
-	text-align:left;
-	cursor:pointer;
-	white-space:nowrap;
-	margin: 0;
-	border-bottom: 2px solid none;
-
+.ics-nav-sub a:hover{
+  text-decoration: none;
 }
 
-
-#ics-hd .dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-  display: none;
-  float: left;
-  min-width: 160px;
-  padding:0 ;
-  margin:1px 0;
-  list-style: none;
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-}
-
-#ics-hd .dropdown-menu .item{
-	text-decoration: none;
-	color: #000000;
-	display: block;
-	padding: 8px 15px;
-	cursor: pointer;
-}
-
-#ics-hd .dropdown-menu li{
-	display: block;
-}
-
-#ics-hd .open {
-  *z-index: 1000;
-}
-
-#ics-hd .open .dropdown-menu {
+.ics-nav-1th a{
   display: block;
-}
-
-#ics-hd .dropdown-menu-right{
-	right:-1px;left:auto;
-}
-
-.ics-nav-2th {
-	padding-bottom: 10px;
-}
-.ics-nav-2th ul{
-	list-style: none;
-	margin: 0;
-	padding: 0;
+  font-weight: 800;
+  padding: 10px 0;
+  text-decoration: none;
 }
 
 .ics-nav-2th li{
-	display: inline-block;
+  display: inline-block;
+  width: 32.9%;
+  text-align: center;
+  border: 1px solid #eeeeee;
+  margin-right: -1px;
+  margin-bottom: -1px;
 }
 
-.ics-hd:after{
-	content: "";
-	clear: both;
-	display: block;
+.ics-nav-2th li a{
+  display: inline-block;
+  padding:5px 0px;
+  padding-right: 20px;
+  position: relative;
+  width: 100%;
+  
+}
+
+.ics-nav-2th li a:after{
+  display: none;
+}
+
+.ics-nav-2th .active{
+  font-weight: 800;
+}
+
+.ics-nav-2th li:nth-of-type(1n) {
+  clear: none
+}
+
+.ics-nav-2th li:nth-of-type(2n + 1) {
+  clear: both
+}
+
+
+/* 상점 목록 */
+.ics-list-ul:after{
+  content:"";
+  display:table;
+  clear:both;
+}
+.ics-list-ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ics-list-ul li{
+  display: inline-block;
+  width: 50%;
+  white-space: nowrap;
+}
+
+.ics-list-ul li .list-item{
+  padding-bottom: 20px;
 }
 
 @media (min-width: 768px) {
-  .modal-dialog {
-    width: 450px;
-    margin: 30px auto;
-  }
-  .ics-list-ul li{width: 25%;}
+ .ics-mod {
+   width: 450px;
+   margin: 30px auto;
+ }
+ .ics-list-ul li{
+   width: 25%;
+ }
+ .ics-nav-2th li{
+   width: auto;
+   border: none;
+   margin: 0;
+   text-align:left;
+ }
+ 
+.ics-nav-2th li a:after{
+  content: '';
+  display: block;
+  position: absolute;
+  right: 30px;
+  top:10px;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #999999;
+}
+
+.ics-nav-2th li:last-child a:after{
+  display: none;
+}
+
+}
+
+/* 매우 작은 화면(가로 320) 용 */
+@media (max-width: 320px) {
+ .ics-list-ul li{
+   width: 100%;
+ }
 }

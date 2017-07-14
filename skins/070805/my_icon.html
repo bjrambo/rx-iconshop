@@ -41,74 +41,84 @@
 
 			<div class="modal hide" id="sell_{$val->icon_srl}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
-					<div class="ics-message">
-						<div style="padding-left: 20px;">판매하기</div>
-						<button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
-					</div>
-					<div style="padding: 20px;">
-						<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" style="float: left; display: inline-block; padding:10px 20px;" />
-						<div style="margin-left: 80px;">
-							<div style="font-size: 18px;">{$val->title}</div>
-							<div style="color: #aaa">1차카테고리 - 2차카테고리</div>
+					<div class="ics-mod">
+						<div class="ics-mod-hd">
+							<div class="title">판매하기</div>
+							<button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
 						</div>
-					</div>
-					<div style="padding: 0px 20px;">
-						<div>주의 사항</div>
-						<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
-							<p>- 판매시 구매금액의 00% 만 되돌려 받으실 수 있습니다.</p>
-							<p>- 기간선택에 따른 포인트는 판매시에 되돌려 받으실 수 없습니다.</p>
-							<p>- 판매시 취소가 되지 않습니다.</p>
+						<div class="ics-mod-bd">
+							<div class="box item" >
+								<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" />
+								<div class="item-info">
+									<div class="title">{$val->title}</div>
+									<div class="cat" >1차카테고리 - 2차카테고리</div>
+								</div>
+							</div>
+							<div class="box">
+								<div class="box-hd">주의사항</div>
+								<div class="box-line etc">
+									<div class="box-etc">
+										<span> 판매시 구매금액의 00% 만 되돌려 받으실 수 있습니다.</span>
+										<span> 기간선택에 따른 포인트는 판매시에 되돌려 받으실 수 없습니다.</span>
+										<span> 판매시 취소가 되지 않습니다.</span>
+									</div>
+								</div>
+							</div>
+							<div class="box">
+								<div class="box-hd">최종결제금액</div>
+								<div class="box-line end">
+									<div class="col">
+										<div class="title">판매가격</div>
+										<div >00P</div>
+										<div class="mark" >&#45;</div>
+									</div>
+									<div class="col">
+										<div class="title">수수료</div>
+										<div >00P</div>
+										<div class="mark" >&#61;</div>
+									</div>
+									<div class="col total">
+										<div class="title">최종결제금액</div>
+										<div >00P</div>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
-					<div style="padding: 0px 20px;">
-						<div>최종 결제 금액</div>
-						<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; overflow: hidden; white-space:nowrap; text-align: center;">
-							<div style="width: 30%; display: inline-block; padding: 10px 0; position: relative; ">
-								<div>구매가격</div>
-								<div style="font-size: 16px;">00P</div>
-							</div>
-							<div style="width: 5%; display: inline-block; padding: 20px 0; vertical-align: top;">&#45;</div>
-							<div style="width: 30%;display: inline-block; padding: 10px 0; position: relative;">
-								<div>수수료</div>
-								<div style="font-size: 16px;">00P</div>
-							</div>
-							<div style="width: 5%; display: inline-block; padding: 20px 0; vertical-align: top; ">&#61;</div>
-							<div style="width: 30%;display: inline-block; background: #f7f7f7; padding: 10px 0;">
-								<div>최종판매금액</div>
-								<div style="font-size: 16px; color:#d52828;">00P</div>
-							</div>
+						<div class="icd-mod-fo">
+							<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
+							<button type="button" class="yellow" onclick="iconSell({$val->data_srl});">{$lang->icon_sell}</button>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
-						<button type="button" class="buy" onclick="iconSell({$val->data_srl});">{$lang->icon_sell}</button>
 					</div>
 				</div>
 			</div>
-			</div>
 			<div class="modal hide" id="delete_{$val->icon_srl}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
-					<div class="ics-message">
-						<div style="padding-left: 20px;">삭제하기</div>
-						<button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
-					</div>
-					<div style="padding: 20px;">
-						<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" style="float: left; display: inline-block; padding:10px 20px;" />
-						<div style="margin-left: 80px;">
-							<div style="font-size: 18px;">{$val->title}</div>
-							<div style="color: #aaa">1차카테고리 - 2차카테고리</div>
+					<div class="ics-mod">
+						<div class="ics-mod-hd">
+							<div style="padding-left: 20px;">삭제하기</div>
+							<button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
 						</div>
-					</div>
-					<div style="padding: 0px 20px;">
-						<div>주의 사항</div>
-						<Div style="border: 1px solid #cccccc; background: #ffffff; margin: 5px 0 20px; padding: 10px">
-							<p>- 삭제는 포인트를 되돌려 받으실 수 없습니다.</p>
-							<p>- 삭제시 취소가 되지 않습니다.</p>
+						<div class="ics-mod-bd">
+							<div class="box item" >
+								<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" />
+								<div class="item-info">
+									<div class="title">{$val->title}</div>
+									<div class="cat" >1차카테고리 - 2차카테고리</div>
+								</div>
+							</div>
+							<div class="box">
+								<div class="box-hd">주의사항</div>
+								<div class="box-line etc">
+									<div class="box-etc">
+										<span> 삭제는 포인트를 되돌려 받으실 수 없습니다.</span>
+										<span> 삭제시 취소가 되지 않습니다.</span>
+									</div>
+								</div>
+							</div>
+						<div class="icd-mod-fo">
+							<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
+							<button type="button" class="pink" onclick="iconDelete({$val->data_srl});">{$lang->icon_delete}</button>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
-						<button type="button" class="gift" onclick="iconDelete({$val->data_srl});">{$lang->icon_delete}</button>
 					</div>
 				</div>
 			</div>

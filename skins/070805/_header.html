@@ -20,47 +20,35 @@
 		{@ $cate_list[$current_key]->children[] = $val }
 		<!--@end-->
 		<!--@end-->
-		<div class="dropdown ">
-			<button class="dropdown-toggle" type="button" id="cate" data-toggle="dropdown" >1차카테고리</button>
-			<ul class="dropdown-menu" role="menu"  aria-labelledby="cate">
-				<li>
-					<a href="{getUrl('', 'mid', $iconshop_info->mid, 'category_srl', '')}" >전체</a>
-				</li>
-				<li loop="$cate_list => $key, $val">
-					<a href="{getUrl('', 'mid', $val->mid, 'category_srl', $val->category_srl)}" >{$val->title} </a>
-				</li>
-			</ul>
-		</div>
-		
-		<!-- 상품 검색 -->
-		<a href="{getUrl('','module','admin','act','dispIconshopAdminConfig')}" onclick="window.open(this.href);return false;" cond="$grant->manager" class="ics-nav-item">상점설정</a>
-		<form action="./" method="get" style="float: right;" >
+
+		<a href="{getUrl('','module','admin','act','dispIconshopAdminConfig')}" onclick="window.open(this.href);return false;" cond="$grant->manager" class="ics-nav-item">관리</a>
+		<!-- 상품검색 -->
+		<form action="./" method="get" class="ics-search" >
 			<input type="hidden" name="mid" value="{$mid}" />
 			<input type="hidden" name="act" value="{$act}" />
-			<input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}"  />
+			<input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" placeholder="Search icons"  />
 			<button type="submit" ><i class="fa fa-search" aria-hidden="true"></i></button>
 		</form>
 	</div>
-	<div style="padding: 10px 0; border-bottom: 1px solid #eeeeee;">
-		<div class="ics-nav-title" style="display: block; font-weight: 800; padding: 10px 0;">
-			<!-- 1차 메뉴명 출력, 현재는 분류가 출력이 안됨.. -->
-			<block loop="$iconshop_main_menu => $key,$val" cond="$menu == $key">
-				{$val['title']}
+	<!-- 카테고리를 사용할때만 나오는 메뉴(아직 사용에 따른 보기 기능구현 안됨) -->
+	<div class="ics-nav-sub"  >
+		<div class="ics-nav-1th" >
+			<block loop="$cate_list=>$key,$val" cond="$category_srl==$val->category_srl">
+				<a href="{getUrl('', 'mid', $val->mid, 'category_srl', $val->category_srl)}" >{$val->title}</a>
 			</block>
 		</div>
-		
-		<!--@if($act != 'dispIconshopMyIcon')-->
 		<!-- 1차 메뉴 선택시 나오는 2차 메뉴 -->
-		<div class="ics-nav-2th">
+		<div class="ics-nav-2th" cond="$act != 'dispIconshopMyIcon'">
 			<ul>
-				<li>
-					<a href="{getUrl('', 'mid', $iconshop_info->mid, 'category_srl', '')}" >전체</a>
+				<li loop="$cate_list => $key, $val" cond="!$category_srl">
+					<a href="{getUrl('', 'mid', $val->mid, 'category_srl', $val->category_srl)}" >{$val->title} </a>
 				</li>
-				<block loop="$cate_list=>$key,$val" cond="$category_srl==$val->category_srl"></a>
-					<li loop="$val->children=>$idx,$item" class="on_"|cond="$category==$item->category_srl"><a href="{getUrl(category,$item->category_srl,'document_srl','', 'page', '')}">{$item->title}</a></li>
+				<block loop="$cate_list=>$key,$val" cond="$category_srl==$val->category_srl">
+					<li loop="$val->children=>$idx,$item" >
+						<a href="{getUrl(category,$item->category_srl,'document_srl','', 'page', '')}" class="active"|cond="$category==$item->category_srl">{$item->title}</a>
+					</li>
 				</block>
 			</ul>
 		</div>
-		<!--@end-->
 	</div>
 </div>
