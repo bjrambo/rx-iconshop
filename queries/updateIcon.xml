@@ -1,17 +1,17 @@
 <query id="updateIcon" action="update">
-    <tables>
-        <table name="iconshop_items" />
-    </tables>
-    <columns>
-        <column name="title" var="title" notnull="notnull" />
-        <column name="total_count" var="total_count" default="0" filter="number" />
-        <column name="set_total_count" var="set_total_count" default="0" filter="number" />
-        <column name="price" var="price" default="0" filter="number" />
-        <column name="extra_vars" var="extra_vars" />
-        <column name="file1" var="file1" notnull="notnull" />
-	    <column name="category_srl" var="category_srl" default="0" />
-    </columns>
-    <conditions>
-        <condition operation="equal" column="icon_srl" var="icon_srl" notnull="notnull" filter="number" />
-    </conditions>
+	<tables>
+		<table name="iconshop_items"/>
+	</tables>
+	<columns>
+		<column name="title" var="title" notnull="notnull"/>
+		<column name="total_count" var="total_count" default="0" filter="number"/>
+		<column name="set_total_count" var="set_total_count" default="0" filter="number"/>
+		<column name="price" var="price" default="0" filter="number"/>
+		<column name="extra_vars" var="extra_vars"/>
+		<column name="file1" var="file1" notnull="notnull"/>
+		<column name="category_srl" var="category_srl" default="0"/>
+	</columns>
+	<conditions>
+		<condition operation="equal" column="icon_srl" var="icon_srl" notnull="notnull" filter="number"/>
+	</conditions>
 </query>

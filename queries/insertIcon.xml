@@ -1,16 +1,16 @@
 <query id="insertIcon" action="insert">
-    <tables>
-        <table name="iconshop_items" />
-    </tables>
-    <columns>
-        <column name="icon_srl" var="icon_srl" filter="number" notnull="notnull" />
-        <column name="title" var="title" notnull="notnull" />
-        <column name="total_count" var="total_count" default="0" filter="number" />
-        <column name="set_total_count" var="total_count" default="0" filter="number" />
-        <column name="price" var="price" default="0" filter="number" />
-        <column name="file1" var="file1" notnull="notnull" />
-        <column name="extra_vars" var="extra_vars" />
-        <column name="category_srl" var="category_srl" default="0" filter="number" />
-        <column name="regdate" default="curdate()" />
-    </columns>
+	<tables>
+		<table name="iconshop_items"/>
+	</tables>
+	<columns>
+		<column name="icon_srl" var="icon_srl" filter="number" notnull="notnull"/>
+		<column name="title" var="title" notnull="notnull"/>
+		<column name="total_count" var="total_count" default="0" filter="number"/>
+		<column name="set_total_count" var="total_count" default="0" filter="number"/>
+		<column name="price" var="price" default="0" filter="number"/>
+		<column name="file1" var="file1" notnull="notnull"/>
+		<column name="extra_vars" var="extra_vars"/>
+		<column name="category_srl" var="category_srl" default="0" filter="number"/>
+		<column name="regdate" default="curdate()"/>
+	</columns>
 </query>
