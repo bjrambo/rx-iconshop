@@ -63,7 +63,7 @@
 										<div class="title">{$val->title}</div>
 										<div class="cat" >1차카테고리 - 2차카테고리</div>
 										<div class="price" style="">
-											가격 <span class="count" ><!--@if($val->price == 0)-->무료<!--@else-->{$val->price}P<!--@end--></span>
+											가격 <span class="ics-count" ><!--@if($val->price == 0)-->무료<!--@else-->{$val->price}P<!--@end--></span>
 										</div>
 										<div cond="$val->total_count != 0">재고 <span>{$val->total_count} / {$val->set_total_count}</span></div>
 										<div cond="$val->total_count == 0">재고없음</div>
@@ -148,7 +148,7 @@
 											<div class="title">{$val->title}</div>
 											<div class="cat" >1차카테고리 - 2차카테고리</div>
 											<div class="price" style="">
-												가격 <span class="count" ><!--@if($val->price == 0)-->무료<!--@else-->{$val->price}P<!--@end--></span>
+												가격 <span class="ics-count" ><!--@if($val->price == 0)-->무료<!--@else-->{$val->price}P<!--@end--></span>
 											</div>
 											<div cond="$val->total_count != 0">재고 <span>{$val->total_count} / {$val->set_total_count}</span></div>
 											<div cond="$val->total_count == 0">재고없음</div>
@@ -225,14 +225,13 @@
 			</div>
 		</li>
 	</ul>
-
-	<div class="ics-pagination" cond="$icon_list">
-		<a href="{getUrl('page','','module_srl','')}">&laquo;</a>
-		<!--@while($page_no = $page_navigation->getNextPage())-->
-		<a href="{getUrl('page',$page_no,'module_srl','')}" class="active"|cond="$page == $page_no">{$page_no}</a>
-		<!--@end-->
-		<a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}">&raquo;</a>
-	</div>
+</div>
+<div class="ics-pg" cond="$icon_list">
+	<a href="{getUrl('page','','module_srl','')}" class="page" >&#60;</a>
+	<!--@while($page_no = $page_navigation->getNextPage())-->
+	<a href="{getUrl('page',$page_no,'module_srl','')}" class="page active"|cond="$page == $page_no">{$page_no}</a>
+	<!--@end-->
+	<a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="page">&#62;</a>
 </div>
 <script type="text/javascript">
 	jQuery(function ($) {

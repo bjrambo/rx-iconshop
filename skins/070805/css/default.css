@@ -164,6 +164,7 @@
   letter-spacing: 0px;
   word-spacing: 0px;
   font-size: 0;
+  margin-top: 20px;
 }
 
 .icd-mod-fo:after{
@@ -277,13 +278,14 @@
 }
 
 .ics-mod-bd .box-hd{
+  padding-top: 20px;
   padding-bottom: 3px;
 }
 
 /* 상품설명 구간 */
 
 .ics-mod-bd .box.item {
-  padding: 20px;
+  padding: 20px 20px 0;
 }
 
 .ics-mod-bd .box img {
@@ -321,7 +323,7 @@
   margin-top: 5px;
 }
 
-.ics-mod-bd .box .item-info .price .count{
+.ics-mod-bd .box .item-info .price .ics-count{
   font-size: 13px;
   color: #cb2c2c;
   margin-left: 5px;
@@ -330,7 +332,7 @@
 .ics-mod-bd .box .box-line{
   border: 1px solid #cccccc; 
   background: #ffffff;
-  margin: 5px 0 20px;
+  margin: 5px 0 0;
   padding:10px 15px;
 }
 
@@ -343,6 +345,7 @@
 
 .ics-mod-bd .box .box-line.etc{
   padding: 0;
+  width: 100%;
 }
 
 /* Modal 기간선택 구간 */
@@ -575,6 +578,7 @@
 
 
 /* 상점 목록 */
+
 .ics-list-ul:after{
   content:"";
   display:table;
@@ -589,10 +593,84 @@
   display: inline-block;
   width: 50%;
   white-space: nowrap;
+  font-size: 11px;
 }
 
 .ics-list-ul li .list-item{
   padding-bottom: 20px;
+}
+
+/* 페이지네비 */
+
+.ics-pg{
+  text-align: center;
+  padding-top: 10px;
+}
+.ics-pg:after{
+  content:"";
+  display:table;
+  clear:both;
+}
+
+.ics-pg .page{
+  text-decoration: none;
+  color: #000000;
+  display:inline-block;
+  padding: 5px 5px;
+}
+
+.ics-pg .page.active{
+  color: red;
+}
+
+/* 마이페이지 */
+
+.ics-table {
+  border: 0;
+  color: #000000;
+  font-size: 11px;
+  margin-top: 20px;
+}
+.ics-table a{
+  text-decoration: none;
+  color: #000000;
+}
+.ics-table th {
+  border: 0;
+  padding: 10px 0 11px 0;
+  height: 13px;
+  white-space: nowrap;
+  font-weight: normal;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.ics-table td {
+  border: 0;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 10px 10px;
+  white-space: nowrap;
+  vertical-align: top;
+  line-height: 1.4;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.ics-table td.title{
+  text-align: left;
+}
+
+.ics-table .etc{
+  display: inline-block;
+  padding: 5px;
+  font-size: 12px;
+}
+
+/* 나만의 아이콘 */
+
+.my-icon {
+  position: relative;
+  padding: 10px 0;
 }
 
 @media (min-width: 768px) {

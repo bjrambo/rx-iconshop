@@ -1,8 +1,76 @@
 <include target="_header.html" />
-
-
-<!--@if(!$icon_list)-->{$lang->null_myicon}<!--@end-->
-<table cellpadding="0" cellspacing="0" width="100%" border="0">
+<div class="my-icon">
+	<a href="#my_{$val->icon_srl}" role="button" data-toggle="modal" style="text-decoration: none; color: #000000; float: right;">&#43; 아이콘 등록하기</a>
+	<div class="modal hide" id="my_{$val->icon_srl}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="ics-mod">
+				<div class="ics-mod-hd">
+					<div class="title">등록하기</div>
+					<button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+				</div>
+				<div class="ics-mod-bd">
+					<div class="box">
+						<div class="box-hd">이름</div>
+						<div class="box-line">
+							<input type="text" style=" overflow: hidden; padding:0; outline: none; width: 100%; border: 0;" placeholder="이름">
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-hd">파일등록</div>
+						<div class="box-line">첨부하기</div>
+						<div style="padding: 10px 0;">
+							<div style="font-size: 10px;">이미지 사이즈 00 x 00, 파일크기 00MB 이하, 확장자 JPG,GIF만 등록가능</div>
+							<div style="padding: 10px 0;">
+								등록된 파일 이미지
+								<div style="float: right">
+									<input type="checkbox">
+									<label> 삭제</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-hd">최종결제금액</div>
+						<div class="box-line end">
+							<div class="col">
+								<div class="title">등록금액</div>
+								<div >00P</div>
+								<div class="mark" >&#45;</div>
+							</div>
+							<div class="col">
+								<div class="title">수정금액</div>
+								<div >00P</div>
+								<div class="mark" >&#61;</div>
+							</div>
+							<div class="col total">
+								<div class="title">최종결제금액</div>
+								<div >00P</div>
+							</div>
+						</div>
+					</div>
+					<div class="box">
+						<div class="box-hd">주의사항</div>
+						<div class="box-line etc">
+							<div class="box-etc">
+								<span> 등록된 아이템은 판매가 되지 않습니다.</span>
+								<span> 수정할 경우 수수료가 발생합니다. 등록하실 때 유의하세요.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="icd-mod-fo">
+					<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
+					<button type="button" class="yellow" >등록하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="ics-list-no" style=" text-align: center;" cond="!$icon_list">
+	<i class="fa fa-meh-o" aria-hidden="true" style="padding: 20px 0; font-size: 100px; color: #aaaaaa;"></i>
+	<div>{$lang->null_myicon}</div>
+</div>
+<table cellpadding="0" cellspacing="0" width="100%" border="0" class="ics-table">
 	<thead>
 	<tr>
 		<th>아이콘</th>
@@ -10,35 +78,31 @@
 		<th>기타</th>
 	</tr>
 	</thead>
-
 	<tr loop="$icon_list=>$key,$val">
 		<!-- 분류는 구매, 판매, 선물, 삭제 로 기록 한다 -->
-		<td>
-			<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" style="padding:25px 20px;display: inline-block;  border: 1px solid #eee;" />
+		<td class="title">
+			<img src="{$val->file1}" alt="{$val->title}" title="{$val->title}" style="padding:20px 20px;display: inline-block;  border: 1px solid #eee;" />
 			<div style="display: inline-block; vertical-align: top; padding-left: 10px;">
+				<!-- 분류(구매, 선물, 등록) -->
 				<div>구매</div>
-				<div>구매일 : {zdate($val->start_date, 'Y.m.d')} (만료일 : {zdate($val->end_date, 'Y.m.d')})</div>
-				<div style="font-size: 14px;">{$val->title}</div>
+				<div>{zdate($val->start_date, 'Y.m.d')} (&#126; <!--@if($val->end_date != 0)-->{zdate($val->end_date, 'Y.m.d')}<!--@else-->무제한<!--@end-->)</div>
+				<div >{$val->title}</div>
 				<div style="color: #aaa">1차카테고리 - 2차카테고리</div>
 			</div>
 		</td>
-
 		<!-- 해당 아이콘이 언제까지 쓸 수 있는지 표시 (판매/삭제/선물 미표기, 무제한은 무제한으로 표기) -->
-
 		<!-- 대표설정은 적용, 해제로 선택(가능한 아이콘만) -->
-		<td align="center">
+		<td>
 			<!--@if($val->is_selected!="Y")-->
 			<a onclick="iconSelected({$val->data_srl});" style="cursor: pointer;">{$lang->is_selected}</a>
 			<!--@else-->
-			{$lang->icon_active}
+			<span style="color: #ff9494">사용중</span>
 			<!--@end-->
 		</td>
-
-		<td align="center" valign="middle">
+		<td>
 			<!-- 판매는 판매가능시 링크 활성화, 무료 아이콘은 삭제 버튼만 활성화 -->
-			<a href="#sell_{$val->icon_srl}" role="button" style=" display: block; margin: 3px 0; padding: 5px; border: 1px solid #aaaaaa;" data-toggle="modal">{$lang->icon_sell}</a>
-			<a href="#delete_{$val->icon_srl}" role="button" style=" display: block; margin: 3px 0; padding: 5px; border: 1px solid #aaaaaa;" data-toggle="modal">{$lang->icon_delete}</a>
-
+			<a href="#sell_{$val->icon_srl}" role="button" data-toggle="modal" class="etc"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+			<a href="#delete_{$val->icon_srl}" role="button" data-toggle="modal" class="etc"><i class="fa fa-minus" aria-hidden="true"></i></a>
 			<div class="modal hide" id="sell_{$val->icon_srl}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="ics-mod">
@@ -52,16 +116,6 @@
 								<div class="item-info">
 									<div class="title">{$val->title}</div>
 									<div class="cat" >1차카테고리 - 2차카테고리</div>
-								</div>
-							</div>
-							<div class="box">
-								<div class="box-hd">주의사항</div>
-								<div class="box-line etc">
-									<div class="box-etc">
-										<span> 판매시 구매금액의 00% 만 되돌려 받으실 수 있습니다.</span>
-										<span> 기간선택에 따른 포인트는 판매시에 되돌려 받으실 수 없습니다.</span>
-										<span> 판매시 취소가 되지 않습니다.</span>
-									</div>
 								</div>
 							</div>
 							<div class="box">
@@ -83,6 +137,16 @@
 									</div>
 								</div>
 							</div>
+							<div class="box">
+								<div class="box-hd">주의사항</div>
+								<div class="box-line etc" >
+									<div class="box-etc" >
+										<span> 판매시 구매금액의 00% 만 되돌려 받으실 수 있습니다.</span>
+										<span> 기간선택에 따른 포인트는 판매시에 되돌려 받으실 수 없습니다.</span>
+										<span> 판매시 취소가 되지 않습니다.</span>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="icd-mod-fo">
 							<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
@@ -95,8 +159,8 @@
 				<div class="modal-dialog">
 					<div class="ics-mod">
 						<div class="ics-mod-hd">
-							<div style="padding-left: 20px;">삭제하기</div>
-							<button type="button" data-dismiss="modal" aria-hidden="true" style="position: absolute; right: 0px; top: 0px; border: none; background: none; font-size: 30px; color: #aaaaaa; cursor: pointer; padding: 10px;">×</button>
+							<div class="title">삭제하기</div>
+							<button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
 						</div>
 						<div class="ics-mod-bd">
 							<div class="box item" >
@@ -115,6 +179,7 @@
 									</div>
 								</div>
 							</div>
+						</div>
 						<div class="icd-mod-fo">
 							<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
 							<button type="button" class="pink" onclick="iconDelete({$val->data_srl});">{$lang->icon_delete}</button>
@@ -122,16 +187,15 @@
 					</div>
 				</div>
 			</div>
-			</div>
 		</td>
 	</tr>
 </table>
-<div class="ics-pagination">
-	<a href="{getUrl('page','','module_srl','')}">&laquo;</a>
+<div class="ics-pg" cond="$icon_list">
+	<a href="{getUrl('page','','module_srl','')}" class="page" >&#60;</a>
 	<!--@while($page_no = $page_navigation->getNextPage())-->
-	<a href="{getUrl('page',$page_no,'module_srl','')}" class="active" |cond="$page == $page_no">{$page_no}</a>
+	<a href="{getUrl('page',$page_no,'module_srl','')}" class="page active"|cond="$page == $page_no">{$page_no}</a>
 	<!--@end-->
-	<a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}">&raquo;</a>
+	<a href="{getUrl('page',$page_navigation->last_page,'module_srl','')}" class="page">&#62;</a>
 </div>
 <script type="text/javascript">
 	var confirm_isselected = "{$lang->confirm_isselected}";

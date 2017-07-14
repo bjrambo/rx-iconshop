@@ -31,7 +31,7 @@
 		</form>
 	</div>
 	<!-- 카테고리를 사용할때만 나오는 메뉴(아직 사용에 따른 보기 기능구현 안됨) -->
-	<div class="ics-nav-sub"  >
+	<div class="ics-nav-sub"  cond="$act != 'dispIconshopMyIcon'">
 		<div class="ics-nav-1th" >
 			<block loop="$cate_list=>$key,$val" cond="$category==$val->category_srl">
 				<a href="{getUrl('', 'mid', $val->mid, 'category', $val->category_srl, 'category_srl', $val->category_srl)}" >{$val->title}</a>
