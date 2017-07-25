@@ -325,7 +325,7 @@ class iconshopController extends iconshop
 		$args->price = -1;
 		$args->extra_vars = serialize(new stdClass());
 		$args->regdate = date('YmdHis');
-		$file1_obj = $args->file1;
+		$file1_obj = $obj->file1;
 		if($file1_obj['tmp_name'])
 		{
 			// 이미지 파일이 아니면 무시
@@ -362,8 +362,14 @@ class iconshopController extends iconshop
 				//TODO(bJRAmbo) : check again
 				@move_uploaded_file($file1_obj['tmp_name'], $filename);
 			}
-			$obj->file1 = $filename;
+			$args->file1 = $filename;
 		}
+
+		if(!$args->file1)
+		{
+			return new Object(-1, '파일을 생성하지 못했습니다.');
+		}
+
 		if(!$args->icon_srl)
 		{
 			$args->icon_srl = getNextSequence();
@@ -381,6 +387,7 @@ class iconshopController extends iconshop
 				return $output;
 			}
 		}
+
 
 		$my_args = new stdClass();
 		$my_args->data_srl = getNextSequence();

@@ -1,8 +1,29 @@
 <include target="_header.html" />
+<div class="modal {$XE_VALIDATOR_MESSAGE_TYPE}" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" cond="$XE_VALIDATOR_MESSAGE">
+	<div class="modal-dialog">
+		<div class="ics-mod">
+			<div class="ics-mod-hd">
+				<div class="title">아이콘샵</div>
+				<button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+			</div>
+			<div class="ics-mod-bd error">
+				<div class="icon">
+					<i class="fa fa-exclamation e"|cond="$XE_VALIDATOR_MESSAGE_TYPE == 'error'" class="fa fa-smile-o s"|cond="$XE_VALIDATOR_MESSAGE_TYPE != 'error'" aria-hidden="true"></i>
+				</div>
+				<div>{$XE_VALIDATOR_MESSAGE}</div>
+			</div>
+			<div class="icd-mod-fo">
+				<button data-dismiss="modal" aria-hidden="true" class="full"|cond="$XE_VALIDATOR_MESSAGE_TYPE == 'error'">{$lang->cmd_close}</button>
+				<a href="{getUrl('', 'mid', $iconshop_info->mid,'act','dispIconshopMyIcon')}" class="yellow" cond="$XE_VALIDATOR_MESSAGE_TYPE != 'error'" type="button"><button>마이페이지</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="my-icon">
 	<a href="#my_{$val->icon_srl}" role="button" data-toggle="modal" style="text-decoration: none; color: #000000; float: right;">&#43; 아이콘 등록하기</a>
 	<div class="modal hide" id="my_{$val->icon_srl}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<form action="{Context::getRequestUri()}" method="post" >
+		<form action="{Context::getRequestUri()}" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="module" value="iconshop" />
 			<input type="hidden" name="act" value="procIconshopInsertMyIcon" />
 			<div class="modal-dialog">
@@ -63,7 +84,7 @@
 					</div>
 					<div class="icd-mod-fo">
 						<button data-dismiss="modal" aria-hidden="true">{$lang->cmd_close}</button>
-						<button type="button" class="yellow" >등록하기</button>
+						<button type="submit" class="yellow" >등록하기</button>
 					</div>
 				</div>
 			</div>
