@@ -306,7 +306,7 @@ class iconshopController extends iconshop
 
 	function procIconshopInsertMyIcon()
 	{
-		if(Context::get('is_logged'))
+		if(!Context::get('is_logged'))
 		{
 			return new Object(-1, '로그인 하지 않은 사람은 이용할 수 없습니다.');
 		}
