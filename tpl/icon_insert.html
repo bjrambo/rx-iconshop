@@ -13,8 +13,10 @@
 			<label class="x_control-label">분류선택</label>
 			<div class="x_controls">
 				<select name="category_srl">
-					<option value="0" selected="selected"|cond="!$icon_data->category_srl">{$lang->notuse}</option>
-					<option loop="$category_list => $key, $val" value="{$val->category_srl}" selected="selected"|cond="$icon_data->category_srl == $val->category_srl" >{$val->title}</option>
+					<option value="">{$lang->category}</option>
+					<option loop="$category_list => $val" value="{$val->category_srl}" selected="selected"|cond="$icon_data->category_srl == $val->category_srl">
+						{str_repeat("&nbsp;&nbsp;",$val->depth)} {$val->title}
+					</option>
 				</select>
 				<p>이 상품의 분류를 선택합니다. 상품간의 분류를 나눠서 상품을 관리할 수 있습니다.</p>
 			</div>
